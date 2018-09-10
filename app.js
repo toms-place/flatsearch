@@ -102,17 +102,11 @@ function sendNotification(links) {
     auth: auth
   });
 
-  var linksHref = '';
-
-  for (let i = 0; i < links.length; i++) {
-    linksHref += "<p><a href='" + links[i] + "'>" + links[i] + "</a></p>";
-  }
-
   var mailOptions = {
     from: auth.user,
     to: sendNotifcationTo,
     subject: 'NEUES LEBEN - neue Wohnung gefunden!',
-    html: "<h1>Neue Wohnung!</h1><p>Diese Gebäude haben neue Wohnungen:</p>" + linksHref
+    html: "<h1>Neue Wohnung!</h1><p>Diese Gebäude haben neue Wohnungen:</p>" + links
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -133,12 +127,20 @@ function sendNotification(links) {
  * @returns
  */
 function getLinks(notModified, modified, angebot) {
-  var links = [];
-  let count = 0;
+  var links = '';
   for (let i = 0; i < notModified.length; i++) {
     if (notModified[i] < modified[i] && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0 || modified.length == 0 && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0) {
-      links[count] = 'https://www.wohnen.at' + angebot[i].href;
-      count++;
+      var anz = 0;
+      var title = "";
+      var address = "";
+
+      if(modified [i]) anz = modified[i]; else anz = notModified[i];
+      if(angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) title = angebot[i].querySelectorAll('.title')[0].innerHTML; else title = 'no title';
+      if(angebot[i].querySelectorAll('.address')[0].innerHTML) address = angebot[i].querySelectorAll('.address')[0].innerHTML; else address = "no address";
+      //console.log(angebot[i].querySelectorAll('.title')[0].innerHTML + " ... title");
+
+
+      links += "<h2>" + title + "</h2><p>"  + anz + " Wohnungen:</br >" + "<a href='https://www.wohnen.at" + angebot[i].href + "'>" + address + "</a></p></br >";
     }
   }
   return links;
