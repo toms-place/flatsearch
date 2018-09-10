@@ -131,16 +131,16 @@ function getLinks(notModified, modified, angebot) {
   for (let i = 0; i < notModified.length; i++) {
     if (notModified[i] < modified[i] && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0 || modified.length == 0 && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0) {
       var anz = 0;
-      var title = "";
-      var address = "";
+      var anzText = '';
+      var title = '';
+      var address = '';
 
       if(modified [i]) anz = modified[i]; else anz = notModified[i];
       if(angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) title = angebot[i].querySelectorAll('.title')[0].innerHTML; else title = 'no title';
       if(angebot[i].querySelectorAll('.address')[0].innerHTML) address = angebot[i].querySelectorAll('.address')[0].innerHTML; else address = "no address";
-      //console.log(angebot[i].querySelectorAll('.title')[0].innerHTML + " ... title");
+      if(anz < 1) anzText = 'Wohnung:'; else anzText = 'Wohnungen:';
 
-
-      links += "<h2>" + title + "</h2><p>"  + anz + " Wohnungen:</br >" + "<a href='https://www.wohnen.at" + angebot[i].href + "'>" + address + "</a></p></br >";
+      links += "<h2>" + title + "</h2><p>"  + anz + anzText + "</br >" + "<a href='https://www.wohnen.at" + angebot[i].href + "'>" + address + "</a></p></br >";
     }
   }
   return links;
