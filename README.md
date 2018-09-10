@@ -1,6 +1,6 @@
-# wohnen-crawl
+# wohnen-crawler
 
-- crawls the website www.wohnen.at for new appartments
+- crawls a website for new appartments
 
 # requirements
 - nodejs - [download here](https://nodejs.org/en/download/)
