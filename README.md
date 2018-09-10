@@ -1,6 +1,6 @@
 # wohnen-crawler
 
-- crawls a website for new appartments
+- crawls a website for new apartments
 
 # requirements
 - nodejs - [download here](https://nodejs.org/en/download/)
