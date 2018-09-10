@@ -76,7 +76,7 @@ function checkIfNewApartments() {
 
         //TODO see which element is different and do register for
         sendNotification(getLinks(notModified, modified, angebot));
-        console.log(NotModified);
+        console.log(notModified);
         console.log(modified);
 
         for (let i = 0; i < angebot.length; i++) {
