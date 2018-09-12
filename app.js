@@ -1,13 +1,10 @@
-//sender gmail authentification & notification recipient
-var auth = {
-  user: '',
-  pass: ''
-};
-var sendNotifcationTo = '';
+var myAuth = require('./auth');
+
+var auth = myAuth.auth;
+var sendNotifcationTo = myAuth.sendNotifcationTo;
 
 
-
-
+var timeout = 10000;
 
 const request = require('request');
 const jsdom = require('jsdom');
@@ -18,17 +15,19 @@ var isEqual = require('lodash.isequal');
 var nodemailer = require('nodemailer');
 
 //holds the two states of the checked Apartments
-var notModified = [];
-var modified = [];
+var notModified = {};
+var modified = {};
 
 //changes to false after first boot
 var startBool = true;
 
-checkIfNewApartments()
+checkIfNewApartments();
 
+// https://www.wohnen.at/angebot/unser-wohnungsangebot/
+// http://127.0.0.1:8080/
 function checkIfNewApartments() {
   var options = {
-    'url': 'https://www.wohnen.at/angebot/unser-wohnungsangebot/'
+    'url': 'http://127.0.0.1:8080/'
   };
   request(
     options,
@@ -43,60 +42,98 @@ function checkIfNewApartments() {
       if (startBool == true) {
         console.log('> now crawling the website every 5 minutes');
 
-        for (let i = 0; i < angebot.length; i++) {
-          notModified[i] = parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML);
-        }
-
-        sendNotification(getLinks(notModified, modified, angebot));
-        for (let i = 0; i < angebot.length; i++) {
-          modified[i] = parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML);
-        }
-
+        modifyObject(angebot, 1);
+        //sendNotification(getLinks(notModified, modified, angebot));
+        modifyObject(angebot, 2);
         startBool = false;
         restartCrawl();
         return;
-      }
-
-      if (isEqual(notModified, modified)) {
-
-        for (let i = 0; i < angebot.length; i++) {
-          modified[i] = parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML);
-        }
-
+      } else if (isEqual(notModified, modified)) {
+        console.log('isEqual');
+        modifyObject(angebot, 2);
         if (!isEqual(notModified, modified)) {
-
           console.log(' ');
           console.log('modified');
           console.log('do something here!!')
           console.log(' ');
 
-          //TODO see which element is different and do register for
-          sendNotification(getLinks(notModified, modified, angebot));
-          console.log('isNotEqu notM', notModified);
-          console.log('isNotEqu mod', modified);
+          console.log(compare(notModified, modified));
 
-          for (let i = 0; i < angebot.length; i++) {
-            notModified[i] = parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML);
-            modified[i] = parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML);
-          }
+          //TODO see which element is different and do register for
+          //sendNotification(getLinks(notModified, modified, angebot));
+          modifyObject(angebot);
           restartCrawl();
           return;
         } else {
-
           restartCrawl();
           return;
-
         }
+      } else {
+        restartCrawl();
+        return;
       }
     }
   );
 }
 
 function restartCrawl() {
+  console.log('timout started');
+  //console.log(notModified);
+  //console.log(modified);
   setTimeout(function () {
     checkIfNewApartments();
-  }, 300000);
+  }, timeout);
   return;
+}
+
+/** Modifies the init objects, which then will be compared
+ * 
+ * @param {JSDOM} angebot //.querySelectorAll('.unstyled')
+ * @param {INTEGER} whatToModify //1=noModified 2=modified else=both
+ */
+function modifyObject(angebot, whatToModify) {
+  let titleCount = 1;
+  for (let i = 0; i < angebot.length; i++) {
+    let title = '';
+    let address = '';
+    if (angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) {
+      title = trim(angebot[i].querySelectorAll('.title')[0].innerHTML);
+    } else {
+      title = 'no title ' + titleCount;
+      titleCount++;
+    }
+    if (angebot[i].querySelectorAll('.address')[0].innerHTML) {
+      address =
+        trim(angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[0].innerHTML) +
+        ', ' + trim(angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[1].innerHTML);
+    } else {
+      address = 'no address';
+    }
+    if (whatToModify == 1) {
+      notModified[title] = {
+        apartments: parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML),
+        address: address,
+        href: angebot[i].href
+      };
+    } else if (whatToModify == 2) {
+      modified[title] = {
+        apartments: parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML),
+        address: address,
+        href: angebot[i].href
+      };
+    } else {
+      notModified[title] = {
+        apartments: parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML),
+        address: address,
+        href: angebot[i].href
+      };
+      modified[title] = {
+        apartments: parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML),
+        address: address,
+        href: angebot[i].href
+      };
+    }
+  }
 }
 
 function sendNotification(links) {
@@ -129,55 +166,74 @@ function sendNotification(links) {
  * @param {*} angebot
  * @returns
  */
+
+/*
 function getLinks(notModified, modified, angebot) {
   var links = '';
   for (let i = 0; i < notModified.length; i++) {
-    if (notModified[i] < modified[i] && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0 || modified.length == 0 && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0) {
+    if () {
       var anz = 0;
       var anzText = '';
-      var title = '';
-      var address = '';
       if (modified[i] >= 0) anz = modified[i];
       else anz = notModified[i];
-      if (angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) title = angebot[i].querySelectorAll('.title')[0].innerHTML;
-      else title = 'no title';
-      if (angebot[i].querySelectorAll('.address')[0].innerHTML) address = angebot[i].querySelectorAll('.address')[0].innerHTML;
-      else address = "no address";
       if (anz == 1) anzText = 'Wohnung';
       else anzText = 'Wohnungen';
 
       links += "<h1>Neue Wohnungen:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
-    } else if (notModified[i] > modified[i] && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) > 0) {
-      var anz = 0;
-      var anzText = '';
-      var title = '';
-      var address = '';
-      if (modified[i] >= 0) anz = modified[i];
-      else anz = notModified[i];
-      if (angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) title = angebot[i].querySelectorAll('.title')[0].innerHTML;
-      else title = 'no title';
-      if (angebot[i].querySelectorAll('.address')[0].innerHTML) address = angebot[i].querySelectorAll('.address')[0].innerHTML;
-      else address = "no address";
-      if (anz == 1) anzText = 'Wohnung';
-      else anzText = 'Wohnungen';
+    } else if () {
+      
 
       links += "<h1>Weniger Wohnungen:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
-    } else if (notModified[i] > modified[i] && parseInt(angebot[i].querySelectorAll('.large-font')[0].innerHTML) == 0) {
-      var anz = 0;
-      var anzText = '';
-      var title = '';
-      var address = '';
-      if (modified[i] >= 0) anz = modified[i];
-      else anz = notModified[i];
-      if (angebot[i].querySelectorAll('.title')[0].innerHTML.replace(/\s/g, '').length) title = angebot[i].querySelectorAll('.title')[0].innerHTML;
-      else title = 'no title';
-      if (angebot[i].querySelectorAll('.address')[0].innerHTML) address = angebot[i].querySelectorAll('.address')[0].innerHTML;
-      else address = "no address";
-      if (anz == 1) anzText = 'Wohnung';
-      else anzText = 'Wohnungen';
+    } else if () {
+      
 
       links += "<h1>Keine Wohnungen mehr:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
     }
   }
   return links;
-};
+};*/
+
+function trim(str) {
+  return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
+function compare(notM, mod) {
+
+  let diff = {};
+
+  var keysNotMod = Object.keys(notM),
+    lenNotMod = keysNotMod.length,
+    i = 0,
+    propNotMod,
+    valueNotMod;
+  var keysMod = Object.keys(mod),
+    lenMod = keysMod.length,
+    y = 0,
+    propMod,
+    valueMod;
+
+  while (i < lenNotMod) {
+    while (y < lenMod) {
+
+      propNotMod = keysNotMod[i];
+      valueNotMod = notM[propNotMod];
+      propMod = keysMod[y];
+      valueMod = mod[propMod];
+
+      if (valueNotMod.apartments !== valueMod.apartments) {
+        diff[propMod] = valueMod;
+      } else {
+        diff[propMod] = 'noChange';
+      }
+
+
+      i += 1;
+      y += 1;
+    }
+  }
+
+
+
+  return diff;
+
+}
