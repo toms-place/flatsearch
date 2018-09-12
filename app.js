@@ -1,23 +1,17 @@
 var myAuth = require('./auth');
-
 var auth = myAuth.auth;
 var sendNotifcationTo = myAuth.sendNotifcationTo;
+var timeout = 300000;
 
-
-var timeout = 10000;
-
+//libs
 const request = require('request');
-const jsdom = require('jsdom');
-const {
-  JSDOM
-} = jsdom;
+const {JSDOM} = require('jsdom');
 var isEqual = require('lodash.isequal');
 var nodemailer = require('nodemailer');
 
 //holds the two states of the checked Apartments
 var notModified = {};
 var modified = {};
-
 //changes to false after first boot
 var startBool = true;
 
@@ -27,7 +21,7 @@ checkIfNewApartments();
 // http://127.0.0.1:8080/
 function checkIfNewApartments() {
   var options = {
-    'url': 'http://127.0.0.1:8080/'
+    'url': 'https://www.wohnen.at/angebot/unser-wohnungsangebot/'
   };
   request(
     options,
@@ -40,28 +34,28 @@ function checkIfNewApartments() {
       var angebot = dom.window.document.querySelectorAll('.unstyled');
 
       if (startBool == true) {
-        console.log('> now crawling the website every 5 minutes');
 
-        modifyObject(angebot, 1);
-        //sendNotification(getLinks(notModified, modified, angebot));
-        modifyObject(angebot, 2);
+        console.log('> start: now crawling the website every 5 minutes');
+        modifyInitObjects(angebot);
         startBool = false;
         restartCrawl();
         return;
-      } else if (isEqual(notModified, modified)) {
-        console.log('isEqual');
-        modifyObject(angebot, 2);
+
+      } else if (startBool == false && isEqual(notModified, modified)) {
+
+        //console.log('> isEqual');
+        modifyInitObjects(angebot, 2);
+
         if (!isEqual(notModified, modified)) {
-          console.log(' ');
-          console.log('modified');
-          console.log('do something here!!')
-          console.log(' ');
 
-          console.log(compare(notModified, modified));
+          console.log('> modified');
+          console.log(getChangedApartments(notModified, modified));
 
-          //TODO see which element is different and do register for
-          //sendNotification(getLinks(notModified, modified, angebot));
-          modifyObject(angebot);
+          //TODO register for getChangedApartments(notModified, modified)
+          sendNotification(getHtml(getChangedApartments(notModified, modified)));
+
+
+          modifyInitObjects(angebot);
           restartCrawl();
           return;
         } else {
@@ -77,9 +71,6 @@ function checkIfNewApartments() {
 }
 
 function restartCrawl() {
-  console.log('timout started');
-  //console.log(notModified);
-  //console.log(modified);
   setTimeout(function () {
     checkIfNewApartments();
   }, timeout);
@@ -89,9 +80,9 @@ function restartCrawl() {
 /** Modifies the init objects, which then will be compared
  * 
  * @param {JSDOM} angebot //.querySelectorAll('.unstyled')
- * @param {INTEGER} whatToModify //1=noModified 2=modified else=both
+ * @param {INTEGER} whatToModify //1=notModified 2=modified else=both
  */
-function modifyObject(angebot, whatToModify) {
+function modifyInitObjects(angebot, whatToModify) {
   let titleCount = 1;
   for (let i = 0; i < angebot.length; i++) {
     let title = '';
@@ -136,7 +127,12 @@ function modifyObject(angebot, whatToModify) {
   }
 }
 
-function sendNotification(links) {
+/** 
+ *
+ *
+ * @param {*} html
+ */
+function sendNotification(html) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: auth
@@ -146,7 +142,7 @@ function sendNotification(links) {
     from: auth.user,
     to: sendNotifcationTo,
     subject: 'NEUES LEBEN - neue Wohnung gefunden!',
-    html: links
+    html: html
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -158,55 +154,32 @@ function sendNotification(links) {
   });
 }
 
-/**
- * Links to register for appartment
+/** Trims whitespace
  *
- * @param {*} notModified
- * @param {*} modified
- * @param {*} angebot
+ *
+ * @param {*} str
  * @returns
  */
-
-/*
-function getLinks(notModified, modified, angebot) {
-  var links = '';
-  for (let i = 0; i < notModified.length; i++) {
-    if () {
-      var anz = 0;
-      var anzText = '';
-      if (modified[i] >= 0) anz = modified[i];
-      else anz = notModified[i];
-      if (anz == 1) anzText = 'Wohnung';
-      else anzText = 'Wohnungen';
-
-      links += "<h1>Neue Wohnungen:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
-    } else if () {
-      
-
-      links += "<h1>Weniger Wohnungen:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
-    } else if () {
-      
-
-      links += "<h1>Keine Wohnungen mehr:</h1><h2>" + title + "</h2><p>" + address + "</p><p><a href='https://www.wohnen.at" + angebot[i].href + "'>" + anz + " " + anzText + "</a></p></br >";
-    }
-  }
-  return links;
-};*/
-
 function trim(str) {
   return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
-function compare(notM, mod) {
+/** returns an object of the Apartments which have changed
+ *
+ * @param {Object} notM
+ * @param {Object} mod
+ * @returns {Object} 
+ */
+function getChangedApartments(notM, mod) {
 
-  let diff = {};
+  let ChangedApartments = {};
 
-  var keysNotMod = Object.keys(notM),
+  let keysNotMod = Object.keys(notM),
     lenNotMod = keysNotMod.length,
     i = 0,
     propNotMod,
     valueNotMod;
-  var keysMod = Object.keys(mod),
+  let keysMod = Object.keys(mod),
     lenMod = keysMod.length,
     y = 0,
     propMod,
@@ -220,20 +193,43 @@ function compare(notM, mod) {
       propMod = keysMod[y];
       valueMod = mod[propMod];
 
-      if (valueNotMod.apartments !== valueMod.apartments) {
-        diff[propMod] = valueMod;
+      if (valueNotMod) {
+        if (valueNotMod.apartments !== valueMod.apartments) {
+          let newVal = valueMod;
+          newVal.apartmentsBefore = valueNotMod.apartments;
+          ChangedApartments[propMod] = newVal;
+        }
       } else {
-        diff[propMod] = 'noChange';
+        let newVal = valueMod;
+        newVal.apartmentsBefore = 0;
+        ChangedApartments[propMod] = newVal;
       }
-
 
       i += 1;
       y += 1;
     }
   }
-
-
-
-  return diff;
-
+  return ChangedApartments;
 }
+
+
+
+function getHtml(obj) {
+  let html = '<h1>Neue Wohnungen:</h1>';
+
+  Object.entries(obj).forEach(
+    ([key, value]) => {
+
+      let nowText = '';
+      let beforeText = '';
+      if (value.apartments == 1) nowText = ' Wohnung ';
+      else nowText = ' Wohnungen ';
+      if (value.apartmentsBefore == 1) beforeText = ' Wohnung ';
+      else beforeText = ' Wohnungen ';
+
+      html += "<h2>" + key + "</h2><p>" + value.address + "</p><p><a href='https://www.wohnen.at" + value.href + "'>" + value.apartments + nowText + "jetzt / " + value.apartmentsBefore + beforeText + "davor</a></p></br >";
+    }
+  );
+
+  return html;
+};
