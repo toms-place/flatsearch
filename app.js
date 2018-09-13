@@ -1,9 +1,8 @@
-//sender gmail authentification & notification recipient
+//sender gmail authentification
 var auth = {
   user: '',
   pass: ''
 };
-var sendNotifcationTo = '';
 var timeout = 300000;
 
 //libs
@@ -55,7 +54,9 @@ function checkIfNewApartments() {
           console.log(getChangedApartments(notModified, modified));
 
           //TODO register for getChangedApartments(notModified, modified)
-          sendNotification(getHtml(getChangedApartments(notModified, modified)));
+          let html = getHtml(getChangedApartments(notModified, modified));
+          sendNotification(html, 'kontakt@weber-thomas.at');
+          sendNotification(html, 'lmoshuber@outlook.com');
 
 
           modifyInitObjects(angebot);
@@ -135,7 +136,7 @@ function modifyInitObjects(angebot, whatToModify) {
  *
  * @param {*} html
  */
-function sendNotification(html) {
+function sendNotification(html, sendNotifcationTo) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: auth
