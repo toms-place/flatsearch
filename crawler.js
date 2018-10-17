@@ -11,6 +11,7 @@ class Crawler {
   startCrawl() {
     var self = this;
 
+    //timout for testing
     setTimeout(() => {
       console.log('job started! repeating in ' + self.cronTime + ' milliseconds');
       self.crawl().then(() => {
@@ -21,6 +22,7 @@ class Crawler {
     }, self.cronTime);
 
     /*
+    //don't forget the *&/ for the cronjob per minute
         const job = new CronJob('0 ' + self.cronTime + ' 9-20 * * *', function () {
           console.log('Every ' + self.cronTime + ' minutes');
           self.crawl().then(() => {
@@ -30,9 +32,11 @@ class Crawler {
         });
         job.addCallback();
         job.start();
-        return job;*/
+        return job;
+    */
 
   }
+  //TODO implement email notification
   alert(emails) {
     if (this.changedFlats.length > 0) {
       console.log(emails);

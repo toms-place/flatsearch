@@ -1,3 +1,9 @@
+/*
+* TODO
+*
+* expand flat object
+*/
+
 const Crawler = require('./crawler');
 const rp = require("request-promise");
 const {
