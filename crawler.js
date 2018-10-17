@@ -15,32 +15,32 @@ class Crawler {
   crawl() {}
   startCrawl() {
     var self = this;
-    
-/*
-    //timout for testing
-    setTimeout(() => {
-      console.log('job started! repeating in ' + self.cronTime + ' milliseconds');
-      self.crawl().then(() => {
-        self.compare(() => {
-          self.alert();
-        });
-      });
-      self.startCrawl();
-    }, self.cronTime);
-  */
-    
-    //don't forget the *&/ for the cronjob per minute
-        const job = new CronJob('0 */' + self.cronTime + ' 9-20 * * *', function () {
-          console.log('Every ' + self.cronTime + ' minutes');
+
+    /*
+        //timout for testing
+        setTimeout(() => {
+          console.log('job started! repeating in ' + self.cronTime + ' milliseconds');
           self.crawl().then(() => {
-            self.compare();
-            self.alert("email");
+            self.compare(() => {
+              self.alert();
+            });
           });
-        });
-        job.addCallback();
-        job.start();
-        return job;
-    
+          self.startCrawl();
+        }, self.cronTime);
+      */
+
+    //don't forget the *&/ for the cronjob per minute
+    const job = new CronJob('0 */' + self.cronTime + ' 9-20 * * *', function () {
+      console.log('Every ' + self.cronTime + ' minutes');
+      self.crawl().then(() => {
+        self.compare();
+        self.alert("email");
+      });
+    });
+    job.addCallback();
+    job.start();
+    return job;
+
 
   }
   //TODO implement email notification
@@ -103,7 +103,8 @@ function getHtml(arr) {
 
   for (let i of arr) {
     let title;
-    if (i.title) title = i.title; else title = i.address;
+    if (i.title) title = i.title;
+    else title = i.address;
     html +=
       `<h2><a href='${i.link}'>${title}</a></h2>` +
       `<p>${i.amount} Wohnung/en<br />` +
@@ -119,20 +120,23 @@ function sendNotification(html, self) {
     auth: auth
   });
 
-  var mailOptions = {
-    from: auth.user,
-    to: sendNotifcationTo,
-    subject: `${self.url} - neue Wohnung gefunden!`,
-    html: html
-  };
+  for (var i = 0; i < sendNotifcationTo.length; i++) {
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+    var mailOptions = {
+      from: auth.user,
+      to: sendNotifcationTo[i],
+      subject: `${self.url} - neue Wohnung gefunden!`,
+      html: html
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+  }
 
 }
 
