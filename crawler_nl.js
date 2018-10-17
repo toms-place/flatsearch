@@ -24,7 +24,8 @@ class Crawler_nl extends Crawler {
 
     return rp(options).then((res, err) => {
       if (err) {
-        return console.error('error requesting header:', err);
+        let date = new Date();
+        return console.error('error requesting header:', date, err);
       } else {
         var dom = new JSDOM(res.body);
         var angebot = dom.window.document.querySelectorAll('.unstyled');
@@ -34,8 +35,8 @@ class Crawler_nl extends Crawler {
             title: angebot[i].querySelectorAll('.title')[0].innerHTML.trim(),
             district: angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[0].innerHTML.split(" ")[0],
             city: angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[0].innerHTML.split(" ")[1],
-            adress: angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[1].innerHTML,
-            link: angebot[i].href,
+            address: angebot[i].querySelectorAll('.address')[0].querySelectorAll('span')[1].innerHTML,
+            link: 'https://www.wohnen.at/' + angebot[i].href,
             amount: angebot[i].querySelectorAll('.large-font')[0].innerHTML,
             status: angebot[i].querySelectorAll('.tile-ribbon')[0].innerHTML.trim()
           }

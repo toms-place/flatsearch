@@ -45,17 +45,19 @@ class Crawler_ebg extends Crawler {
         let status;
 
         for (let i = 0; i < angebot.length; i++) {
-          link = angebot[i].getAttribute("onclick").split('\'')[1];
+          link = 'http://www.ebg-wohnen.at/' + angebot[i].getAttribute("onclick").split('\'')[1];
           if (angebot[i].querySelectorAll('.address')[0] && angebot[i].querySelectorAll('.number')[0]) {
             id = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[1];
             address = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[1];
             district = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[0];
             city = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[1];
+            title = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[1];
             amount = 1;
             rooms = parseInt(angebot[i].querySelectorAll('.number')[0].innerHTML);
           } else {
             id = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[1];
             address = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[1];
+            title = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[1];
             district = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[0];
             city = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[1];
             amount = parseInt(angebot[i].querySelectorAll('.numberOfFlats')[0].innerHTML);;

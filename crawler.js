@@ -1,3 +1,8 @@
+var myAuth = require('./auth');
+var auth = myAuth.auth;
+var sendNotifcationTo = myAuth.sendNotifcationTo;
+var nodemailer = require('nodemailer');
+
 class Crawler {
   constructor(url, cronTime, initOut) {
     this.url = url
@@ -10,20 +15,22 @@ class Crawler {
   crawl() {}
   startCrawl() {
     var self = this;
-
+    
+/*
     //timout for testing
     setTimeout(() => {
       console.log('job started! repeating in ' + self.cronTime + ' milliseconds');
       self.crawl().then(() => {
-        self.compare();
-        self.alert("me");
+        self.compare(() => {
+          self.alert();
+        });
       });
       self.startCrawl();
     }, self.cronTime);
-
-    /*
+  */
+    
     //don't forget the *&/ for the cronjob per minute
-        const job = new CronJob('0 ' + self.cronTime + ' 9-20 * * *', function () {
+        const job = new CronJob('0 */' + self.cronTime + ' 9-20 * * *', function () {
           console.log('Every ' + self.cronTime + ' minutes');
           self.crawl().then(() => {
             self.compare();
@@ -33,19 +40,16 @@ class Crawler {
         job.addCallback();
         job.start();
         return job;
-    */
+    
 
   }
   //TODO implement email notification
-  alert(emails) {
+  alert() {
     if (this.changedFlats.length > 0) {
-      console.log(emails);
-      for (var i = 0; i < this.changedFlats.length; i++) {
-        console.log(this.changedFlats[i]);
-      }
+      sendNotification(getHtml(this.changedFlats), this);
     }
   }
-  compare() {
+  compare(callback) {
     var self = this;
 
     //clear changedFlats on init
@@ -89,8 +93,47 @@ class Crawler {
     }
 
     self.tempFlats = Array.from(self.flats);
+    callback();
 
   }
+}
+
+function getHtml(arr) {
+  let html = '<h1>Neue Wohnungen:</h1>';
+
+  for (let i of arr) {
+    let title;
+    if (i.title) title = i.title; else title = i.address;
+    html +=
+      `<h2><a href='${i.link}'>${title}</a></h2>` +
+      `<p>${i.amount} Wohnung/en<br />` +
+      `in ${i.district} ${i.city}, ${i.address}<p><br />`
+  }
+
+  return html;
+};
+
+function sendNotification(html, self) {
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: auth
+  });
+
+  var mailOptions = {
+    from: auth.user,
+    to: sendNotifcationTo,
+    subject: `${self.url} - neue Wohnung gefunden!`,
+    html: html
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
 }
 
 module.exports = Crawler;

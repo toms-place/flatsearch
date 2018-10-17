@@ -16,8 +16,8 @@ if (process.env.PORT) {
 }
 
 
-const neuesleben = new Crawler_nl("http://" + HOST + PORT, 10000, true);
+const neuesleben = new Crawler_nl("http://" + HOST + PORT, 5, true);
 neuesleben.startCrawl();
 
-const ebg = new Crawler_ebg('http://www.ebg-wohnen.at/Suche.aspx', 10000, true);
+const ebg = new Crawler_ebg('http://www.ebg-wohnen.at/Suche.aspx', 5, true);
 ebg.startCrawl();
