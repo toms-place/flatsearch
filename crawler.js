@@ -2,6 +2,7 @@ var myAuth = require('./auth');
 var auth = myAuth.auth;
 var sendNotifcationTo = myAuth.sendNotifcationTo;
 var nodemailer = require('nodemailer');
+var CronJob = require('cron').CronJob;
 
 class Crawler {
   constructor(url, cronTime, initOut) {
