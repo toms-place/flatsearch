@@ -16,7 +16,7 @@ if (process.env.PORT) {
 }
 
 let nlURL = "http://" + HOST + PORT;
-const neuesleben = new Crawler_nl(nlURL, '0 */1 9-17 * * *', true);
+const neuesleben = new Crawler_nl(nlURL, '0 */5 9-17 * * *', true);
 neuesleben.startCrawl();
 
 let ebgURL = 'http://www.ebg-wohnen.at/Suche.aspx';

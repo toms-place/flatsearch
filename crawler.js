@@ -33,11 +33,16 @@ class Crawler {
     //don't forget the *&/ for the cronjob per minute
     const job = new CronJob(self.cronTime, function () {
       let d = new Date();
-      console.log(`job started for ${self.url} at ${d}`);
+      console.log(`job done for ${self.url}`);
+      console.log(`at ${d}`);
       self.crawl().then(() => {
         self.compare(() => {
-          self.alert("email");
-          console.log(`job done for ${self.url} at ${d}`);
+          self.alert((res) => {
+            let dN = new Date();
+            console.log(`email sent to ${res}`);
+            console.log(`job done for ${self.url}`);
+            console.log(`at ${dN}`);
+          });
         });
       });
     });
@@ -114,7 +119,7 @@ function getHtml(arr) {
   return html;
 };
 
-function sendNotification(html, self) {
+function sendNotification(html, self, callback) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: auth
@@ -133,7 +138,7 @@ function sendNotification(html, self) {
       if (error) {
         console.log(error);
       } else {
-        console.log('Email sent: ' + info.response);
+        callback(info.response);
       }
     });
   }
