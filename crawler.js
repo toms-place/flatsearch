@@ -33,13 +33,12 @@ class Crawler {
     //don't forget the *&/ for the cronjob per minute
     const job = new CronJob(self.cronTime, function () {
       let d = new Date();
-      console.log(`job done for ${self.url}`);
+      console.log(`job started for ${self.url}`);
       console.log(`at ${d}`);
       self.crawl().then(() => {
         self.compare(() => {
-          self.alert((res) => {
+          self.alert(() => {
             let dN = new Date();
-            console.log(`email sent to ${res}`);
             console.log(`job done for ${self.url}`);
             console.log(`at ${dN}`);
           });
@@ -47,12 +46,6 @@ class Crawler {
       });
     });
     job.start();
-  }
-  //TODO implement email notification
-  alert() {
-    if (this.changedFlats.length > 0) {
-      sendNotification(getHtml(this.changedFlats), this);
-    }
   }
   compare(callback) {
     var self = this;
@@ -96,10 +89,35 @@ class Crawler {
         }
       }
     }
-
     self.tempFlats = Array.from(self.flats);
     callback();
+  }
+  //TODO implement email notification
+  alert(callback) {
+    if (this.changedFlats.length > 0) {
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: auth
+      });
 
+      var mailOptions = {
+        from: auth.user,
+        to: sendNotifcationTo,
+        subject: `${this.url} - neue Wohnung gefunden!`,
+        html: getHtml(this.changedFlats)
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          for (let a of info.accepted) {
+            console.log(`Email sent to: ${a}`);
+          }
+        }
+        callback();
+      });
+    } else callback();
   }
 }
 
@@ -118,31 +136,5 @@ function getHtml(arr) {
 
   return html;
 };
-
-function sendNotification(html, self, callback) {
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: auth
-  });
-
-  for (var i = 0; i < sendNotifcationTo.length; i++) {
-
-    var mailOptions = {
-      from: auth.user,
-      to: sendNotifcationTo[i],
-      subject: `${self.url} - neue Wohnung gefunden!`,
-      html: html
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        callback(info.response);
-      }
-    });
-  }
-
-}
 
 module.exports = Crawler;
