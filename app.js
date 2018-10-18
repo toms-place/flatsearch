@@ -15,9 +15,10 @@ if (process.env.PORT) {
   PORT = ":" + process.env.PORT
 }
 
-
-const neuesleben = new Crawler_nl("http://" + HOST + PORT, 5, true);
+let nlURL = "http://" + HOST + PORT;
+const neuesleben = new Crawler_nl(nlURL, '0 */1 9-17 * * *', true);
 neuesleben.startCrawl();
 
-const ebg = new Crawler_ebg('http://www.ebg-wohnen.at/Suche.aspx', 5, true);
+let ebgURL = 'http://www.ebg-wohnen.at/Suche.aspx';
+const ebg = new Crawler_ebg(ebgURL, '0 */5 9-17 * * *', true);
 ebg.startCrawl();

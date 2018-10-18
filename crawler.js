@@ -33,11 +33,11 @@ class Crawler {
     //don't forget the *&/ for the cronjob per minute
     const job = new CronJob(self.cronTime, function () {
       let d = new Date();
-      console.log(`job started for ${this.url} at ${d}`);
+      console.log(`job started for ${self.url} at ${d}`);
       self.crawl().then(() => {
         self.compare(() => {
           self.alert("email");
-          console.log(`job done for ${this.url} at ${d}`);
+          console.log(`job done for ${self.url} at ${d}`);
         });
       });
     });
