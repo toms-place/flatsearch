@@ -34,15 +34,12 @@ class Crawler {
     const job = new CronJob('0 */' + self.cronTime + ' 9-20 * * *', function () {
       console.log('Every ' + self.cronTime + ' minutes');
       self.crawl().then(() => {
-        self.compare();
-        self.alert("email");
+        self.compare(() => {
+          self.alert("email");
+        });
       });
     });
-    job.addCallback();
     job.start();
-    return job;
-
-
   }
   //TODO implement email notification
   alert() {
