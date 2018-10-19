@@ -1,24 +1,9 @@
-const server = require('./www');
-const Crawler_ebg = require('./crawler_ebg');
-const Crawler_nl = require('./crawler_nl');
+const server = require('./tests/www');
+const Crawler = require('./lib/crawler');
 
-
-/* ENV setup */
-let PORT = "";
-let HOST = process.env.HOST;
-
-if (process.env.PORT) {
-  PORT = process.env.PORT;
-  server.listen(PORT, HOST, () => {
-    console.log(`Server running at http://${HOST}${PORT}/`);
-  });
-  PORT = ":" + process.env.PORT
+if (process.env.NODE_ENV == 'dev') {
+  server.listen(process.env.PORT || 8080);
 }
 
-let nlURL = "http://" + HOST + PORT;
-const neuesleben = new Crawler_nl(nlURL, '0 */5 9-17 * * *', true);
-neuesleben.startCrawl();
-
-let ebgURL = 'http://www.ebg-wohnen.at/Suche.aspx';
-const ebg = new Crawler_ebg(ebgURL, '0 */5 9-17 * * *', true);
-ebg.startCrawl();
+const crawler = new Crawler('0 */5 9-17 * * *');
+crawler.startJob();

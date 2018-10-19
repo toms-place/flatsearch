@@ -1,4 +1,4 @@
-const Crawler = require('./crawler');
+const Crawler = require('./lib/crawler');
 const rp = require("request-promise");
 const {
   JSDOM

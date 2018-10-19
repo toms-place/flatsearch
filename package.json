@@ -4,8 +4,8 @@
   "description": "crawl wohnen.at & ebg and register for new appartments",
   "main": "app.js",
   "scripts": {
-    "start": "env HOST='www.wohnen.at/angebot/unser-wohnungsangebot/' node app.js",
-    "test": "env HOST=127.0.0.1 PORT=8000 node www.js & env HOST=127.0.0.1 PORT=8000 node app.js"
+    "start": "env NODE_ENV=prod node app.js",
+    "test": "env NODE_ENV=dev node app.js"
   },
   "keywords": [],
   "author": "Thomas Weber",
