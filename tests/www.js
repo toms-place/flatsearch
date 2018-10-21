@@ -21,6 +21,34 @@ const server = http.createServer((req, res) => {
         res.end();
       });
       break;
+    case '/szb':
+      fs.readFile('./tests/szb.html', (err, data) => {
+        if (err) throw err;
+        res.write(data);
+        res.end();
+      });
+      break;
+    case '/su':
+      fs.readFile('./tests/su.html', (err, data) => {
+        if (err) throw err;
+        res.write(data);
+        res.end();
+      });
+      break;
+      case '/egw':
+        fs.readFile('./tests/egw.html', (err, data) => {
+          if (err) throw err;
+          res.write(data);
+          res.end();
+        });
+        break;
+        case '/frieden':
+          fs.readFile('./tests/frieden.html', (err, data) => {
+            if (err) throw err;
+            res.write(data);
+            res.end();
+          });
+          break;
     default:
       break;
   }
