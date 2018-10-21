@@ -1,0 +1,2870 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wohnungsangebot</title>
+    <link href="/DependencyHandler.axd?s=L0Nzcy9qcXVlcnktdWktY3VzdG9tLmNzczsvQ3NzL21hZ25pZmljLXBvcHVwLmNzczsvQ3NzL2ZvbnQuY3NzOy9Dc3MvbWFpbi5jc3M7L0Nzcy9JbWFnZUdhbGxlcnkvSW1hZ2VHYWxsZXJ5LmNzczsvQ3NzL3Byb2plY3Qtc2VhcmNoLmNzczs&amp;t=Css&amp;cdv=33" type="text/css" rel="stylesheet"/>
+
+
+    
+    <script type="text/javascript">
+        (function () {
+            var method;
+            var noop = function () { };
+            var methods = [
+                'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+                'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+                'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+                'timeStamp', 'trace', 'warn'
+            ];
+            var length = methods.length;
+            var console = (window.console = window.console || {});
+
+            while (length--) {
+                method = methods[length];
+
+                // Only stub undefined methods.
+                if (!console[method]) {
+                    console[method] = noop;
+                }
+            }
+        }());
+    </script>
+</head>
+<body>
+    <div id="pge">
+        <div id="hdr-bgr">
+            <div id="hdr">
+                <div id="hdr-cnt">
+                    <div id="lgo">
+                        <a href="/" tabindex="0">
+                            <img width="84" height="80" alt="Baugenossenschaft Frieden" src="/Css/images/Logo.gif">
+                        </a>
+                    </div>
+                    <ul class="nvg" id="hdr_nvg_1">
+                        <li>
+                                <a href="/anmelden/">Anmelden</a>
+                        </li>
+                        <li>
+                            <a href="/merkliste/">Meine Merkliste</a>
+                        </li>
+                        <li>
+                            <a href="/service/kontakt/">Kontakt</a>
+                        </li>
+                        <li>
+                            <label>Suche</label>
+                        </li>
+                        <li>
+                            <form method="GET" action="/suche/">
+                                <input type="text" name="s">
+                            </form>
+                        </li>
+                    </ul>
+                    
+
+
+
+
+
+
+
+    <ul class="nvg" id="hdr_nvg_2">
+            <li>
+
+                
+                    <a class="act" href="/wohnungsangebot/" class="ir" tabindex="0">Wohnungsangebot</a>
+            </li>
+            <li>
+
+                
+                    <a href="/service/" class="ir" tabindex="0">Service</a>                   
+            </li>
+            <li>
+
+                
+                    <a href="/aktuelles/" class="ir" tabindex="0">Aktuelles</a>                   
+            </li>
+            <li>
+
+                
+                    <a href="/referenzen/" class="ir" tabindex="0">Referenzen</a>                   
+            </li>
+            <li>
+
+                
+                    <a href="/oekologie/" class="ir" tabindex="0">&#214;kologie</a>                   
+            </li>
+            <li>
+
+                
+                    <a href="/unternehmen/" class="ir" tabindex="0">Unternehmen</a>                   
+            </li>
+        
+
+    </ul>   
+
+
+
+                    <a href="http://sauberreinzufrieden.frieden.at/" class="ir" id="btn-sauber_rein" tabindex="0">Sauber-Rein</a>
+                </div>
+            </div>
+        </div>
+        <div id="bdy">
+            <div id="bdy-cnt">
+                
+
+<div id="nav-cnt">
+    <div class="bcr">
+        <div>
+            
+
+
+    Pfad:
+    <a href="/">Home</a>&nbsp;|&nbsp;
+    <span>Wohnungsangebot</span>
+
+        </div>
+    </div>
+
+    <div id="lcl">
+
+	
+    
+    <!-- TEMPLATES -->
+<script type="text/html" id="map-img-template">
+	<img data-bind="attr: { src: ImageSrc }" class="map-img absolute" />
+</script>
+
+<script type="text/html" id="map-area-template">
+	<area data-bind="attr: { coords: Coords, title: Label, id: 'area' + Id },
+	click: $root.Select, event: { mouseover: $root.Toggle, mouseout: $root.Toggle }"
+		shape="poly" class="area" coords="1,2,3,4" />
+</script>
+
+<script type="text/html" id="sidebar-pill-template">
+	<!-- ko if: Selected -->
+	<div class="sidebar-pill">
+		
+		<span data-bind="	text: Label"></span>
+	</div>
+	<!-- /ko -->
+</script>
+<script type="text/html" id="map-pill-template">
+	<div class="map-pill">
+		<input type="checkbox" data-bind="checked: Selected, attr: { id: Id }" />
+		<span data-bind="	text: Label"></span>
+	</div>
+</script>
+
+<!-- TEMPLATES -->
+
+<div class="search-criteria" style="padding-left: 9px;">
+	<div id="divWsTop">
+		<div id="divWsBottom">
+<form action="/umbraco/Surface/ProjectSearch" id="search-form" method="post" onsubmit="submitSearchCriteriaToAnalytics();">				<div id="divWsBody">
+					<div class="Caption">Geben Sie bitte Ihre Filterkriterien an: </div>
+					<input type="hidden" id="selected-district-ids-helper"/>
+					<a href="#maps-container" class="open-popup-link" style="display: none;">Show inline popup</a>
+					<div style="position: relative;" id="map-app">
+						<input type="hidden" name="SelectedDistrictIds" id="selected-district-ids" data-bind="value: AllActiveDistrictIds">
+						<div class="sp_item map-controls">
+							<!-- MAPS POPUP -->
+							<div id="maps-container" class="maps-container mfp-hide">
+								<div class="header-btns">
+									<div class="close-btn-div" id="close-btn"></div>
+								</div>
+								<div style="clear: both;"></div>
+
+								<div id="" class="maps-inner-container ">
+									<div class="side-map-pills-wrapper">
+										<input type="checkbox" id="all-current-checked" data-bind="checked: HasActiveStateAllSelectedDistricts" />
+										Alle Bezirke 
+										<div class="side-map-pills" data-bind="template: { name: 'map-pill-template', foreach: ActiveStateDistricts }">
+										</div>
+									</div>
+									<input type="hidden" data-bind="value: activeState" />
+									<div id="map-o" class="map">
+										<div data-bind="template: { name: 'map-img-template', foreach: states }"></div>
+										<img src="/Css/Images/ProjectSearch/Map/oesterreich.png" usemap="#OMap" class="absolute map-img">
+										<map name="OMap" data-bind="template: { name: 'map-area-template', foreach: states }"></map>
+									</div>
+
+									<div id="map-s" class="map state-map">
+										
+										<div style="clear: both;"></div>
+										<div data-bind="template: { name: 'map-img-template', foreach: ActiveStateDistricts }"></div>
+										<img data-bind="attr: { src: ImageSrc }" usemap="#StateMap" class="absolute map-img">
+										<map name="StateMap" data-bind="template: { name: 'map-area-template', foreach: ActiveStateDistricts }"></map>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+
+								<div class="footer-btns">
+									<button id="back-btn">zurück zur österreichkarte</button>
+									<button id="select-btn" data-bind="click: Search">Auswahl anzeigen</button>
+								</div>
+							</div>
+							<!-- //MAPS POPUP -->
+							<h2>Regionenauswahl
+							</h2>
+							<div class="top-control" id="show-map">
+							</div>
+							<div class="control left" id="no-districts-only">
+							</div>
+							<div class="control right" id="t-districts-only">
+							</div>
+
+							<div style="clear: both"></div>
+						</div>
+						<div class="sidebar-pills" data-bind="template: { name: 'sidebar-pill-template', foreach: maps }"></div>
+					</div>
+					<div style="clear: both;"></div>
+
+					<div id="search-app">
+						<div class="sp_item">
+							<div>
+							    <h2>Baustruktur</h2>
+							</div>
+							<div>
+								<select data-bind="event: { change: Search}" id="SelectedLivingUnitType" name="SelectedLivingUnitType"><option selected="selected" value="0">Alle</option>
+<option value="17">Wohneinheit</option>
+<option value="18">Wohnung</option>
+<option value="19">Reihenhaus</option>
+<option value="20">Doppelhaus</option>
+</select>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+
+						<div class="sp_item">
+							<div>
+								<h2>Rechtsform</h2>
+							</div>
+							<div>
+								<select data-bind="event: { change: Search}" id="SelectedLegalForm" name="SelectedLegalForm"><option selected="selected" value="0">Alle</option>
+<option value="11">Miete</option>
+<option value="12">Eigentum</option>
+<option value="13">Miete mit Kaufoption</option>
+</select>
+							</div>
+						</div>
+
+						<div style="clear: both;"></div>
+						<div class="sp_item room-controls">
+							<div>
+								<h2>Zimmer</h2>
+							</div>
+							<div class="top-left control"
+								data-bind="css: { active: rooms()[0]() == true }, click: Activate.bind($data, 0)"></div>
+							<div class="top-right control"
+								data-bind="css: { active: rooms()[1]() == true }, click: Activate.bind($data, 1)"></div>
+							<div class="bottom-left control"
+								data-bind="css: { active: rooms()[2]() == true }, click: Activate.bind($data, 2)"></div>
+							<div class="bottom-right control"
+								data-bind="css: { active: rooms()[3]() == true }, click: Activate.bind($data, 3)"></div>
+							<input data-bind="checked: rooms()[0]()" data-val="true" data-val-required="Das Feld &quot;Rooms2&quot; ist erforderlich." id="rooms2-chx" name="Rooms2" type="checkbox" value="true" /><input name="Rooms2" type="hidden" value="false" />
+							<input data-bind="checked: rooms()[1]()" data-val="true" data-val-required="Das Feld &quot;Rooms3&quot; ist erforderlich." id="rooms3-chx" name="Rooms3" type="checkbox" value="true" /><input name="Rooms3" type="hidden" value="false" />
+							<input data-bind="checked: rooms()[2]()" data-val="true" data-val-required="Das Feld &quot;Rooms4&quot; ist erforderlich." id="rooms4-chx" name="Rooms4" type="checkbox" value="true" /><input name="Rooms4" type="hidden" value="false" />
+							<input data-bind="checked: rooms()[3]()" data-val="true" data-val-required="Das Feld &quot;RoomsSpecial&quot; ist erforderlich." id="roomsS-chx" name="RoomsSpecial" type="checkbox" value="true" /><input name="RoomsSpecial" type="hidden" value="false" />
+						</div>
+						<div style="clear: both;"></div>
+
+						<div style="margin-top: 17px;" class="sp_item">
+							<div>
+								<h2>Bauphase</h2>
+							</div>
+							<table width="100%" cellspacing="5">
+								<tbody>
+									<tr>
+										<td>
+											<span class="cl">Bezugsfertig</span>
+										</td>
+										<td>
+											<input data-bind="event: { change: Search}" data-val="true" data-val-required="Das Feld &quot;Available&quot; ist erforderlich." id="available-chx" name="Available" type="checkbox" value="true" /><input name="Available" type="hidden" value="false" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="cl">In Bau</span>
+										</td>
+										<td>
+											<input data-bind="event: { change: Search}" data-val="true" data-val-required="Das Feld &quot;InBau&quot; ist erforderlich." id="inbau-chx" name="InBau" type="checkbox" value="true" /><input name="InBau" type="hidden" value="false" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="cl">In Bauvorbereitung</span>
+										</td>
+										<td>
+											<input data-bind="event: { change: Search}" data-val="true" data-val-required="Das Feld &quot;InPlan&quot; ist erforderlich." id="inplan-chx" name="InPlan" type="checkbox" value="true" /><input name="InPlan" type="hidden" value="false" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div style="text-align: center;">
+						<div id="suchen_panel_info">
+							<div id="suchen_panel_info_ajax">
+								<span id="suchen_panel_info_ajax_text">&nbsp;Suche wird ausgeführt...</span>
+							</div>
+							<span style="color: #B3411B; font-weight: bolder;" id="ctl00_ctl06_suchen_zahl"></span>
+						</div>
+						<input type="image" src="../../../Css/Images/ProjectSearch/b_anzeigen.png" id="submit-search" name="submit-search" style="display: none"  >
+						<div style="clear: both;">
+						</div>
+					</div>
+				</div>
+</form>		</div>
+	</div>
+</div>
+
+
+
+
+	
+    <div class="offset-top">
+	<div id="lower-sidebar">
+	<div id="merk-box">
+		<h2 style="color: #b3411b;">Meine Merkliste</h2>
+			<p>Melden Sie sich bitte an, um die Wohnungen aus <a href="/merkliste/" style="text-decoration: underline; color: #b3411b;">Ihrer Merkliste</a> zu betrachten.</p>
+	</div>
+
+
+	<div id="interesse-box">
+		<h2 style="color: #b3411b;">Meine Interessensliste</h2>
+			<p>Melden Sie sich bitte an, um die Wohnungen aus <a href="/interessensliste/" style="text-decoration: underline; color: #b3411b;">Ihrer Interessensliste</a> zu betrachten.</p>
+	</div>
+
+
+		<ul class="nvg" id="nvg_2">
+			<li class="frs"><span id="icn-miete">Miete</span></li>
+			<li><span id="icn-kaufoption">Kaufoption</span></li>
+			<li><span id="icn-abstellplatz">Abstellplatz</span></li>
+			<li><span id="icn-garage">Garage</span></li>
+			<li><span id="icn-lift">Lift</span></li>
+			<li><span id="icn-garten">Garten</span></li>
+			<li><span id="icn-loggia">Loggia</span></li>
+			<li><span id="icn-balkon">Balkon</span></li>
+			<li class="lst"><span id="icn-terrasse">Terrasse</span></li>
+		</ul>
+		</div>
+</div>
+
+
+    </div>
+</div>
+<div id="cnt" class="cnt">
+    
+
+<div>
+    <h1>
+        Wohnungsangebot
+    </h1>
+	
+	    
+
+
+
+
+<div id="result-functions">
+    <div class="result-functions">
+	<a class="send" href="/wohnungsangebot/ergebnisliste-senden/?InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False">Ergebnisliste senden</a>
+	<a class="print" href=/Handlers/FlatsSearchPdfHandler.ashx?InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False>Ergebnisliste drucken</a>
+</div>
+</div>
+
+
+<div class="cnt_box_top"></div>
+<div class="cnt_box">
+    <div id="cnt_box_inner">
+        <div id="project-searches">
+
+
+
+<div class="referenz-box" data-id="1858">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1110 Wien, Fickeysstra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=B0356DDB8C3343B9B6079061B2DA6ECC65A5C381A271427CBACBC709FEE3CF68&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1110 Wien, Fickeysstra&#223;e 5-7</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1858">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1858">
+                5 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1858" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1858">
+                                <strong>1110 Wien, Fickeysstra&#223;e 7</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44321&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44321&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 54,88m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44321&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.200,00 € EM • 655,33 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44321">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44312&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 18</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44312&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 56,64m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44312&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.200,00 € EM • 661,09 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44312">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44324&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 52</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44324&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 55,27m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44324&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.200,00 € EM • 669,96 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44324">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44313&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 53</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44313&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 53,84m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44313&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.200,00 € EM • 640,68 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44313">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 80</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 55,62m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.200,00 € EM • 675,17 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44336">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1619">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1140 Wien, Hernstorfer Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=88D8A64B9D974E6ABFE72B0C2122AD01DDD3DBCE54994F24A58AE7739A27888D&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1140 Wien, Hernstorfer Stra&#223;e 3-7</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1619">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1619">
+                3 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1619" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1619">
+                                <strong>1140 Wien, Zehetnergasse 32</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 8</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 95,01m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        15.596,29 € EM • 967,25 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark38270">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38327&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 12</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38327&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 56,63m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38327&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        9.101,73 € EM • 620,16 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark38327">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1619">
+                                <strong>1140 Wien, Zehetnergasse 36</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38295&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 7</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38295&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 59,65m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=38295&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        9.703,85 € EM • 607,27 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark38295">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1857">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1210 Wien, Stammersdorfer Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=73F7122D0A8A44658C36B959615EDC1C68BEADC71A5C443D9FDE5289C63040CF&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1210 Wien, Stammersdorfer Stra&#223;e 257</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1857">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1857">
+                2 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1857" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1857">
+                                <strong>1210 Wien, Stammersdorfer Stra&#223;e 257</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77520&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 2.01</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77520&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 59,92m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77520&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        168,92 € / Monat • 221.419,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77520">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77527&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 2.04</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77527&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 129,69m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77527&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        291,00 € / Monat • 409.473,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77527">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1865">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1210 Wien, Stammersdorfer Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=5DFBE8BD6CBC4E8FB69B1D80BC8245BD247B059E1C064BEDAB270A79379B5BB5&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1210 Wien, Stammersdorfer Stra&#223;e 253</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1865">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1865">
+                6 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1865" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1865">
+                                <strong>1210 Wien, Stammersdorfer Stra&#223;e 253</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77542&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.02</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77542&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 59,47m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77542&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        168,24 € / Monat • 221.213,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77542">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77540&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.04</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77540&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 67,45m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77540&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        180,00 € / Monat • 239.395,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77540">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77552&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.05</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77552&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 59,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77552&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        164,32 € / Monat • 215.152,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77552">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77544&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.06</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77544&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 80,25m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77544&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        221,15 € / Monat • 303.031,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77544">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77537&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.10</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77537&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 91,82m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77537&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        221,15 € / Monat • 303.031,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77537">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77546&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1.13</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77546&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 86,09m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77546&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        209,39 € / Monat • 284.849,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77546">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1882">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1220 Wien, Gartenheimstra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=DE40713837F34A59876B1C6BEDB8D6C50DA764E215DC4326B76A73F13218F235&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1220 Wien, Gartenheimstra&#223;e 31</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1882">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1882">
+                1 Wohnung entspricht den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1882" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1882">
+                                <strong>1220 Wien, Gartenheimstra&#223;e 31</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock 1. OG / T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 104,9m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        244,75 € / Monat • 337.565,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76248">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1874">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1230 Wien, Autofabrikstra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=CC2D2EA66D1A4838B6E753DC4CB9A03236BDD9D754AA4A699CC7444500B4C4BA&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1230 Wien, Autofabrikstra&#223;e 20</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1874">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1874">
+                7 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1874" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1874">
+                                <strong>1230 Wien, Autofabrikstra&#223;e 20</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77561&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77561&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 54,95m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77561&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        161,54 € / Monat • 274.881,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77561">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77560&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77560&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 86,13m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77560&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        229,72 € / Monat • 394.237,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77560">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77558&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77558&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 88,09m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77558&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        235,92 € / Monat • 405.088,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77558">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77557&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 4</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77557&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 87,92m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77557&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        211,12 € / Monat • 361.685,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77557">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77556&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77556&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,74m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77556&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        188,40 € / Monat • 321.900,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77556">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77559&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77559&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 92,36m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77559&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        233,84 € / Monat • 401.471,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77559">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77555&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 7</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77555&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 83,82m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=77555&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        225,58 € / Monat • 387.003,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark77555">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1856">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">1230 Wien, Erlaaer Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=C44286060ACB467C89C7C16A0B38FF759E71501BD4A546168E1DE73E55629DAC&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>1230 Wien, Erlaaer Stra&#223;e 144</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1856">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1856">
+                27 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1856" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1856">
+                                <strong>1230 Wien, Erlaaer Stra&#223;e 144</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76977&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 1 / T&#252;r 2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76977&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 62,34m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76977&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        208,00 € / Monat • 245.244,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76977">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76979&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 1 / T&#252;r 3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76979&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 74,66m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76979&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        231,00 € / Monat • 281.213,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76979">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76975&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 1 / T&#252;r 4</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76975&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,9m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76975&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        218,00 € / Monat • 261.594,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76975">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76972&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 1 / T&#252;r 8</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76972&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,53m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76972&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        227,00 € / Monat • 274.673,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76972">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76940&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76940&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 55,04m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76940&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        204,00 € / Monat • 238.704,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76940">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76961&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76961&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 67,64m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76961&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        233,00 € / Monat • 284.483,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76961">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76958&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 4</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76958&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 75,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76958&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        237,00 € / Monat • 291.023,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76958">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76944&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76944&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 67,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76944&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        222,00 € / Monat • 268.133,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76944">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76941&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76941&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 77,87m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76941&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        244,00 € / Monat • 300.833,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76941">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76943&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 8</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76943&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 75,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76943&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        237,00 € / Monat • 291.023,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76943">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76952&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 10</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76952&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 77,87m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76952&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        244,00 € / Monat • 300.833,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76952">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76981&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 12</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76981&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 110,99m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76981&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        319,00 € / Monat • 418.550,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76981">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76942&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 14</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76942&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 61,21m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76942&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        212,00 € / Monat • 251.784,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76942">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76947&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 3 / T&#252;r 2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76947&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,08m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76947&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        239,00 € / Monat • 294.293,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76947">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76984&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 3 / T&#252;r 3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76984&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 68,71m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76984&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        212,00 € / Monat • 251.784,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76984">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76955&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 3 / T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76955&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,08m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76955&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        239,00 € / Monat • 294.293,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76955">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76985&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 3 / T&#252;r 7</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76985&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 54,9m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76985&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        187,00 € / Monat • 212.545,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76985">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76949&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76949&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 53,84m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76949&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        191,00 € / Monat • 219.085,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76949">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76969&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76969&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 58,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76969&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        201,00 € / Monat • 235.434,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76969">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76960&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76960&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 58,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76960&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        206,00 € / Monat • 241.974,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76960">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76986&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 4</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76986&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 58,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76986&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        201,00 € / Monat • 235.434,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76986">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76945&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76945&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 58,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76945&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        201,00 € / Monat • 235.434,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76945">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76946&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76946&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 58,76m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76946&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        199,00 € / Monat • 232.164,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76946">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76959&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 7</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76959&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 59,07m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76959&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        206,00 € / Monat • 241.974,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76959">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76970&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 9</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76970&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 98,22m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76970&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        279,00 € / Monat • 356.421,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76970">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76980&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 10</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76980&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 98,22m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76980&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        279,00 € / Monat • 356.421,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76980">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76950&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 4 / T&#252;r 11</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76950&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 98,22m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=76950&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        279,00 € / Monat • 356.421,00 € VK
+                    </td>
+
+                    <td class="fourth" id="bookmark76950">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1658">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2020 Hollabrunn, Dr. Viktor Zeidlerplatz</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=FC8FFEB95BA949D2891A870D300DB52A1872AE0FECA448AAACF8D315EEB646F0&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2020 Hollabrunn, Dr. Viktor Zeidlerplatz 3-4</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1658">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1658">
+                1 Wohnung entspricht den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1658" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1658">
+                                <strong>2020 Hollabrunn, Dr. Viktor Zeidlerplatz 3</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39211&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 9</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39211&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 36,58m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39211&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2.500,00 € EM • 268,21 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark39211">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1667">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2020 Hollabrunn, Billrothgasse</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=30604DEF18A14B5E8C8CE7E8FC89000BD3E9924866574D35B1203283A95D4E63&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2020 Hollabrunn, Billrothgasse 2</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1667">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1667">
+                2 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1667" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1667">
+                                <strong>2020 Hollabrunn, Billrothgasse 2</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39282&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39282&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 55,59m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39282&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3.800,00 € EM • 589,95 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark39282">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 22</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        1 Zimmer • 46,4m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=39265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3.200,00 € EM • 492,46 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark39265">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="2417">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2020 Hollabrunn, Robert L&#246;fflerstra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=769D8351321A468B9D1C6CC76B33E9305A7FC3F3D05340F3973968E2E52DD4CB&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2020 Hollabrunn, Robert L&#246;fflerstra&#223;e 1</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="2417">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="2417">
+                1 Wohnung entspricht den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="2417" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2417">
+                                <strong>2020 Hollabrunn, Robert L&#246;fflerstra&#223;e 1</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=79784&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege 2 / T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=79784&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 76,27m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=79784&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        61.861,00 € EM • 597,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark79784">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="2404">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2070 Retz, Adolf Lehr-Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=A58C62B3F48C4D12A3E97A54754FEAEC29860020C28844CD943F56A5B7348D6B&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2070 Retz, Adolf Lehr-Stra&#223;e 14,16,18</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="2404">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="2404">
+                2 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="2404" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2404">
+                                <strong>2070 Retz, Adolf Lehr Stra&#223;e 14</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60377&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60377&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 73,42m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60377&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        25.000,00 € EM • 660,62 € / Monat • Weitere Finanzierungsvarianten
+                    </td>
+
+                    <td class="fourth" id="bookmark60377">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2404">
+                                <strong>2070 Retz, Adolf Lehr Stra&#223;e 16</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60363&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60363&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 73,42m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=60363&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        36.231,19 € EM • 682,90 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark60363">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="2406">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2070 Retz, Adolf Lehr-Stra&#223;e</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=0D78EA88E0FF45AEBCF064964EEE7A6D2689A7084D4A4E3E9B7EDE607ED82CF9&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2070 Retz, Adolf Lehr-Stra&#223;e </span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>In Bau <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="2406">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="2406">
+                18 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="2406" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 2</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B1/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83248&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        38.037,00 € EM • 724,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83248">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83249&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B1/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83249&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83249&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83249">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83250&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B1/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83250&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83250&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 716,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83250">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 20</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83251&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B4/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83251&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83251&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        35.134,00 € EM • 659,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83251">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83252&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B4/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83252&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83252&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        34.843,00 € EM • 644,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83252">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83253&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B4/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83253&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83253&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        33.972,00 € EM • 622,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83253">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 22</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83254&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B5/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83254&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83254&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.166,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83254">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83255&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B5/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83255&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83255&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83255">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83256&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B5/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83256&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83256&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.747,00 € EM • 717,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83256">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 24</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83268&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B6/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83268&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83268&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 716,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83268">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83269&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B6/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83269&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83269&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83269">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B6/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83270&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.747,00 € EM • 717,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83270">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 4</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B2/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83265&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        38.037,00 € EM • 724,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83265">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83266&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B2/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83266&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83266&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.456,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83266">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83267&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B2/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83267&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83267&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.166,00 € EM • 709,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83267">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="2406">
+                                <strong>2070 Retz, Adolf Lehr-Stra&#223;e 6</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83241&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B3/1</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83241&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83241&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        37.166,00 € EM • 702,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83241">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83242&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B3/2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83242&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 99,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83242&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        36.585,00 € EM • 687,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83242">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r RH B3/3</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        4 Zimmer • 96,44m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        35.714,00 € EM • 673,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83243">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1944">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2074 Unterretzbach, Herrengasse</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Css/Images/keinbild2.jpg" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2074 Unterretzbach, Herrengasse 125</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1944">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1944">
+                1 Wohnung entspricht den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1944" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1944">
+                                <strong>2074 Unterretzbach, Herrengasse 125</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=47243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stiege B / T&#252;r 14</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=47243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 70,61m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=47243&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        7.431,26 € EM • 488,62 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark47243">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="3162">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2130 Mistelbach, Rosenh&#252;gelweg</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=8D75729946564EC88496D1308BC73CD6A49D3C3506194AF49A26E3B6ABE19F04&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2130 Mistelbach, Rosenh&#252;gelweg 2</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>In Bauvorbereitung <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Erstbezug <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="3162">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="3162">
+                7 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="3162" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="3162">
+                                <strong>2130 Mistelbach, Rosenh&#252;gelweg 2</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83328&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock EG / T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83328&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 53,98m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83328&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        22.019,00 € EM • 347,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83328">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83329&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock EG / T&#252;r 6</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83329&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 54,02m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83329&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        21.639,00 € EM • 339,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83329">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83330&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock EG / T&#252;r 7</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83330&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 53,89m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83330&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        22.019,00 € EM • 347,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83330">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock 1.OG / T&#252;r 13</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 69,12m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83336&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        27.714,00 € EM • 429,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83336">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83338&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock 1.OG / T&#252;r 15</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83338&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 53,83m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83338&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        22.019,00 € EM • 348,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83338">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83340&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock 1.OG / T&#252;r 17</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83340&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        2 Zimmer • 53,79m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83340&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        22.019,00 € EM • 348,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83340">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83316&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">Stock 1.OG / T&#252;r 19</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83316&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 74,26m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=83316&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        29.612,00 € EM • 456,00 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark83316">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<div class="referenz-box" data-id="1871">
+    <h2 class="ProjektTitle">
+        <span class="ProjectTitle">2130 Mistelbach, Oberhoferstr.</span>
+    </h2>
+    <table width="737" style="vertical-align: top; text-align: left;">
+        <tr>
+            <td width="142">
+                <img src="/Handlers/FileHandler.ashx?h=C265D943401E492691E94C5F1090FECA3C3A037C7659400FACEA5A899D3D43BD&amp;width=142" />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                    <span>2130 Mistelbach, Oberhoferstr.127, 129,131, BT 2, EZ 5610</span><br />
+                <br />
+            </td>
+            <td width="272" style="vertical-align: top;">
+                <span class="ProjektWohnungenBeschreibung">
+                        <strong>Art:&nbsp;</strong> Wohnung<br />
+
+                        <strong>Phase:&nbsp;</strong>Bezugsfertig <br />
+
+                        <strong>Beziehbar:&nbsp;</strong>Wiedervermietung <br />
+                </span>
+            </td>
+        </tr>
+    </table>
+    <div style="clear: both">
+    </div>
+    <div class="project-units" data-id="1871">
+        <div class="unit-count-wrapper" style="">
+
+            <span class="unit-count" data-id="1871">
+                2 Wohnungen entsprechen den Suchkriterien.
+            </span>
+        </div>
+        <div class="blenden-btn-wrapper" style="">
+            <span class="blenden-btn">EINBLENDEN</span>
+            <input type="hidden" value="1871" />
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="slide-div">
+        <table class="batch-units" style="border-collapse: collapse; width: 728px;">
+            <tbody>
+
+                    <tr class="header">
+                        <td class="street" colspan="4">
+                            <span class="group" data-id="1871">
+                                <strong>2130 Mistelbach, Oberhoferstra&#223;e 129</strong>
+                            </span>
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44906&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 2</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44906&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 75,08m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44906&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        30.236,14 € EM • 695,72 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44906">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44873&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        <span class="anchor">T&#252;r 5</span>
+                    </td>
+                    <td class="second" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44873&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        3 Zimmer • 74,9m<sup>2</sup>
+                    </td>
+                    <td class="third" onclick="location.href = '/wohnungsangebot/wohneinheit-details/?referer=search&id=44873&amp;InBau=False&amp;InPlan=False&amp;Available=False&amp;Rooms2=False&amp;Rooms3=False&amp;Rooms4=False&amp;RoomsSpecial=False&amp;SelectedLegalForm=0&amp;SelectedLivingUnitType=0&amp;SelectedDistrictIds=&amp;WienRegion=False&amp;TirolRegion=False'">
+                        29.216,99 € EM • 565,24 € / Monat
+                    </td>
+
+                    <td class="fourth" id="bookmark44873">
+                        
+        <a class="merken-offline" href="/anmelden">Merken</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var appPath = '/';
+</script>
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+            </div>
+        </div>
+
+        <div id="ftr">
+            <div id="ftr-cnt">
+                <ul class="nvg" id="ftr-nvg">
+                    <li>
+                        <a href="/service/haeufige-fragen/" tabindex="0">FAQ</a>
+                    </li>
+                    <li>
+                        <a href="/sitemap/" tabindex="0">Sitemap</a>
+                    </li>
+                    <li>
+                        <a href="/impressum/" tabindex="0">Impressum</a>
+                    </li>
+                    <li>
+                        <a href="/datenschutz/" class="lst" tabindex="0">Datenschutz</a>
+                    </li>
+                </ul>
+                <div class="clr">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/DependencyHandler.axd?s=L1NjcmlwdHMvYW5hbHl0aWNzL2dhLmpzOy9TY3JpcHRzL2pxdWVyeS0xLjEwLjIuanM7L1NjcmlwdHMvQ29tcGF0aWJpbGl0eS5qczsvU2NyaXB0cy9qcXVlcnkudW5vYnRydXNpdmUtYWpheC5taW4uanM7L1NjcmlwdHMvUHJvamVjdFNlYXJjaC9qcXVlcnkuZW5kbGVzcy1zY3JvbGwuanM7L1NjcmlwdHMvanF1ZXJ5LXVpLTEuMTAuMy5taW4uanM7L1NjcmlwdHMva25vY2tvdXQtMy4wLjAuanM7L1NjcmlwdHMvUHJvamVjdFNlYXJjaC9Qcm9qZWN0U2VhcmNoLmpzOy9TY3JpcHRzL1Byb2plY3RTZWFyY2gvTWFwLmpzOy9TY3JpcHRzL3NpZGViYXIuanM7L1NjcmlwdHMvUHJvamVjdFNlYXJjaC9qcXVlcnkubWFnbmlmaWMtcG9wdXAuanM7L1NjcmlwdHMvYW5hbHl0aWNzL3NlYXJjaC5qczsvU2NyaXB0cy9JbWFnZUdhbGxlcnkvamNhcm91c2VsLmNvbm5lY3RlZC1jYXJvdXNlbHMuanM7L1NjcmlwdHMvSW1hZ2VHYWxsZXJ5L2pxdWVyeS5qY2Fyb3VzZWwubWluLmpzOw&amp;t=Javascript&amp;cdv=33" type="text/javascript"></script>
+
+</body>
+</html>

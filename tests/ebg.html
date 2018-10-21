@@ -1,0 +1,2733 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head id="Head1"><title>
+	Suche
+</title><link href="Styles/Site.css" rel="stylesheet" type="text/css" /><link href="Styles/jquery-ui.css" rel="stylesheet" type="text/css" /><link href="Styles/TeaserControl.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.cycle.min.js" type="text/javascript"></script>
+    <script src="Scripts/Application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var menuEntered = false;
+        var timeoutAnimationRef;
+
+        function rollDownMenu() {
+            if ($.browser.msie) {
+                $('.menu #sliding_menu').stop().animate({ top: 0 }, 500, function() {
+                    $('#sliding_menu .shadow').show();
+                });
+            }
+            else {
+                $('.menu #sliding_menu').stop().animate({ top: 0 }, 500, function() {
+                    $('#sliding_menu .shadow').fadeIn(200);
+                });
+            }
+        }
+
+        $(function () {
+            // initialize slideshow
+            $('#slideshow').cycle({
+                fx: 'fade',
+                speed: 2000,
+                timeout: 5000,
+                pause: 1
+            });
+
+            // event handler: slide down menu
+            $('.menu ul').mouseenter(function () {
+                menuEntered = true;
+                timeoutAnimationRef = setTimeout("if (menuEntered) rollDownMenu();", 300);
+
+            });
+            
+            $('.menu').mouseleave(function () {
+            menuEntered = false;
+            if (timeoutAnimationRef != null)
+            clearTimeout(timeoutAnimationRef);
+
+            var slidingMenu = $('#sliding_menu');
+            if (slidingMenu.is(':visible')) {
+                //var height = slidingMenu.height();
+                var height = $('.sliding_menu_panel').outerHeight();
+                if ($.browser.msie) {
+                    $('#sliding_menu .shadow').hide(0, function () {
+                        slidingMenu.stop().animate({ top: 0-height }, 500);
+                    });
+                }
+                else {
+                $('#sliding_menu .shadow').fadeOut(200, function () {
+                        slidingMenu.stop().animate({ top: 0-height }, 500);
+                    }); 
+                }
+                }
+            });
+            
+            // initialize sliding menu
+            $(function () {
+                $('#sliding_menu').css('top', 24 - $('#sliding_menu').outerHeight());
+                var maxHeight = 0;
+                $('.sliding_menu_panel').each(function () {
+                    maxHeight = Math.max(maxHeight, $(this).outerHeight());
+                });
+
+                $('.sliding_menu_panel').each(function () {
+                    $(this).css('height', maxHeight);
+                });
+
+                $('.shadow_right_repeat').height($('.menu_items').height() - 10);
+            });
+
+            // hover effects
+            $('.angebot, .betreuung, .unternehmen').bind('mouseenter', function () {
+
+                var cls;
+                if ($(this).hasClass('angebot'))
+                    cls = 'angebot';
+                else if ($(this).hasClass('betreuung'))
+                    cls = 'betreuung';
+                else
+                    cls = 'unternehmen';
+
+                var li = $('.menu li.' + cls);
+                li.addClass(cls + "_hover");
+
+                var panel = $('#sliding_menu .' + cls);
+                panel.addClass('sliding_menu_panel_hover');
+
+            }).bind('mouseleave', function () {
+
+                var cls;
+                if ($(this).hasClass('angebot'))
+                    cls = 'angebot';
+                else if ($(this).hasClass('betreuung'))
+                    cls = 'betreuung';
+                else
+                    cls = 'unternehmen';
+
+                var li = $('.menu li.' + cls);
+                li.removeClass(cls + "_hover");
+
+                var panel = $('#sliding_menu .' + cls);
+                panel.removeClass('sliding_menu_panel_hover');
+            });
+        });
+    </script>
+    
+    <!-- frazosengraben banner implementation -->
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani:400,500,600,700,300" rel="stylesheet" type="text/css" /><link rel="stylesheet" type="text/css" href="/banner2/css/banner.css" />
+    <script type="text/javascript" src="/banner2/scripts/banner.js"></script>
+    <!-- frazosengraben banner implementation -->
+
+    
+    <link href="Styles/jquery.ad-gallery.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/Contact.css" rel="stylesheet" type="text/css" />
+	<link href="Styles/project.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jgallery/jquery.ad-gallery.pack.js" type="text/javascript"></script>
+    
+    <link href="Styles/jCarousel/jcarousel.vertical.css" type="text/css" rel="stylesheet"/>
+    <script src="Scripts/jCarousel/jquery.jcarousel.min.js" type="text/javascript"></script>
+    <script src="Scripts/jCarousel/jcarousel.vertical.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        //validovanie textboxov
+        $(document).ready(function () {
+
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            prm.add_initializeRequest(InitializeRequest);
+
+            // Executed anytime an async postback occurs.
+            function InitializeRequest(sender, args) {
+                if (args._postBackElement.id == 'MainContent_BtnSendInterest') {
+                    var element = $get(args._postBackElement.id);
+                    element.disabled = true;
+                }
+            }
+
+
+            function validateString(input) {
+                var regex = /^([1-9][0-9]*|0)$/;
+                if (input.search(regex) == -1) {
+
+                    while (input.length > 0 && input.search(regex) == -1) {
+                        input = (input.substring(0, input.length - 1));
+                    }
+                }
+                return input;
+            }
+
+            $('#MainContent_TbxRoomsFrom').keyup(function () {
+                $('#MainContent_TbxRoomsFrom').val(validateString($('#MainContent_TbxRoomsFrom').val()));
+            });
+            $('#MainContent_TbxRoomsTo').keyup(function () {
+                $('#MainContent_TbxRoomsTo').val(validateString($('#MainContent_TbxRoomsTo').val()));
+            });
+        });
+
+        //jGallery javascript
+        $(function () {
+            
+            
+            $('.mainpanel').hover(function () {
+                $(this).css('cursor', 'pointer');
+            }, function () {
+                $(this).css('cursor', 'auto');
+            });
+            $('.showMore').hover(function () {
+                $(this).css('cursor', 'pointer');
+                $(this).css('opacity', '0.8');
+            }, function () {
+                $(this).css('cursor', 'auto');
+                $(this).css('opacity', '1');
+            });
+
+            if ($('#MainContent_pnlSearchResultsBig').height() <= $('.pnlSearchResultsContainer .outerPanel').height()) {
+                $('.pnlSearchResultsContainer .outerPanel').height($('#MainContent_pnlSearchResultsBig').height());
+                $('.showMore').hide();
+            }
+        });
+
+        //176px * number of elements to scroll + 6px
+        function showMoreResults() {
+            if ($('#MainContent_pnlSearchResultsBig').height() <= ($('.pnlSearchResultsContainer .outerPanel').height() + 1780)) {
+                $('.pnlSearchResultsContainer .outerPanel').height($('#MainContent_pnlSearchResultsBig').height());
+                $('.showMore').hide();
+            }
+            else
+                $('.pnlSearchResultsContainer .outerPanel').height($('.pnlSearchResultsContainer .outerPanel').height() + 1780);
+            //window.scrollTo(0, $('body').height());
+        }
+
+
+    </script>
+    <script type="text/javascript">
+        var isAnimating = false;
+    </script>
+
+    
+    <!-- frazosengraben banner implementation -->   
+    <div id="banner">
+        <div class="banner-row">
+            <div class="banner-block firstText">
+                <p class="large-text">Mein Lebens(t)raum am Franzosengraben</p>
+                <p class="sub-text"><span>Miet- und Eigentumswohungen in <br /> 1030 Wien bei der U3 Station Erdberg</span></p>
+            </div>
+
+            <div class="banner-block secondText">
+                <img src="banner2/franzosengraben_banner_logo.png" id="logo" alt="" />
+            </div>
+
+            <div class="banner-block projectAndArrow">
+                <a href="http://www.franzosengraben.wien/" id="arrow" target="_blank">Projekt ansehen</a>
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="closeBanner">
+                <a href="" onclick="return false;">
+                    <img id="closeButton" src="banner2/close_banner.png" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- frazosengraben banner implementation -->  
+
+</head>
+<body>
+    <form method="post" action="./Suche.aspx" id="Form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTU1NDA5NDM1MQ9kFgJmD2QWAgIDD2QWBgIDDw8WAh4EVGV4dAUFU3VjaGVkZAIED2QWBgIBD2QWCgIRDxYCHgdWaXNpYmxlaGQCEw8WAh8BaGQCFQ8WAh8BaGQCFw8PFgIfAWhkZAIlD2QWAmYPZBYCAgEPD2QWAh4Fc3R5bGUFDWRpc3BsYXk6bm9uZTsWBAIBD2QWAgIBD2QWAgIBD2QWAmYPZBYCAgEPZBYCAgMPEGRkFgFmZAIDD2QWAgIBDw8WAh4Fc3RhdGULKWtFQkdXZWJTaXRlLkNvbnRyb2xzLkxvZ2luK0xvZ2luUGFnZVN0YXRlLCBFQkdXZWJTaXRlLCBWZXJzaW9uPTEuMi4wLjEsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbABkFgICAg8WAh8BaGQCBQ9kFgICJQ9kFgJmDw9kFgQeB29uY2xpY2sFRXdpbmRvdy5sb2NhdGlvbiA9ICcuL1Byb2pla3REZXRhaWwuYXNweD9pZD0zNDcmdHlwPTEwMCZ6bWluPTEmem1heD01Jx8CBQ9jdXJzb3I6cG9pbnRlcjsWAgIDDw8WAh8BZ2QWDAIBDxYGHgVjbGFzcwUbdGVhc2VyY29uc3RwaGFzZWltZyBuZXVfYmF1HgNzcmMFHH4vSW1hZ2VzL3JpYmJvbnMvbmV1X2JhdS5wbmcfAWdkAgMPFgIfBgV6L0hhbmRsZXJzL0Nhc3RlbGxvRmlsZUhhbmRsZXIuYXNoeD9oPUI1N0RGQjc1NjkwMzQzNTFCOTgwN0FBMTY1OUJDQkQwRUI2ODAxRDlDNjE2NEQxNDg3MTkwRERDMThDMTJCNkYmd2lkdGg9MjUyJmhlaWdodD0xNjZkAgcPFgIfAAUWV29obmVuIGluIE9iZXJzY2hlZmZhdWQCCQ8WAh8ABT01NDQwIFNjaGVmZmF1IGFtIFRlbm5lbmdlYmlyZ2UsIFNjaGVmZmF1IGFtIFRlbm5lbmdlYmlyZ2UgMzY4ZAILDxYCHglpbm5lcmh0bWwFATRkAg0PFgIfBwUnV09ITlVOR0VOIEVOVFNQUkVDSEVOPC9icj5ERU4gS1JJVEVSSUVOZAIHD2QWAgIBD2QWAgIDD2QWBGYPDxYCHwFnZBYCAgEPEA8WBh4NRGF0YVRleHRGaWVsZAUETmFtZR4LXyFEYXRhQm91bmRnHg5EYXRhVmFsdWVGaWVsZAUCSWRkEBUEBU1pZXRlD0VpZ2VudHVtICAgICAgIBRNaWV0ZSBtaXQgS2F1Zm9wdGlvbhVGcmVpZmluYW56aWVydGUgTWlldGUVBAExATIBMwE2FCsDBGdnZ2dkZAIBD2QWAgIBDxAPFgYfCAUETmFtZR8KBQJJZB8JZ2QQFQMEV2llbilOaWVkZXLDtnN0ZXJyZWljaCwgQnVyZ2VubGFuZCwgU3RlaWVybWFyaw9XZXN0w7ZzdGVycmVpY2gVAwExATYBOBQrAwNnZ2dkZAIFD2QWAmYPFgIfAAWyAzxkaXYgY2xhc3M9InByb2plY3QiPjxoMyBjbGFzcz0idGl0bGUiPjExMDAgV2llbiwgU29ubndlbmR2aWVydGVsICBCUEwgQy4yMi5CPC9oMz48c3BhbiBjbGFzcz0ic3VidGl0bGUiPjExMDAgV2llbiwgTWFyaWEtTGFzc25pZy1TdHJhw59lIDM4IHVuZCB3ZWl0ZXJlPC9zcGFuPjxhIGhyZWY9Ii9Qcm9qZWt0RGV0YWlsLmFzcHg/aWQ9MzQ0JnR5cD0yIj5MZXNlbiBTaWUgbWVocjwvYT48L2Rpdj48ZGl2IGNsYXNzPSJwcm9qZWN0Ij48aDMgY2xhc3M9InRpdGxlIj4xMjMwIFdpZW4sIEluIGRlciBXaWVzZW4gT3N0PC9oMz48c3BhbiBjbGFzcz0ic3VidGl0bGUiPjEyMzAgV2llbiwgSW4gZGVyIFdpZXNlbiA3QSB1bmQgd2VpdGVyZTwvc3Bhbj48YSBocmVmPSIvUHJvamVrdERldGFpbC5hc3B4P2lkPTM0NiZ0eXA9MiI+TGVzZW4gU2llIG1laHI8L2E+PC9kaXY+ZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WDQUbY3RsMDAkTWFpbkNvbnRlbnQkY2J4bEFydCQwBRtjdGwwMCRNYWluQ29udGVudCRjYnhsQXJ0JDEFG2N0bDAwJE1haW5Db250ZW50JGNieGxBcnQkMgUbY3RsMDAkTWFpbkNvbnRlbnQkY2J4bEFydCQzBRtjdGwwMCRNYWluQ29udGVudCRjYnhsQXJ0JDMFHmN0bDAwJE1haW5Db250ZW50JGNieGxSZWdpb24kMAUeY3RsMDAkTWFpbkNvbnRlbnQkY2J4bFJlZ2lvbiQxBR5jdGwwMCRNYWluQ29udGVudCRjYnhsUmVnaW9uJDIFHmN0bDAwJE1haW5Db250ZW50JGNieGxSZWdpb24kMgUiY3RsMDAkTWFpbkNvbnRlbnQkY2J4bFdvaG51bmdBcnQkMAUiY3RsMDAkTWFpbkNvbnRlbnQkY2J4bFdvaG51bmdBcnQkMQUiY3RsMDAkTWFpbkNvbnRlbnQkY2J4bFdvaG51bmdBcnQkMQUaY3RsMDAkTWFpbkNvbnRlbnQkYnRuU3VjaGWp37t17ojoJU/W0RwreWloJeXW5+3nBXhIbmXUB6C5Og==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form1'];
+if (!theForm) {
+    theForm = document.Form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=6pWT4iyxq7is9Qa6LFncPm81Ln8p9qRMasf6ZChM_WbLYaHgwXBytUiOeo7aLZ_6O6SPd5qLW2wzpYJpYqWv93bqjxhK-zeVC7GJCFJeW8U1&amp;t=635803038500000000" type="text/javascript"></script>
+
+
+<script src="Scripts/login.js" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_mesqgrGGUA2-y33u3K_ypVbTmE7DOpq-fAt4pVWFav19upwdpDruZYYND80O-2dD5meszWjE092h8HOznbao4wbkqGh09UFu9y5zSU12pBxINRJaFg5lv8ZGmktLgsUFgdZgmPeMuz7OEAl5wg1s78zVoJOAQubCxDMe3ToOfE1&amp;t=5f9d5645" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=8WTbzmWnvwLIS6QhQz1WT2HXxFFooFCR6MjFCry03k2zvY0WviAgtfmETQdZVgy3_tVRYPcsmNSiibVYsDaOnm_yA0CzHtNKWA91xONwIdnEet8hv5kBRCPgqAycI7LzWgKJLsLpbglPqIoljx7ns_HPMVkvwwZujO0rR5xGFEZ3U9U8RZClS-M6yObi3M9b0&amp;t=5f9d5645" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="6E95882D" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAA++5rEn3uEUJf4p49Pzxkv6+W7vWNIhBLAt+8mkj93icgvnf0fkozTAPaJkOs9qC+tfle3RhibSKtBvCynkFzXC4G8GJiuiG3V7rcAXNS06d5WnB24bdpFHHPjDWmJocWiWopyCvnf6ycrC2QeFfaSgqmUvNaAaaGEDurnnszjdnmN8XrlGmHEa9oqgrLBYYxZi6PrrxmWdlS3Z4IIdbwWoPKPD5g3ug9dj1YeIwNNUIeMGAqojWF4NjKpQh0FGYOP+Uf74t7wW64M6Nca3Mra+b/lAAODeJ24nsM8blzkjRlsayfvoiT4GG3T0OHV0fJu7JXMXF2G37JjYUH36POrLbWd6qREV1GLkLaLrF41KHw==" />
+</div>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl09', 'Form1', ['tctl00$UpLogout','UpLogout'], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+    <div class="page">
+        <div class="header">
+            <div class="header_stripe_smaller">
+                <div class="header_image">
+                    <div class="logo" onclick="window.location = 'Default.aspx';"></div>
+                    <div id="UpLogout">
+	
+                            
+                        
+</div>
+                </div>
+            </div>
+            <div class="after_header_fill"></div>
+            <div class="menu_stripe">
+                <div class="menu">
+                    <ul>
+                        <li class="angebot" />
+                        <li class="betreuung" />
+                        <li class="unternehmen" />
+                    </ul>
+                    <div style="clear:both;"></div>
+                    <div class="menu_shadow angebot"></div>
+                    <div class="menu_shadow betreuung"></div>
+                    <div class="menu_shadow unternehmen"></div>
+                    <div style="clear:both;"></div>
+                    <div class="sliding_menu_wrapper">
+                        <div id="sliding_menu" class="sliding_menu_height sliding_menu_location">
+                            <div class="menu_items">
+                                
+
+<div class="sliding_menu_panel sliding_menu_height angebot">
+    <h2>Suchen und Finden</h2>
+    <a href="Suche.aspx?typ=1&wa=$0$1&art=all&rg=all&zmin=1&zmax=5">Wohnungen und Reihenhäuser</a>
+
+    <a href="Suche.aspx?typ=3&rg=all">Garagen und Stellplätze</a>
+    <a href="Suche.aspx?typ=2&rg=all">Büros und Lokale</a>
+
+    <h2 id="ctl11_hdNeubau">Aktuelle Neubauprojekte</h2>
+    <a href="/ProjektDetail.aspx?id=340&typ=2" class="link_to_project">Graz, GREEN CITY, Olga-Rudel-Zeynek-Gasse 10,<br /></a><a href="/ProjektDetail.aspx?id=347&typ=2" class="link_to_project">Wohnen in Oberscheffau,<br />5440 Scheffau am Tennengebirge, Scheffau am Tennengebirge 368</a><a href="/ProjektDetail.aspx?id=344&typ=2" class="link_to_project">1100 Wien, Sonnwendviertel  BPL C.22.B,<br />1100 Wien, Maria-Lassnig-Straße 38 und weitere</a><a href="Projekte.aspx?typ=2">&gt; weitere aktuelle Projekte</a>
+                                
+    <h2 id="ctl11_hdGeplant">Geplante Projekte</h2>
+    <a href="/ProjektDetail.aspx?id=335&typ=1" class="link_to_project">1220 Wien, Zschokkegasse 83-85,<br />1220 Wien, Zschokkegasse 83-85 und weitere</a><a href="/ProjektDetail.aspx?id=345&typ=1" class="link_to_project">1180 Wien, Pötzleinsdorfer Höhe 2 ,<br /></a><a href="/ProjektDetail.aspx?id=349&typ=1" class="link_to_project">1100 Wien, Puchsbaumgasse - "Quartier Bienvenue",<br /></a><a href="Projekte.aspx?typ=1">&gt; weitere geplante Projekte</a>
+
+    <h2>Kontakt zum Vergabeteam</h2>
+    <a href="Vergabeteam.aspx#Neubauwohnungen">Neubauwohnungen</a>
+    <a href="Vergabeteam.aspx#Wiedervermietungen">Wiedervermietungen</a>
+</div>
+<div class="sliding_menu_panel sliding_menu_height betreuung">
+    <h2>BewohnerInnen-Service</h2>
+    <a href="Abloesen.aspx">Ablösen</a>
+    <a href="Investitionsersatz.aspx">Investitionsersatz</a>
+    <a href="Formulare.aspx">Formulare zum Download</a>
+    <a href="Links.aspx">Links</a>
+    <a href="Eigentumsoption.aspx">Info Eigentumsoption</a>
+    <a href="Kuendigung.aspx">Wie kündige ich meine Wohnung?</a>
+
+    <h2>Kontakt zur Hausverwaltung</h2>
+    <a href="Hausverwaltung.aspx#hauptbuero">Hauptbüro</a>
+    <a href="Hausverwaltung.aspx#zweigniederlassungen">Zweigniederlassungen</a>
+</div>
+<div class="sliding_menu_panel sliding_menu_height unternehmen">
+    <h2>Die EBG</h2>
+    <a href="Unternehmensprofil.aspx">Unternehmensprofil</a>
+    <a href="100Jahre.aspx">100 Jahre Herausforderung</a>
+    <a href="Satzung.aspx">Satzung</a>
+    <a href="Organigramm.aspx">Organigramm</a>
+    <a href="ZahlenFakten.aspx">Zahlen und Fakten</a>
+    <a href="Projekte.aspx?typ=3">Referenzprojekte</a>
+    <a href="Team.aspx">Das Team</a>
+    <a href="Neuigkeiten.aspx">Neuigkeiten</a>
+</div>
+
+                                <div style="clear:both;"></div>
+                                <div class="menu_location_stripe">
+                                    <span id="lblLocation">Suche</span>
+                                </div>
+                            </div>
+                            <div class="shadow shadow_right_wrapper" style="display:none;">
+                                <div class="shadow_right_top"></div>
+
+                                <div class="shadow_right_repeat"></div>
+                            </div>
+                            
+                            <div style="clear:both;"></div>
+                            <div class="shadow shadow_bottom" style="display:none;"></div>
+                            <div style="clear:both;"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            
+    <div class="mainLeft" style="width: 668px">
+        
+        <div class="pnlSearchResultsContainer">
+            
+            <div class="outerPanel">
+                <div id="MainContent_pnlSearchResultsBig">
+	
+                <div id="MainContent_ctl03_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=5028&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl03_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=CC6173FE27754DCD99B004C0CCACD8BC1AC60FB56F5F45F0841D13D1881C3E5D&width=252&height=166" id="MainContent_ctl03_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl03_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1020 Wien, Vorgartenstraße 219 / 1 / TOP 14</span>
+            </h5>
+            <div id="MainContent_ctl03_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl03_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl03_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl03_ctl00_spanEnergyConsumption">35</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl03_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl03_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl03_ctl00_area" class="column area">
+        <div class="number">83<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl03_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl03_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;664,- / Monat</div>
+        <div class="number_smaller">€&nbsp;32.350,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl04_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=879&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl04_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl04_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=F712710128274E33891834E112C0F3C227651FF8113D46BE854D23CD6A26D4E2&width=252&height=166" id="MainContent_ctl04_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl04_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1080 Wien, Josefstädter Str. 81-83 / 4 / TOP 27</span>
+            </h5>
+            <div id="MainContent_ctl04_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl04_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl04_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl04_ctl00_spanEnergyConsumption">31</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl04_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl04_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl04_ctl00_area" class="column area">
+        <div class="number">64<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl04_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl04_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;1.035,- / Monat</div>
+        <div class="number_smaller">€&nbsp;3.090,- Kaution</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl05_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=4057&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl05_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=36E761EEB8D64D37BA12C9971087E198B5CFD7A541FE4E3F94565002AD87AB14&width=252&height=166" id="MainContent_ctl05_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl05_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1100 Wien, Senefeldergasse 46 / TOP 1</span>
+            </h5>
+            <div id="MainContent_ctl05_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl05_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl05_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl05_ctl00_spanEnergyConsumption">29,9</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl05_ctl00_area" class="column area">
+        <div class="number">43<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl05_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl05_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;325,- / Monat</div>
+        <div class="number_smaller">€&nbsp;21.754,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl06_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=4633&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl06_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl06_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=9FB63FB79A554A1CB9BC0475472DA08DC5CDA769F7964CC294EEB3DEFCB48F47&width=252&height=166" id="MainContent_ctl06_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl06_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1100 Wien, Absberggasse 45a / E / TOP 8</span>
+            </h5>
+            <div id="MainContent_ctl06_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl06_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl06_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl06_ctl00_spanEnergyConsumption">30,7</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl06_ctl00_rooms" class="column rooms">
+        <div class="number">77</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl06_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl06_ctl00_area" class="column area">
+        <div class="number">124<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl06_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl06_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;951,- / Monat</div>
+        <div class="number_smaller">€&nbsp;40.730,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl07_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=111&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl07_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl07_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=C9F4F8BEB805444E9C780ACFDAEBC003362444336EB246229D728980925A5C02&width=252&height=166" id="MainContent_ctl07_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl07_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1110 Wien, Kaiser Ebersdorfer Str.79 / 5 / TOP 19</span>
+            </h5>
+            <div id="MainContent_ctl07_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl07_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl07_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl07_ctl00_spanEnergyConsumption">38</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl07_ctl00_rooms" class="column rooms">
+        <div class="number">5</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl07_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl07_ctl00_area" class="column area">
+        <div class="number">99<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl07_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl07_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;706,- / Monat</div>
+        <div class="number_smaller">€&nbsp;35.307,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl08_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=117&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl08_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=2BE61F4F0AF14846B22C90F448D42A899112A12820AF46F5B764A8249D62F594&width=252&height=166" id="MainContent_ctl08_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl08_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1110 Wien, Kaiser Ebersdorfer Str.79 / 5 / TOP 25</span>
+            </h5>
+            <div id="MainContent_ctl08_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl08_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl08_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl08_ctl00_spanEnergyConsumption">38</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl08_ctl00_area" class="column area">
+        <div class="number">73<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl08_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl08_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;530,- / Monat</div>
+        <div class="number_smaller">€&nbsp;26.764,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl09_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=1749&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl09_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=6CF22CD2009D47AC8D563EA22CACDDD1954CA10A7FD04FFBB8284D2D15F1C9D4&width=252&height=166" id="MainContent_ctl09_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl09_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1130 Wien, Anton Langergasse 23 / 3 / TOP 2</span>
+            </h5>
+            <div id="MainContent_ctl09_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl09_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl09_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl09_ctl00_spanEnergyConsumption">77,46</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl09_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl09_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl09_ctl00_area" class="column area">
+        <div class="number">70<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl09_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl09_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;522,- / Monat</div>
+        <div class="number_smaller">€&nbsp;10.469,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl10_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=2368&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl10_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=034E6A04FCE14C5DA7C0AB1DF4550A9BB1ADCE1BE0A9452C83794D22EA939F36&width=252&height=166" id="MainContent_ctl10_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl10_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1170 Wien, Hormayrgasse 12 / TOP 15</span>
+            </h5>
+            <div id="MainContent_ctl10_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl10_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl10_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl10_ctl00_spanEnergyConsumption">79</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl10_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl10_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl10_ctl00_area" class="column area">
+        <div class="number">49<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl10_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl10_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;307,- / Monat</div>
+        <div class="number_smaller">€&nbsp;8.275,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl11_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=2029&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl11_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=22CBF0CCC6444ADF97E928647F854AB721B16940FBEE4F168624B3DF437C5681&width=252&height=166" id="MainContent_ctl11_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl11_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1210 Wien, Dopschstraße 20 / 2 / TOP 36</span>
+            </h5>
+            <div id="MainContent_ctl11_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl11_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl11_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl11_ctl00_spanEnergyConsumption">56,67</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl11_ctl00_area" class="column area">
+        <div class="number">93<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl11_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl11_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;724,- / Monat</div>
+        <div class="number_smaller">€&nbsp;8.328,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl12_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=3083&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl12_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=B8D361949E0F45FF82DEC7A8EFA3A6A5F66D3AFA6D394E8FA1BA8EAFD552C791&width=252&height=166" id="MainContent_ctl12_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl12_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1210 Wien, Kummergasse 5 / 1 / TOP 28</span>
+            </h5>
+            
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl12_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl12_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl12_ctl00_area" class="column area">
+        <div class="number">122<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl12_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl12_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;681,- / Monat</div>
+        <div class="number_smaller">€&nbsp;31.712,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl13_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=4243&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl13_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=426EC5D2FDA1463DB1660EC47CBF5C43D81ABC3FD9454815A5AD0AAE0CA511CC&width=252&height=166" id="MainContent_ctl13_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl13_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Haberlandtgasse 64 / 1 / TOP 6</span>
+            </h5>
+            <div id="MainContent_ctl13_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl13_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl13_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl13_ctl00_spanEnergyConsumption">45,4</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl13_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl13_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl13_ctl00_area" class="column area">
+        <div class="number">87<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl13_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl13_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;675,- / Monat</div>
+        <div class="number_smaller">€&nbsp;38.380,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl14_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=5776&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl14_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=998277B0D4C74EE5BFC2DB267B8DEC54C7738B37A00A488A8A658A6C945FC2BA&width=252&height=166" id="MainContent_ctl14_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl14_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Pilotengasse 14 / TOP 9</span>
+            </h5>
+            <div id="MainContent_ctl14_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl14_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl14_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl14_ctl00_spanEnergyConsumption">27,32</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl14_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl14_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl14_ctl00_area" class="column area">
+        <div class="number">87<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl14_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl14_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;588,- / Monat</div>
+        <div class="number_smaller">€&nbsp;41.331,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl15_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=13350&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl15_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl15_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=05ECCE9BB0B542FA843EEB5D9F26545FDBC875385B084F9B9AB4CD255F93C1E8&width=252&height=166" id="MainContent_ctl15_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl15_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Polgarstraße 32 / 2 / TOP 17</span>
+            </h5>
+            <div id="MainContent_ctl15_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl15_ctl00_divEnergyBar" class="energyclassa">
+        <div id="MainContent_ctl15_ctl00_divEnergyLabel" class="bar energy">A</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl15_ctl00_spanEnergyConsumption">24</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl15_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl15_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl15_ctl00_area" class="column area">
+        <div class="number">55<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl15_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl15_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;461,- / Monat</div>
+        <div class="number_smaller">€&nbsp;3.217,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl16_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=13779&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl16_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=C7EB3B585C2B4F4ABB7FCF283C983E49EFEA99DCABBB4917BC56F5C47787A9F3&width=252&height=166" id="MainContent_ctl16_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl16_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Mimi-Grossberg-Gasse 3 / E / TOP 23</span>
+            </h5>
+            <div id="MainContent_ctl16_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl16_ctl00_divEnergyBar" class="energyclassap">
+        <div id="MainContent_ctl16_ctl00_divEnergyLabel" class="bar energy">A+</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl16_ctl00_spanEnergyConsumption">15</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl16_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl16_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl16_ctl00_area" class="column area">
+        <div class="number">54<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl16_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl16_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;403,- / Monat</div>
+        <div class="number_smaller">€&nbsp;4.955,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl17_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=13842&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl17_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl17_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=EE75084039F744B98FD5FBDFD54A22C5D0555EACDFE34458AF0CA695BC2D80C0&width=252&height=166" id="MainContent_ctl17_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl17_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Ilse-Arlt-Straße 4 / C / TOP 11</span>
+            </h5>
+            <div id="MainContent_ctl17_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl17_ctl00_divEnergyBar" class="energyclassap">
+        <div id="MainContent_ctl17_ctl00_divEnergyLabel" class="bar energy">A+</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl17_ctl00_spanEnergyConsumption">15</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl17_ctl00_rooms" class="column rooms">
+        <div class="number">1</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl17_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl17_ctl00_area" class="column area">
+        <div class="number">43<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl17_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl17_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;314,- / Monat</div>
+        <div class="number_smaller">€&nbsp;3.835,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl18_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=13757&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl18_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=EFD1DF9C89FA415697D870A44440C01BCA10508A332349988A434AE0794A211C&width=252&height=166" id="MainContent_ctl18_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl18_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1220 Wien, Mimi-Grossberg-Gasse 3 / E / TOP 1</span>
+            </h5>
+            <div id="MainContent_ctl18_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl18_ctl00_divEnergyBar" class="energyclassap">
+        <div id="MainContent_ctl18_ctl00_divEnergyLabel" class="bar energy">A+</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl18_ctl00_spanEnergyConsumption">15</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl18_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl18_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl18_ctl00_area" class="column area">
+        <div class="number">100<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl18_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl18_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;707,- / Monat</div>
+        <div class="number_smaller">€&nbsp;8.692,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl19_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=14240&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl19_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl19_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=9B426E26029346CDB40635588509B3B3B97B4C0C7A28486CADA3039A9435FA88&width=252&height=166" id="MainContent_ctl19_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl19_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1230 Wien, Breitenfurter Straße 324 / 1 / TOP 120</span>
+            </h5>
+            <div id="MainContent_ctl19_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl19_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl19_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl19_ctl00_spanEnergyConsumption">25,3</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl19_ctl00_area" class="column area">
+        <div class="number">88<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl19_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl19_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;625,- / Monat</div>
+        <div class="number_smaller">€&nbsp;43.096,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl20_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=14250&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl20_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=14349A488B29452B95E80DA2285FE5E81FEFE7B7FE2F419C9F3A7CD4A4044AC6&width=252&height=166" id="MainContent_ctl20_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl20_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">1230 Wien, Breitenfurter Straße 324 / 2 / TOP 209</span>
+            </h5>
+            <div id="MainContent_ctl20_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl20_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl20_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl20_ctl00_spanEnergyConsumption">25,3</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl20_ctl00_area" class="column area">
+        <div class="number">78<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl20_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl20_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;557,- / Monat</div>
+        <div class="number_smaller">€&nbsp;38.334,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl21_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=7412&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl21_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=EC9D79D70F124411936FE61EC3D34758C06FC678FF1544F4BE8E2EEB7B88FCEA&width=252&height=166" id="MainContent_ctl21_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl21_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Dr. Eckenergasse 14 / TOP 7</span>
+            </h5>
+            <div id="MainContent_ctl21_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl21_ctl00_divEnergyBar" class="energyclasse">
+        <div id="MainContent_ctl21_ctl00_divEnergyLabel" class="bar energy">E</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl21_ctl00_spanEnergyConsumption">182,1</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl21_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl21_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl21_ctl00_area" class="column area">
+        <div class="number">40<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl21_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl21_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;306,- / Monat</div>
+        <div class="number_smaller">€&nbsp;620,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl22_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8471&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl22_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=D0E492E8FB6E44F28C194F0BDC83B6BE5FB9C9124B4A4C75BD88DCB4342E82A4&width=252&height=166" id="MainContent_ctl22_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl22_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 A / TOP 9</span>
+            </h5>
+            <div id="MainContent_ctl22_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl22_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl22_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl22_ctl00_spanEnergyConsumption">34,1</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl22_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl22_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl22_ctl00_area" class="column area">
+        <div class="number">120<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl22_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl22_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;1.060,- / Monat</div>
+        <div class="number_smaller">€&nbsp;19.103,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl23_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8475&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl23_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=4EFBA06336264E7D9ECDAB2F5E1DE8A8182B240F6FA84B7AA570E9E1428E5F27&width=252&height=166" id="MainContent_ctl23_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl23_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 A / TOP 13</span>
+            </h5>
+            <div id="MainContent_ctl23_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl23_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl23_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl23_ctl00_spanEnergyConsumption">34</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl23_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl23_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl23_ctl00_area" class="column area">
+        <div class="number">80<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl23_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl23_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;707,- / Monat</div>
+        <div class="number_smaller">€&nbsp;12.775,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl24_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8483&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl24_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=850E63EDD6D74F9188B05390CA646211A82286EB0D3246FF9FCD4812CEF0456C&width=252&height=166" id="MainContent_ctl24_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl24_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 B / TOP 21</span>
+            </h5>
+            <div id="MainContent_ctl24_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl24_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl24_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl24_ctl00_spanEnergyConsumption">35,4</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl24_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl24_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl24_ctl00_area" class="column area">
+        <div class="number">114<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl24_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl24_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;1.001,- / Monat</div>
+        <div class="number_smaller">€&nbsp;18.049,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl25_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8490&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl25_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl25_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=47F4D270E78546DEAF115B2519809DA58BD15690A19245D984D31DEC0A4E6653&width=252&height=166" id="MainContent_ctl25_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl25_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 A / TOP 28</span>
+            </h5>
+            <div id="MainContent_ctl25_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl25_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl25_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl25_ctl00_spanEnergyConsumption">34</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    
+    
+    <div id="MainContent_ctl25_ctl00_area" class="column area">
+        <div class="number">112<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl25_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl25_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;982,- / Monat</div>
+        <div class="number_smaller">€&nbsp;17.822,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl26_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8654&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl26_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl26_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=6AE0FB15FC904DEC89D0E172141F335AB42ADC02D4014FBDA1EBA4937FF839D2&width=252&height=166" id="MainContent_ctl26_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl26_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 F / 8 / TOP 7</span>
+            </h5>
+            <div id="MainContent_ctl26_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl26_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl26_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl26_ctl00_spanEnergyConsumption">36</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl26_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl26_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl26_ctl00_area" class="column area">
+        <div class="number">128<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl26_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl26_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;1.167,- / Monat</div>
+        <div class="number_smaller">€&nbsp;21.860,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl27_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8684&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl27_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl27_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=197A59E880234D3497483D4C4C1770210BB9C05410FB42CCBBD09E3512CA3F76&width=252&height=166" id="MainContent_ctl27_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl27_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">2700 Wiener Neustadt, Zehnergasse 20 F / 12 / TOP 6</span>
+            </h5>
+            <div id="MainContent_ctl27_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl27_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl27_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl27_ctl00_spanEnergyConsumption">36</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl27_ctl00_rooms" class="column rooms">
+        <div class="number">4</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl27_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl27_ctl00_area" class="column area">
+        <div class="number">128<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl27_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl27_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;1.094,- / Monat</div>
+        <div class="number_smaller">€&nbsp;31.100,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl28_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=6963&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl28_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl28_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=C01BE4C6477F497B9C80E3DCA01E8C5344FA08419B52481CACD0E39B5FF55482&width=252&height=166" id="MainContent_ctl28_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl28_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3580 Horn, Raabser Straße 79 / Stg. 4 / TOP 3</span>
+            </h5>
+            <div id="MainContent_ctl28_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl28_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl28_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl28_ctl00_spanEnergyConsumption">53,6</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl28_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl28_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl28_ctl00_area" class="column area">
+        <div class="number">76<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl28_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl28_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;742,- / Monat</div>
+        <div class="number_smaller">€&nbsp;3.044,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl29_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=6959&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl29_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl29_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=E454A7DF1157428FACE09A1AA791774B65C8FE99C56940AB90BEF309F7F91B26&width=252&height=166" id="MainContent_ctl29_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl29_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3580 Horn, Raabser Straße 79 / Stg. 3 / TOP 8</span>
+            </h5>
+            <div id="MainContent_ctl29_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl29_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl29_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl29_ctl00_spanEnergyConsumption">53,6</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl29_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl29_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl29_ctl00_area" class="column area">
+        <div class="number">53<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl29_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl29_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;524,- / Monat</div>
+        <div class="number_smaller">€&nbsp;2.153,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl30_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=7250&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl30_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl30_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=251AA9F6C0C74CBDB1FB394B80430A4AA35B84237F78432BA712ED6D6848EC82&width=252&height=166" id="MainContent_ctl30_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl30_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3812 Groß-Siegharts, Grabenfeldstraße 42 / Stg.1 / TOP 13</span>
+            </h5>
+            <div id="MainContent_ctl30_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl30_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl30_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl30_ctl00_spanEnergyConsumption">52,8</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl30_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl30_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl30_ctl00_area" class="column area">
+        <div class="number">78<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl30_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl30_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;639,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.916,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl31_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=7252&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl31_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl31_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=F99228BA0ED645EE903A538163686A7E9D957A7D7BBD4FB5A18360ED154123BE&width=252&height=166" id="MainContent_ctl31_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl31_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3812 Groß-Siegharts, Grabenfeldstraße 42 / Stg.1 / TOP 15</span>
+            </h5>
+            <div id="MainContent_ctl31_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl31_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl31_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl31_ctl00_spanEnergyConsumption">52,76</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl31_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl31_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl31_ctl00_area" class="column area">
+        <div class="number">56<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl31_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl31_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;458,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.374,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl32_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=7260&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl32_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl32_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=53CE93882AB34CDC86AB60E3A14522569DEA3C45B55C4FA6847BBE3A0F1ED815&width=252&height=166" id="MainContent_ctl32_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl32_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3812 Groß-Siegharts, Grabenfeldstraße 42 / Stg.2 / TOP 23</span>
+            </h5>
+            <div id="MainContent_ctl32_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl32_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl32_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl32_ctl00_spanEnergyConsumption">52,76</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl32_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl32_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl32_ctl00_area" class="column area">
+        <div class="number">78<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl32_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl32_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;641,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.923,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl33_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=7263&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl33_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl33_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=4F1029847FE347EF8CC2E7102FF0507A585EFB55DC3E4FD0A1761E86610C9A5F&width=252&height=166" id="MainContent_ctl33_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl33_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3812 Groß-Siegharts, Grabenfeldstraße 42 / Stg.2 / TOP 26</span>
+            </h5>
+            <div id="MainContent_ctl33_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl33_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl33_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl33_ctl00_spanEnergyConsumption">52,8</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl33_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl33_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl33_ctl00_area" class="column area">
+        <div class="number">78<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl33_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl33_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;640,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.919,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl34_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8143&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl34_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=B33BBDD65C8E4933ABD9B03FC2044F09116B7CF853634052B33FF879934D6420&width=252&height=166" id="MainContent_ctl34_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl34_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3911 Rappottenstein, Rappottenstein 14 / TOP 2</span>
+            </h5>
+            <div id="MainContent_ctl34_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl34_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl34_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl34_ctl00_spanEnergyConsumption">27</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl34_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl34_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl34_ctl00_area" class="column area">
+        <div class="number">49<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl34_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl34_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;457,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.371,- Kaution</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl35_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8145&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl35_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl35_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=AEA8832A5D2445CB89B2AC7988D3714DDFB8BE8AAC284F08BE6A3AC0608FD556&width=252&height=166" id="MainContent_ctl35_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl35_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3911 Rappottenstein, Rappottenstein 14 / TOP 4</span>
+            </h5>
+            <div id="MainContent_ctl35_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl35_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl35_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl35_ctl00_spanEnergyConsumption">27</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl35_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl35_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl35_ctl00_area" class="column area">
+        <div class="number">49<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl35_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl35_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;461,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.383,- Kaution</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl36_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=8147&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl36_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl36_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=99908847228E461EB34A598D5A06E685DFEF0E748DF64228A5BBB931D7B915AA&width=252&height=166" id="MainContent_ctl36_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl36_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3911 Rappottenstein, Rappottenstein 14 / TOP 6</span>
+            </h5>
+            <div id="MainContent_ctl36_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl36_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl36_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl36_ctl00_spanEnergyConsumption">27</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl36_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl36_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl36_ctl00_area" class="column area">
+        <div class="number">80<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl36_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl36_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;786,- / Monat</div>
+        <div class="number_smaller">€&nbsp;2.357,- Kaution</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl37_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=6354&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl37_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl37_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=463AA719085744019D8B3D5FFEC74EF2566696DC63E74DC0B397FF2E953DB66B&width=252&height=166" id="MainContent_ctl37_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl37_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3950 Gmünd, Dr. Karl-Renner-Straße 14 / 8 / TOP 11</span>
+            </h5>
+            <div id="MainContent_ctl37_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl37_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl37_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl37_ctl00_spanEnergyConsumption">75</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl37_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl37_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl37_ctl00_area" class="column area">
+        <div class="number">49<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl37_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl37_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;349,- / Monat</div>
+        <div class="number_smaller">€&nbsp;1.048,- Kaution</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl38_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=6630&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl38_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl38_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=5150039E6FD84FA8B88E026A715F5E4EDD0F0C8CB66846F1A4ADFA9BD1A598F2&width=252&height=166" id="MainContent_ctl38_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl38_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">3950 Gmünd, Conrathstrasse 52 / 1 / TOP 8</span>
+            </h5>
+            <div id="MainContent_ctl38_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl38_ctl00_divEnergyBar" class="energyclassc">
+        <div id="MainContent_ctl38_ctl00_divEnergyLabel" class="bar energy">C</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl38_ctl00_spanEnergyConsumption">72,4</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl38_ctl00_rooms" class="column rooms">
+        <div class="number">2</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl38_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl38_ctl00_area" class="column area">
+        <div class="number">64<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl38_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl38_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;471,- / Monat</div>
+        <div class="number_smaller">€&nbsp;3.717,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+<div id="MainContent_ctl39_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;./ProjektDetail.aspx?id=347&amp;typ=100&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl39_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/neu_bau.png" id="MainContent_ctl39_imgConstructionPhase" class="teaserconstphaseimg neu_bau" />
+            <img src="/Handlers/CastelloFileHandler.ashx?h=B57DFB7569034351B9807AA1659BCBD0EB6801D9C6164D1487190DDC18C12B6F&width=252&height=166" id="MainContent_ctl39_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl39_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Wohnen in Oberscheffau
+            </h4>
+            <h5 style="margin-top: 10px;">
+                5440 Scheffau am Tennengebirge, Scheffau am Tennengebirge 368
+            </h5>
+            <div style="clear:both"></div>
+			<div class="flatsInfo">
+				<div id="MainContent_ctl39_numberOfFlats" style="float:left" class="numberOfFlats">90</div>
+				<div id="MainContent_ctl39_flatsText" style="float:left" class="flatsText">WOHNUNGEN ENTSPRECHEN</br>DEN KRITERIEN</div>
+			</div>
+			
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div><div id="MainContent_ctl40_TeaserWrapper" class="teaser_wrapper" onclick="window.location = &#39;Suche.aspx?id=6101&amp;typ=1&amp;zmin=1&amp;zmax=5&#39;" style="cursor:pointer;">
+		
+    
+    <div id="MainContent_ctl40_pnlContainer" class="mainpanel">
+			
+        <div class="teaserimagediv">
+            <div class="imageProtector imageProtectorTeaser"></div>
+            <img src="Images/ribbons/sofort_beziehbar.png" id="MainContent_ctl40_imgConstructionPhase" alt="construction phase" class="teaserconstphaseimg sofort_beziehbar" />
+            
+            <img src="/Handlers/CastelloFileHandler.ashx?h=DF193B7C5159424B87C1BAE35A351C67BD8A5FE4EDE0476E9BC3EDC0F5F09F2B&width=252&height=166" id="MainContent_ctl40_imgTeaser" alt="teaser image" class="teaserimage" />
+        </div>
+        <img src="Images/teasercontrol/teaser_right_arrow.png" id="MainContent_ctl40_imgRightArrow" alt="Details" class="teaserrightarrow" />
+        <div class="teasercenterdiv">
+            <h4>
+                Miete
+            </h4>
+            <h5 style="margin-top: 10px;">
+                <span class="address">7100 Neusiedl am See, Semmelweisgasse 19 / 2 / TOP 5</span>
+            </h5>
+            <div id="MainContent_ctl40_ctl00_pnlEnergyContainer" class="energycontainer">
+				
+    <div id="MainContent_ctl40_ctl00_divEnergyBar" class="energyclassb">
+        <div id="MainContent_ctl40_ctl00_divEnergyLabel" class="bar energy">B</div>
+        <div class="energydescription">HWB-ref = <span id="MainContent_ctl40_ctl00_spanEnergyConsumption">33,1</span> kWh/m&sup2;a</div>
+        <div style="clear:both;"></div>
+    </div>
+
+			</div>
+<div class="teaser_flat_info">
+    <div id="MainContent_ctl40_ctl00_rooms" class="column rooms">
+        <div class="number">3</div>
+        <div class="label">Zimmer</div>
+    </div>
+    <div id="MainContent_ctl40_ctl00_firstSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl40_ctl00_area" class="column area">
+        <div class="number">94<span class="small">m<sup>2</sup></span></div>
+        <div class="label">Fläche</div>
+    </div>
+    <div id="MainContent_ctl40_ctl00_secondSeparator" class="column_separator"></div>
+    <div id="MainContent_ctl40_ctl00_financesRental" class="column finances">
+        <div class="number_smaller">€&nbsp;726,- / Monat</div>
+        <div class="number_smaller">€&nbsp;13.338,- EM</div>
+        <div class="label">Kosten</div>
+    </div>
+    
+    <div style="clear:both;"></div>
+</div>
+            <p>
+                
+            </p>
+        </div>
+        <div style="clear: both;">
+        </div>
+    
+		</div>
+
+	</div>
+
+</div>
+            </div>
+            <div class="showMore more_content slidedown_button" onclick="javascript: showMoreResults()">
+                <img class="arrows_left" alt="weitere Inhalte Anzeigen" src="Images/icons/arrows_down.png" />
+                <span>weitere Wohnungen anzeigen</span>
+                <img class="arrows_right" alt="weitere Inhalte Anzeigen" src="Images/icons/arrows_down.png" />
+            </div>
+        </div>
+    </div>
+    <div id="MainContent_pnlMainRight" class="mainRight">
+	
+        <div id="MainContent_searchPanel" class="searchPanel lightBorder">
+		
+	        <div id="MainContent_searchHeader">
+				<h1>
+					Suche
+				</h1>
+				<img id="MainContent_ImageHouse" src="Images/icons/haus.png" style="position: absolute; top: 10px; right: 0px; width: 100px;" />
+				
+	        </div>
+            <div id="MainContent_pnlArt">
+			
+                    <div style="float: left;">
+                        <h3>Arten:
+                        </h3>
+                    </div>
+                    <div style="float: left; padding-left: 4px;">
+                        <span id="MainContent_cbxlArt" class="checkBoxList"><input id="MainContent_cbxlArt_0" type="checkbox" name="ctl00$MainContent$cbxlArt$0" value="1" /><label for="MainContent_cbxlArt_0">Miete</label><br /><input id="MainContent_cbxlArt_1" type="checkbox" name="ctl00$MainContent$cbxlArt$1" value="2" /><label for="MainContent_cbxlArt_1">Eigentum       </label><br /><input id="MainContent_cbxlArt_2" type="checkbox" name="ctl00$MainContent$cbxlArt$2" value="3" /><label for="MainContent_cbxlArt_2">Miete mit Kaufoption</label><br /><input id="MainContent_cbxlArt_3" type="checkbox" name="ctl00$MainContent$cbxlArt$3" value="6" /><label for="MainContent_cbxlArt_3">Freifinanzierte Miete</label><br /></span>
+                    </div>
+                    <div style="clear: both;">
+                    </div>
+                
+		</div><div id="MainContent_pnlRegion">
+			
+                    <h3>Regionen:
+                    </h3>
+                    <div style="padding-left: 38px;">
+                        <table id="MainContent_cbxlRegion" class="checkBoxList checkBoxListRegionen" cellspacing="0" cellpadding="0" style="width:250px;border-collapse:collapse;">
+				<tr>
+					<td><input id="MainContent_cbxlRegion_0" type="checkbox" name="ctl00$MainContent$cbxlRegion$0" value="1" /><label for="MainContent_cbxlRegion_0">Wien</label></td>
+				</tr><tr>
+					<td><input id="MainContent_cbxlRegion_1" type="checkbox" name="ctl00$MainContent$cbxlRegion$1" value="6" /><label for="MainContent_cbxlRegion_1">Niederösterreich, Burgenland, Steiermark</label></td>
+				</tr><tr>
+					<td><input id="MainContent_cbxlRegion_2" type="checkbox" name="ctl00$MainContent$cbxlRegion$2" value="8" /><label for="MainContent_cbxlRegion_2">Westösterreich</label></td>
+				</tr>
+			</table>
+                    </div>
+                
+		</div><div id="MainContent_WohnungArt">
+			
+                    <div style="float: left;">
+                        <h3>Alter:
+                        </h3>
+                    </div>
+                    <div style="float: left; padding-left: 8px;">
+                        <span id="MainContent_cbxlWohnungArt" class="checkBoxList"><input id="MainContent_cbxlWohnungArt_0" type="checkbox" name="ctl00$MainContent$cbxlWohnungArt$0" value="0" /><label for="MainContent_cbxlWohnungArt_0">Neubauwohnungen</label><br /><input id="MainContent_cbxlWohnungArt_1" type="checkbox" name="ctl00$MainContent$cbxlWohnungArt$1" value="1" /><label for="MainContent_cbxlWohnungArt_1">Wiedervermietungen</label><br /></span>
+                    </div>
+                    <div style="clear: both;">
+                    </div>
+                
+		</div><div id="MainContent_sliders">
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="display: inline;">
+                            <span>Anzahl der Zimmer:</span>
+                        </h3>
+                        <span>von</span>
+                        <input name="ctl00$MainContent$TbxRoomsFrom" type="text" id="MainContent_TbxRoomsFrom" style="display: inline; width: 25px; text-align: center;" />
+                        <span>bis</span>
+                        <input name="ctl00$MainContent$TbxRoomsTo" type="text" id="MainContent_TbxRoomsTo" style="display: inline; width: 25px; text-align: center;" />
+                    </div>
+                    <div class="sliderContainer">
+                        <div id="MainContent_sliderAnzahlZimmer" class="jq_slider"></div>
+                        <input type="hidden" name="ctl00$MainContent$sliderAnzahlZimmer_1_hdn" id="MainContent_sliderAnzahlZimmer_1_hdn" value="100" />
+                        <div id="MainContent_sliderAnzahlZimmerFrom" style="float: left;">
+                            1
+                        </div>
+                        <input type="hidden" name="ctl00$MainContent$sliderAnzahlZimmer_2_hdn" id="MainContent_sliderAnzahlZimmer_2_hdn" value="500" />
+                        <div id="MainContent_sliderAnzahlZimmerTo" style="float: right;">
+                            5
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+                <input type="image" name="ctl00$MainContent$btnSuche" id="MainContent_btnSuche" class="searchButton" src="Images/buttons/btn_suche_starten.png" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$MainContent$btnSuche&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" style="" />
+                <div style="clear: both;">
+                </div>
+                <br />
+            
+        
+	</div>
+        <div style="clear: both;">
+        </div>
+        
+        <div style="clear: both;">
+        </div>
+    
+</div>
+    <div style="clear: both;">
+    </div>
+
+        </div>
+        
+
+<div class="footer">
+    <div class="content">
+        <div class="left panel">
+            <ul class="navigation">
+                <li class="seitenanfang">
+                    <img alt="seitenanfang" src="Images/icons/seitenanfang.png" />
+                    <a href="#">Seitenanfang</a>
+                </li>
+                <li class="startseite">
+                    <img alt="startseite" src="Images/icons/startseite.png" />
+                    <a href="Default.aspx">Startseite</a>
+                </li>
+                <li class="impressum">
+                    <img alt="impressum" src="Images/icons/impressum.png" />
+                    <a href="Impressum.aspx">Impressum & Datenschutz</a>
+                </li>
+            </ul>
+        </div>
+        <div class="separator panel"></div>
+        <div class="middle panel">
+            <img alt="aktuelle neubauprojekte" src="Images/buttons/aktuelle_neubauprojekte.png" />
+            <div class="project"><h3 class="title">1100 Wien, Sonnwendviertel  BPL C.22.B</h3><span class="subtitle">1100 Wien, Maria-Lassnig-Straße 38 und weitere</span><a href="/ProjektDetail.aspx?id=344&typ=2">Lesen Sie mehr</a></div><div class="project"><h3 class="title">1230 Wien, In der Wiesen Ost</h3><span class="subtitle">1230 Wien, In der Wiesen 7A und weitere</span><a href="/ProjektDetail.aspx?id=346&typ=2">Lesen Sie mehr</a></div>
+        </div>
+        <div class="separator panel"></div>
+        <div class="right panel">
+            <div class="contact_info">
+                <h3 class="title">
+                    EBG Gemeinnützige Ein- und Mehrfamilienhäuser<br />
+                    Baugenossenschaft reg. Gen. m. b. H.
+                </h3>
+                <span class="address">
+                    Josefstädter Straße 81-83<br />
+                    1080 Wien
+                </span>
+                <span class="contact">
+                    Tel.:&nbsp;<a href="tel:+4314061604">+43 (1) 406 16 04</a><br />
+                    Fax: +43 (1) 402 40 94<br />
+                    E-Mail: <a href="mailto:ebg@ebg-wohnen.at">ebg@ebg-wohnen.at</a>
+                </span>
+                <span>
+                    Ein Mitglied von<a href="http://www.gbv.at/" target="_blank"><img src="../Images/gvbLogo/gbv_logo.png" class="logoFooter"/></a>
+                </span>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</div>
+    </div>
+    
+<script type="text/javascript">$(function() { initializeLoginForm(); });</script>
+<script type="text/javascript">
+//<![CDATA[
+$('#MainContent_TbxRoomsFrom').on('blur keyup',function(event,ui) {
+$('#MainContent_sliderAnzahlZimmer_1_hdn').val($('#MainContent_TbxRoomsFrom').val()*100);
+if(event.which == null || event.which == 13) {
+if (parseInt($('#MainContent_TbxRoomsFrom').val()) < 1)
+{$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 0 , 1);
+$('#MainContent_TbxRoomsFrom').val(1); 
+$('#MainContent_sliderAnzahlZimmer_1_hdn').val(1); 
+return;}
+if (parseInt($('#MainContent_TbxRoomsFrom').val()) > parseInt($('#MainContent_TbxRoomsTo').val()))
+{$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 0 , $('#MainContent_TbxRoomsTo').val()*100);
+$('#MainContent_TbxRoomsFrom').val($('#MainContent_TbxRoomsTo').val()); 
+$('#MainContent_sliderAnzahlZimmer_1_hdn').val($('#MainContent_TbxRoomsTo').val()); 
+return;}
+$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 0 , $('#MainContent_TbxRoomsFrom').val()*100 );
+};
+});
+$('#MainContent_TbxRoomsTo').on('blur keyup',function(event,ui) {
+$('#MainContent_sliderAnzahlZimmer_2_hdn').val($('#MainContent_TbxRoomsTo').val()*100);
+if(event.which == null || event.which == 13) {
+if (parseInt($('#MainContent_TbxRoomsTo').val()) > 5)
+{$('#MainContent_TbxRoomsTo').val(5); 
+$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 1 , 500);
+$('#MainContent_sliderAnzahlZimmer_2_hdn').val(5); 
+return;}
+if (parseInt($('#MainContent_TbxRoomsFrom').val()) > parseInt($('#MainContent_TbxRoomsTo').val()))
+{$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 1 , $('#MainContent_TbxRoomsFrom').val()*100);
+$('#MainContent_TbxRoomsTo').val($('#MainContent_TbxRoomsFrom').val()); 
+$('#MainContent_sliderAnzahlZimmer_2_hdn').val($('#MainContent_TbxRoomsFrom').val()); 
+return;}
+$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 1 , $('#MainContent_TbxRoomsTo').val()*100 );
+};
+});
+$(function() { $("#MainContent_sliderAnzahlZimmer").slider( { animate: true, min:100, max:500, values: [100, 500], range: true, slide: function( event, ui ) {$('#MainContent_TbxRoomsFrom').val(Math.round(ui.values[0]/100));$('#MainContent_TbxRoomsTo').val(Math.round(ui.values[1]/100));},change: function( event, ui ) {if (event.originalEvent !== undefined && event.originalEvent.type !== undefined && event.originalEvent.type === 'mouseup') {$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 0 , Math.round(ui.values[0]/100)*100 );$('#MainContent_sliderAnzahlZimmer').slider( 'values' , 1 , Math.round(ui.values[1]/100)*100 );$('#MainContent_sliderAnzahlZimmer_1_hdn').val(Math.round(ui.values[0]/100)*100 );$('#MainContent_sliderAnzahlZimmer_2_hdn').val(Math.round(ui.values[1]/100)*100 );}}}); });
+$('#MainContent_TbxRoomsFrom').val(1);$('#MainContent_TbxRoomsTo').val(5);$(function() { $('.jq_slider').each(function() { var suffix = (typeof($(this).slider('option','suffix')) != 'object' ? $(this).slider('option','suffix') : ''); var prefix = (typeof($(this).slider('option','prefix')) != 'object' ? $(this).slider('option','prefix') : ''); $(this).bind('slide', function(event, ui) { if ($(this).slider('option','values') == null) { $('#' + $(this).attr('id') + '_1').html(prefix + ui.value + suffix); $('#' + $(this).attr('id') + '_1_hdn').attr('value', ui.value); } else {for(i = 0; i < $(this).slider('option','values').length; i++) { $('#' + $(this).attr('id') + '_' + (i+1)).html(prefix + ui.values[i] + suffix); $('#' + $(this).attr('id') + '_' + (i+1) + '_hdn').attr('value', ui.values[i]); } } }); }); });
+
+        $(function () {
+            $('#MainContent_TbUsername, #MainContent_TbPassword').val('');
+            var isOldExplorer = isOldIE();
+
+            var afterSlideUp = function () {
+                $('#MainContent_DivWeitereInhalte span').html('Wohnung');
+                $('#MainContent_DivWeitereInhalte img').attr('src', './Images/icons/arrows_down.png');
+            };
+
+            var afterSlideDown = function () {
+                $('#MainContent_DivWeitereInhalte span').html('Anmeldungsformular einrollen');
+                $('#MainContent_DivWeitereInhalte img').attr('src', './Images/icons/arrows_up.png');
+            };
+            
+            if ($('#MainContent_DivWeitereInhalte') != null) {
+                $('#MainContent_DivWeitereInhalte').bind('click', function () {
+                    if ($('#MainContent_pnlRegistration').is(':visible')) {
+                        if (isOldExplorer) {
+                            $('#MainContent_pnlRegistration').hide();
+                            afterSlideUp();
+                        }
+                        else {
+                            $('#MainContent_pnlRegistration').slideUp(500, afterSlideUp);
+                        }
+                    }
+                    else {
+                        if (isOldExplorer) {
+                            $('#MainContent_pnlRegistration').show();
+                            afterSlideDown();
+                        }
+                        else {
+                            $('#MainContent_pnlRegistration').slideDown(500, afterSlideDown);
+                        }
+                        
+                    }
+                });
+            }
+        });//]]>
+</script>
+</form>
+    <div style="display:none;">
+        <img src="Images/buttons/btn_menu_angebot_a.png" alt="_" />
+        <img src="Images/buttons/btn_menu_betreuung_a.png" alt="_" />
+        <img src="Images/buttons/btn_menu_unternehmen_a.png" alt="_" />
+    </div>
+</body>
+</html>
