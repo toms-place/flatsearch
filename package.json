@@ -17,6 +17,7 @@
   "dependencies": {
     "cron": "^1.4.1",
     "jsdom": "^12.2.0",
+    "lodash.initial": "^4.1.1",
     "lodash.sortby": "^4.7.0",
     "nodemailer": "^4.6.8",
     "request": "^2.88.0",
