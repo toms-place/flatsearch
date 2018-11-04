@@ -3,7 +3,7 @@ const CronJob = require('cron').CronJob;
 const FlatChecker = require('./lib/flatchecker');
 const flatChecker = new FlatChecker();
 const logErr = require('./lib/logger').logErr;
-const users = require('../users').users;
+const users = require('./users').users;
 
 if (process.env.NODE_ENV == 'dev') {
   const server = require('./tests/www');
