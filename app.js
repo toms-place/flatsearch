@@ -2,10 +2,13 @@ const Crawler = require('./lib/crawler');
 const CronJob = require('cron').CronJob;
 const FlatChecker = require('./lib/flatchecker');
 const User = require('./lib/user');
+const flatChecker = new FlatChecker();
+const logErr = require('./lib/logger').logErr;
 
 if (process.env.NODE_ENV == 'dev') {
   const server = require('./tests/www');
   server.listen(process.env.PORT || 8080);
+  flatChecker.initOutput = true;
 }
 
 
@@ -13,10 +16,11 @@ const name = 'Thomas';
 const email = 'kontakt@weber-thomas.at';
 const filter = [1020, 1030, 1200, 1210, 1220];
 
+const thomas = new User(name, email, filter);
 
 
 
-let cronTime = '0 */5 9-17 * * *';
+let cronTime = '0 */5 8-19 * * *';
 startCron(cronTime);
 
 
@@ -24,13 +28,18 @@ startCron(cronTime);
 
 
 async function startCrawl(callback) {
-  let flats;
   const crawler = new Crawler();
-  console.log('starting');
   await crawler.crawl();
-  flats = crawler.flats;
-  //console.log(flats);
-  return callback();
+  let newFlats = await flatChecker.compare(crawler.flats);
+
+  if (newFlats.length > 0) {
+    thomas.alert(newFlats);
+  }
+
+  if (process.env.NODE_ENV == 'dev') {
+    return callback();
+  }
+
 }
 
 function startCron(cronTime) {
@@ -38,12 +47,14 @@ function startCron(cronTime) {
     setTimeout(() => {
       startCrawl(() => {
         startCron();
+      }).catch((err) => {
+        logErr(err);
       });
-    }, 15000);
+    }, 500);
   } else {
-    const job = new CronJob(cronTime, function () {
+    const job = new CronJob(cronTime, () => {
       startCrawl();
-    });
+    }, null, null, "Europe/Amsterdam");
     job.start();
   }
 }
@@ -51,7 +62,6 @@ function startCron(cronTime) {
 
 
 /*
-const newFlats = await new FlatChecker(await crawler.flats).compare(); //Object with array of flatsobject and filter function
 const user = new User(name, email, filter);
 
 user.alert(newFlats.filter(this.filter));
