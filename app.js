@@ -19,7 +19,7 @@ const filter = [1020, 1030, 1200, 1210, 1220];
 const thomas = new User(name, email, filter);
 const thomas2 = new User('Thomas2', 'thomas.weber96@gmail.com', [3950]);
 
-var users = [thomas, thomas2];
+var users = [thomas];
 
 
 
