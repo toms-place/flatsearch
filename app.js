@@ -2,7 +2,7 @@ const Crawler = require('./lib/crawler');
 const CronJob = require('cron').CronJob;
 const FlatChecker = require('./lib/flatchecker');
 const User = require('./lib/user');
-const flatChecker = new FlatChecker();
+const flatChecker = new FlatChecker(true);
 const logErr = require('./lib/logger').logErr;
 
 if (process.env.NODE_ENV == 'dev') {
@@ -17,10 +17,13 @@ const email = 'kontakt@weber-thomas.at';
 const filter = [1020, 1030, 1200, 1210, 1220];
 
 const thomas = new User(name, email, filter);
+const thomas2 = new User('Thomas2', 'thomas.weber96@gmail.com', [3950]);
+
+var users = [thomas, thomas2];
 
 
 
-let cronTime = '0 */5 8-19 * * *';
+let cronTime = '0 */1 8-19 * * *';
 startCron(cronTime);
 
 
@@ -33,7 +36,9 @@ async function startCrawl(callback) {
   let newFlats = await flatChecker.compare(crawler.flats);
 
   if (newFlats.length > 0) {
-    thomas.alert(newFlats);
+    for (let user of users) {
+      user.alert(newFlats);
+    }
   }
 
   if (process.env.NODE_ENV == 'dev') {
@@ -58,11 +63,3 @@ function startCron(cronTime) {
     job.start();
   }
 }
-
-
-
-/*
-const user = new User(name, email, filter);
-
-user.alert(newFlats.filter(this.filter));
-*/
