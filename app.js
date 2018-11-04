@@ -16,14 +16,14 @@ const name = 'Thomas';
 const email = 'kontakt@weber-thomas.at';
 const filter = [1020, 1030, 1200, 1210, 1220];
 
-const thomas = new User(name, email, filter);
+const thomas = new User(name, email);
 const thomas2 = new User('Thomas2', 'thomas.weber96@gmail.com', [3950]);
 
 var users = [thomas];
 
 
 
-let cronTime = '0 */1 8-19 * * *';
+let cronTime = '0 */1 8-21 * * *';
 startCron(cronTime);
 
 
