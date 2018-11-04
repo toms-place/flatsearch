@@ -55,7 +55,7 @@ function startCron(cronTime) {
       }).catch((err) => {
         logErr(err);
       });
-    }, 500);
+    }, 10000);
   } else {
     const job = new CronJob(cronTime, () => {
       startCrawl();
