@@ -16,10 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "cron": "^1.4.1",
-    "globalize": "^1.4.0",
     "jsdom": "^12.2.0",
-    "lodash.initial": "^4.1.1",
-    "lodash.sortby": "^4.7.0",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.23",
     "nodemailer": "^4.6.8",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"

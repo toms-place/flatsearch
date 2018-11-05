@@ -3,6 +3,8 @@ const CronJob = require('cron').CronJob;
 const FlatChecker = require('./lib/flatchecker');
 const flatChecker = new FlatChecker();
 const logErr = require('./lib/logger').logErr;
+const logOut = require('./lib/logger').logOut;
+
 const users = require('./users').users;
 
 if (process.env.NODE_ENV == 'dev') {
@@ -21,8 +23,8 @@ startCron(cronTime);
 
 async function startCrawl(callback) {
   const crawler = new Crawler();
-  await crawler.crawl();
-  let newFlats = await flatChecker.compare(crawler.flats);
+  let flats = await crawler.crawl();
+  let newFlats = await flatChecker.compare(flats);
 
   if (newFlats.length > 0) {
     for (let user of users) {
@@ -44,9 +46,10 @@ function startCron(cronTime) {
       }).catch((err) => {
         logErr(err);
       });
-    }, 10000);
+    }, 1000);
   } else {
     const job = new CronJob(cronTime, () => {
+      logOut(['startedCron']);
       startCrawl();
     }, null, null, "Europe/Amsterdam");
     job.start();
