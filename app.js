@@ -3,7 +3,6 @@ const CronJob = require('cron').CronJob;
 const FlatChecker = require('./lib/flatchecker');
 const flatChecker = new FlatChecker();
 const logErr = require('./lib/logger').logErr;
-const logOut = require('./lib/logger').logOut;
 
 const users = require('./users').users;
 
@@ -14,8 +13,9 @@ if (process.env.NODE_ENV == 'dev') {
 }
 
 
-let cronTime = '0 */5 8-19 * * 1-5';
-startCron(cronTime);
+
+//starts the app
+startCron('0 */5 8-19 * * 1-5');
 
 
 
@@ -32,6 +32,7 @@ async function startCrawl(callback) {
     }
   }
 
+  //to wait till crawl is finished
   if (process.env.NODE_ENV == 'dev') {
     return callback();
   }
@@ -49,7 +50,6 @@ function startCron(cronTime) {
     }, 1000);
   } else {
     const job = new CronJob(cronTime, () => {
-      logOut(['startedCron']);
       startCrawl();
     }, null, null, "Europe/Amsterdam");
     job.start();

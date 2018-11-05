@@ -1,0 +1,121 @@
+November 5th 2018, 1:28:09 pm: startCrawl
+November 5th 2018, 1:32:05 pm: startCrawl
+November 5th 2018, 1:32:23 pm: crawlHeimbau
+November 5th 2018, 1:33:21 pm: startCrawl
+November 5th 2018, 1:33:38 pm: crawlHeimbau
+November 5th 2018, 1:33:39 pm: ReferenceError: res is not defined
+November 5th 2018, 1:33:39 pm: TypeError: arr[a] is not iterable
+November 5th 2018, 1:33:40 pm: startCrawl
+November 5th 2018, 1:33:42 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:34:58 pm: startCrawl
+November 5th 2018, 1:35:28 pm: crawlHeimbau
+November 5th 2018, 1:35:29 pm: TypeError: Cannot read property 'push' of undefined
+November 5th 2018, 1:35:29 pm: TypeError: arr[a] is not iterable
+November 5th 2018, 1:35:30 pm: startCrawl
+November 5th 2018, 1:35:32 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:37:06 pm: startCrawl
+November 5th 2018, 1:37:25 pm: crawlHeimbau
+November 5th 2018, 1:37:26 pm: [object Undefined]
+November 5th 2018, 1:37:26 pm: [object Undefined]
+November 5th 2018, 1:37:27 pm: startCrawl
+November 5th 2018, 1:37:28 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:39:15 pm: startCrawl
+November 5th 2018, 1:39:29 pm: crawlHeimbau
+November 5th 2018, 1:39:43 pm: startCrawl
+November 5th 2018, 1:40:03 pm: crawlHeimbau
+November 5th 2018, 1:40:05 pm: startCrawl
+November 5th 2018, 1:40:06 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:41:14 pm: startCrawl
+November 5th 2018, 1:41:43 pm: crawlHeimbau
+November 5th 2018, 1:41:43 pm: TypeError: Cannot read property 'push' of undefined
+November 5th 2018, 1:41:43 pm: TypeError: arr[a] is not iterable
+November 5th 2018, 1:41:44 pm: startCrawl
+November 5th 2018, 1:41:46 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:42:06 pm: startCrawl
+November 5th 2018, 1:42:30 pm: crawlHeimbau
+November 5th 2018, 1:42:30 pm: TypeError: Cannot read property 'push' of undefined
+November 5th 2018, 1:42:30 pm: TypeError: arr[a] is not iterable
+November 5th 2018, 1:42:31 pm: startCrawl
+November 5th 2018, 1:42:34 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:43:04 pm: startCrawl
+November 5th 2018, 1:43:28 pm: crawlHeimbau
+November 5th 2018, 1:43:57 pm: startCrawl
+November 5th 2018, 1:45:28 pm: startCrawl
+November 5th 2018, 1:45:52 pm: crawlHeimbau
+November 5th 2018, 1:45:52 pm: ReferenceError
+November 5th 2018, 1:45:52 pm: TypeError
+November 5th 2018, 1:45:53 pm: startCrawl
+November 5th 2018, 1:45:56 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:47:43 pm: startCrawl
+November 5th 2018, 1:48:13 pm: SyntaxError
+November 5th 2018, 1:48:38 pm: startCrawl
+November 5th 2018, 1:48:57 pm: crawlHeimbau
+November 5th 2018, 1:48:58 pm: TypeError
+November 5th 2018, 1:48:58 pm: TypeError
+November 5th 2018, 1:48:59 pm: startCrawl
+November 5th 2018, 1:49:37 pm: startCrawl
+November 5th 2018, 1:49:53 pm: crawlHeimbau
+November 5th 2018, 1:49:54 pm: TypeError
+November 5th 2018, 1:49:54 pm: TypeError
+November 5th 2018, 1:49:55 pm: startCrawl
+November 5th 2018, 1:49:56 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:50:16 pm: crawlHeimbau
+November 5th 2018, 1:50:16 pm: TypeError
+November 5th 2018, 1:50:16 pm: TypeError
+November 5th 2018, 1:50:17 pm: startCrawl
+November 5th 2018, 1:52:31 pm: startCrawl
+November 5th 2018, 1:52:49 pm: crawlHeimbau
+November 5th 2018, 1:52:50 pm: TypeError
+November 5th 2018, 1:52:50 pm: Cannot read property 'querySelectorAll' of undefined
+November 5th 2018, 1:52:50 pm: undefined
+November 5th 2018, 1:52:50 pm: TypeError
+November 5th 2018, 1:52:50 pm: undefined
+November 5th 2018, 1:52:50 pm: arr[a] is not iterable
+November 5th 2018, 1:52:51 pm: startCrawl
+November 5th 2018, 1:52:52 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:54:54 pm: startCrawl
+November 5th 2018, 1:55:21 pm: crawlHeimbau
+November 5th 2018, 1:55:25 pm: startCrawl
+November 5th 2018, 1:55:26 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:57:39 pm: startCrawl
+November 5th 2018, 1:57:56 pm: crawlHeimbau
+November 5th 2018, 1:58:01 pm: startCrawl
+November 5th 2018, 1:58:02 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 1:58:19 pm: crawlHeimbau
+November 5th 2018, 1:58:23 pm: startCrawl
+November 5th 2018, 2:00:00 pm: startCrawl
+November 5th 2018, 2:00:26 pm: crawlHeimbau
+November 5th 2018, 2:00:31 pm: startCrawl
+November 5th 2018, 2:00:33 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 2:06:23 pm: startCrawl
+November 5th 2018, 2:06:40 pm: startCrawl
+November 5th 2018, 2:06:56 pm: crawlHeimbau
+November 5th 2018, 2:07:00 pm: TypeError
+November 5th 2018, 2:07:00 pm: res2arr[i].querySelectorAll is not a function
+November 5th 2018, 2:07:00 pm: TypeError
+November 5th 2018, 2:07:00 pm: arr[a] is not iterable
+November 5th 2018, 2:07:01 pm: startCrawl
+November 5th 2018, 2:07:02 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 2:07:20 pm: startCrawl
+November 5th 2018, 2:07:36 pm: crawlHeimbau
+November 5th 2018, 2:07:39 pm: ReferenceError
+November 5th 2018, 2:07:39 pm: res2 is not defined
+November 5th 2018, 2:07:39 pm: TypeError
+November 5th 2018, 2:07:39 pm: arr[a] is not iterable
+November 5th 2018, 2:07:40 pm: startCrawl
+November 5th 2018, 2:07:59 pm: startCrawl
+November 5th 2018, 2:08:18 pm: crawlHeimbau
+November 5th 2018, 2:08:22 pm: startCrawl
+November 5th 2018, 2:08:23 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 2:11:09 pm: startCrawl
+November 5th 2018, 2:11:27 pm: crawlHeimbau
+November 5th 2018, 2:11:31 pm: startCrawl
+November 5th 2018, 2:11:32 pm: Email sent to: kontakt@weber-thomas.at
+November 5th 2018, 2:11:48 pm: crawlHeimbau
+November 5th 2018, 2:11:53 pm: startCrawl
+November 5th 2018, 2:12:09 pm: crawlHeimbau
+November 5th 2018, 2:12:13 pm: startCrawl
+November 5th 2018, 2:12:33 pm: crawlHeimbau
+November 5th 2018, 2:12:38 pm: startCrawl
+November 5th 2018, 2:12:53 pm: crawlHeimbau
+November 5th 2018, 2:12:57 pm: startCrawl
