@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "env NODE_ENV=prod node app.js",
-    "test": "env NODE_ENV=dev node app.js"
+    "test": "env NODE_ENV=dev node app.js",
+    "r": "git pull & env NODE_ENV=prod node app.js"
   },
   "keywords": [],
   "author": "Thomas Weber",

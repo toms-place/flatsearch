@@ -7,6 +7,10 @@ const logErr = require('./lib/logger').logErr;
 const User = require('./lib/user');
 const flatChecker = new FlatChecker();
 
+const nlCrawler = require('./lib/crawlers/nlCrawler');
+const nl = new nlCrawler();
+
+
 if (process.env.NODE_ENV == 'dev') {
   const server = require('./tests/www');
   server.listen(process.env.PORT || 8080);
@@ -28,7 +32,7 @@ async function startCrawl(callback) {
 
   fs.readFile('./users.json', async (err, data) => {
     if (err) throw err;
-
+/*
     let usersJSON = JSON.parse(data);
 
     for (let key in usersJSON) {
@@ -43,6 +47,11 @@ async function startCrawl(callback) {
       for (let user of users) {
         user.alert(newFlats);
       }
+    }
+*/
+    let nlFlats = await nl.crawl();
+    if (nlFlats.length > 0) {
+      console.log(JSON.parse(nlFlats[0]));
     }
 
     //wait till crawl is finished
@@ -61,7 +70,7 @@ function startCron(cronTime) {
       }).catch((err) => {
         logErr(err);
       });
-    }, 1000);
+    }, 10000);
   } else {
     const job = new CronJob(cronTime, () => {
       startCrawl().catch((err) => {
