@@ -2,21 +2,10 @@ const fs = require('fs');
 const CronJob = require('cron').CronJob;
 
 const Crawler = require('./lib/crawler');
-const FlatChecker = require('./lib/flatchecker');
 const logErr = require('./lib/logger').logErr;
 const User = require('./lib/user');
-const flatChecker = new FlatChecker();
 
-const nlCrawler = require('./lib/crawlers/nlCrawler');
-const nl = new nlCrawler();
-
-
-if (process.env.NODE_ENV == 'dev') {
-  const server = require('./tests/www');
-  server.listen(process.env.PORT || 8080);
-  flatChecker.initOutput = true;
-}
-
+const crawler = new Crawler();
 
 
 //starts the app
@@ -27,12 +16,10 @@ startCron('0 */5 8-19 * * 1-5');
 
 
 async function startCrawl(callback) {
-  const crawler = new Crawler();
-  const users = [];
+  let users = [];
 
   fs.readFile('./users.json', async (err, data) => {
     if (err) throw err;
-/*
     let usersJSON = JSON.parse(data);
 
     for (let key in usersJSON) {
@@ -40,18 +27,13 @@ async function startCrawl(callback) {
       users.push(user);
     }
 
-    let flats = await crawler.crawl();
-    let newFlats = await flatChecker.compare(flats);
+    let newFlats = await crawler.crawl();
+
 
     if (newFlats.length > 0) {
       for (let user of users) {
         user.alert(newFlats);
       }
-    }
-*/
-    let nlFlats = await nl.crawl();
-    if (nlFlats.length > 0) {
-      console.log(JSON.parse(nlFlats[0]));
     }
 
     //wait till crawl is finished
