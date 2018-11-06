@@ -4,9 +4,13 @@ const CronJob = require('cron').CronJob;
 const Crawler = require('./lib/crawler');
 const logErr = require('./lib/logger').logErr;
 const User = require('./lib/user');
+const server = require('./tests/www.js');
 
 const crawler = new Crawler();
 
+if (process.env.NODE_ENV == 'dev') {
+  //server.listen(8080);
+}
 
 //starts the app
 startCron('0 */5 8-19 * * 1-5');
