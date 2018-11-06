@@ -15,11 +15,13 @@
 - User of Host
 - Password of Host
 
-```{
+```
+{
   "host": "",
   "user": "",
   "pass": ""
-}```
+}
+```
 
 ## users.json
 - User objects with:
@@ -27,10 +29,12 @@
 - Email
 - filter: [] Array of districts as Integers
 
-```{
+```
+{
   "user1": {
     "name": "",
     "email": "",
     "filter": []
   }
-}```
+}
+```
