@@ -38,7 +38,7 @@ class Flat {
     if (this.images) {
       images = `<h3>Bilder</h3>`
       for (let i = 0; i < this.images.length; i++) {
-        images += `<a href="${this.link}"><img width="146px" height="98px" style="margin: 0px 5px 5px 0px;" src="${this.images[i].src}"></a>`;
+        images += `<img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${this.images[i].src}" />`;
       }
     }
 

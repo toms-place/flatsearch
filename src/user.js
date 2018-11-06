@@ -33,10 +33,12 @@ class User {
   async sendMail(arr) {
     fs.readFile('./mailAuth.json', async (err, data) => {
       if (err) throw err;
+
       let mailAuth = JSON.parse(data);
 
-      var transporter = nodemailer.createTransport({
+      let transporter = nodemailer.createTransport({
         host: mailAuth.host,
+        service: mailAuth.service,
         port: 465,
         secure: true, // use SSL
         auth: {
