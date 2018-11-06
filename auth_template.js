@@ -3,7 +3,5 @@ var auth = {
   user: '',
   pass: ''
 };
-var sendNotifcationTo = 'email1, email2';
 
 exports.auth = auth;
-exports.sendNotifcationTo = sendNotifcationTo;
