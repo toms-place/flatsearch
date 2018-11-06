@@ -1,9 +1,9 @@
 const fs = require('fs');
 const CronJob = require('cron').CronJob;
 
-const Crawler = require('./lib/crawler');
-const logErr = require('./lib/logger').logErr;
-const User = require('./lib/user');
+const Crawler = require('./src/crawler');
+const logErr = require('./src/logger').logErr;
+const User = require('./src/user');
 const server = require('./tests/www.js');
 
 const crawler = new Crawler();
