@@ -5,7 +5,7 @@
 - nodejs - [download here](https://nodejs.org/en/download/)
 
 # usage
-1. add [mailAuth.json](#mailAuth.json) & [users.json](#users.json)
+1. add [mailAuth.json](#mailAuthjson) & [users.json](#usersjson)
 2. npm install
 3. npm start
 4. leave it running, you get notified every 5 minutes if there is a new apartment
