@@ -1,7 +1,6 @@
 const Flat = require('../flat');
 const FlatChecker = require('../flatchecker');
 const rp = require('request-promise');
-const initial = require('lodash.initial');
 const jsdom = require('jsdom');
 const {
   JSDOM
@@ -55,7 +54,7 @@ class heimbauCrawler {
         let innerDoc = new JSDOM(res2arr[i].res.body).window.document;
 
         let district = res2arr[i].angebot.querySelectorAll('a')[0].innerHTML;
-        let adress = initial(innerDoc.querySelectorAll('.object-detail-address')[0].innerHTML.split(','))[0];
+        let adress = res2arr[i].angebot.querySelectorAll('a')[1].innerHTML;
         let city = innerDoc.querySelectorAll('.object-detail-address')[0].innerHTML.split(',').pop().split('.')[0].trim().split(' ')[1];
         let link = res2arr[i].res.request.uri.href;
         let docs;
