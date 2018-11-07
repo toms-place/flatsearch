@@ -16,7 +16,7 @@ class nlCrawler {
 
   async crawl() {
     try {
-      logOut('crawlNL');
+      //logOut('crawlNL');
 
       this.newFlats = [];
 

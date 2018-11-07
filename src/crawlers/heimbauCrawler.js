@@ -17,7 +17,7 @@ class heimbauCrawler {
 
   async crawl() {
     try {
-      logOut('crawlHeimbauNeubau');
+      //logOut('crawlHeimbauNeubau');
       this.newFlats = [];
 
       let url = 'https://www.heimbau.at/wohnungen';

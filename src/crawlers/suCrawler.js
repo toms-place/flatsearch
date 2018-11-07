@@ -16,7 +16,7 @@ class suCrawler {
 
   async crawl() {
     try {
-      logOut('crawlSU');
+      //logOut('crawlSU');
       this.newFlats = [];
       
       let url = 'http://www.siedlungsunion.at/wohnen/sofort';

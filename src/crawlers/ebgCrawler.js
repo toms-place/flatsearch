@@ -19,7 +19,7 @@ class ebgCrawler {
   async crawl() {
     try {
 
-      logOut('crawlEBG');
+      //logOut('crawlEBG');
       this.newFlats = [];
 
       let url = 'http://www.ebg-wohnen.at/Suche.aspx';

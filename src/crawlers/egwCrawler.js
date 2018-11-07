@@ -16,7 +16,7 @@ class egwCrawler {
 
   async crawl() {
     try {
-      logOut('crawlEGW');
+      //logOut('crawlEGW');
       this.newFlats = [];
 
       let url = 'http://www.egw.at/immobilien/bestands-wohnungen/miete/';

@@ -16,7 +16,7 @@ class szbCrawler {
 
   async crawl() {
     try {
-      logOut('crawlSZB');
+      //logOut('crawlSZB');
       this.newFlats = [];
 
       let url = 'https://www.sozialbau.at/unser-angebot/sofort-verfuegbar/';
