@@ -10,7 +10,7 @@ const logOut = require('../logger').logOut;
 
 class nlCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 

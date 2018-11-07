@@ -8,9 +8,9 @@ const {
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
 
-class ebwCrawler {
+class egwCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 
@@ -63,4 +63,4 @@ class ebwCrawler {
   }
 }
 
-module.exports = ebwCrawler;
+module.exports = egwCrawler;

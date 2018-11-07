@@ -12,7 +12,7 @@ const {
 
 class ebgCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 
