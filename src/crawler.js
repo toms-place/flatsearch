@@ -7,6 +7,7 @@ const ebgCrawler = require('./crawlers/ebgCrawler');
 const suCrawler = require('./crawlers/suCrawler');
 const szbCrawler = require('./crawlers/szbCrawler');
 const hbCrawler = require('./crawlers/heimbauCrawler');
+const frCrawler = require('./crawlers/friedenCrawler');
 
 
 class Crawler {
@@ -17,6 +18,7 @@ class Crawler {
     this.egw = new egwCrawler();
     this.ebg = new ebgCrawler();
     this.hb = new hbCrawler();
+    this.fr = new frCrawler();
   }
   async crawl() {
     logOut('startCrawl');
@@ -30,6 +32,7 @@ class Crawler {
       , this.egw.crawl()
       , this.ebg.crawl()
       , this.hb.crawl()
+      , this.fr.crawl()
     ];
 
     await Promise.all(promises);
@@ -40,6 +43,7 @@ class Crawler {
       , this.su.newFlats
       , this.egw.newFlats
       , this.ebg.newFlats
+      , this.fr.newFlats
     ];
 
     await combine(newFlats, flats);
