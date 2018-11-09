@@ -5,7 +5,7 @@ const logErr = require('../logger').logErr;
 
 class wsudCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 
