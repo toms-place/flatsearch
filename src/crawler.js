@@ -20,7 +20,7 @@ class Crawler {
     this.ebg = new ebgCrawler();
     this.hb = new hbCrawler();
     this.fr = new frCrawler();
-    //this.wsud = new wsudCrawler();
+    this.wsud = new wsudCrawler();
   }
   async crawl() {
     logOut('startCrawl');
@@ -35,7 +35,7 @@ class Crawler {
       , this.ebg.crawl()
       , this.hb.crawl()
       , this.fr.crawl()
-      //, this.wsud.crawl()
+      , this.wsud.crawl()
     ];
 
     await Promise.all(promises);
@@ -47,7 +47,7 @@ class Crawler {
       , this.egw.newFlats
       , this.ebg.newFlats
       , this.fr.newFlats
-      //, this.wsud.newFlats
+      , this.wsud.newFlats
     ];
 
     await combine(newFlats, flats);

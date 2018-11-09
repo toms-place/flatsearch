@@ -42,7 +42,7 @@ class friedenCrawler {
         }
 
 
-        let flat = new Flat('frieden', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flat = new Flat('Frieden', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
         await flats.push(JSON.stringify(flat));
 
