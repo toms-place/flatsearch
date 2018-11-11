@@ -54,7 +54,7 @@ class heimbauCrawler {
         let innerDoc = new JSDOM(res2arr[i].res.body).window.document;
 
         let district = res2arr[i].angebot.querySelectorAll('a')[0].innerHTML;
-        let adress = res2arr[i].angebot.querySelectorAll('a')[1].innerHTML;
+        let address = res2arr[i].angebot.querySelectorAll('a')[1].innerHTML;
         let city = innerDoc.querySelectorAll('.object-detail-address')[0].innerHTML.split(',').pop().split('.')[0].trim().split(' ')[1];
         let link = res2arr[i].res.request.uri.href;
         let docs;
@@ -123,7 +123,7 @@ class heimbauCrawler {
           images = innerDoc.querySelectorAll('.object-pictures-cont')[0].querySelectorAll('img');
         }*/
 
-        let flat = new Flat('Heimbau', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flat = new Flat('Heimbau', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
         flats.push(JSON.stringify(flat));
       }

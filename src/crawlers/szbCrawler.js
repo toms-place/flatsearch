@@ -39,17 +39,17 @@ class szbCrawler {
 
         for (let i = 1; i < angebot.length; i++) {
 
-          let district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
+          let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
           district = parseInt(angebot[i].querySelectorAll('td')[0].querySelectorAll('a')[0].innerHTML.trim().split(',')[0].split(' ')[0]);
           city = angebot[i].querySelectorAll('td')[0].querySelectorAll('a')[0].innerHTML.trim().split(',')[0].split(' ')[1];
-          adress = angebot[i].querySelectorAll('td')[0].querySelectorAll('a')[0].innerHTML.trim().split(',')[1];
+          address = angebot[i].querySelectorAll('td')[0].querySelectorAll('a')[0].innerHTML.trim().split(',')[1];
           link = 'https://www.sozialbau.at/unser-angebot/sofort-verfuegbar/';
           rooms = parseInt(angebot[i].querySelectorAll('td')[1].innerHTML);
           costs = angebot[i].querySelectorAll('td')[3].innerHTML;
           funds = angebot[i].querySelectorAll('td')[2].innerHTML;
 
-          let flat = new Flat('SZB', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+          let flat = new Flat('SZB', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
           flats.push(JSON.stringify(flat));
         }

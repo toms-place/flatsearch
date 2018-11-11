@@ -26,7 +26,7 @@ class friedenCrawler {
       let angebot = document.querySelectorAll('.batch-units tr');
 
       let street;
-      let district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
+      let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
       for (let i = 0; i < angebot.length; i++) {
 
@@ -37,12 +37,12 @@ class friedenCrawler {
           city = rest[0];
           continue;
         } else if (angebot[i].querySelectorAll('a').length > 0) {
-          adress = street + ' ' + angebot[i].querySelectorAll('.first .anchor')[0].innerHTML;
+          address = street + ' ' + angebot[i].querySelectorAll('.first .anchor')[0].innerHTML;
           link = 'http://www.frieden.at' + angebot[i].querySelectorAll('.first')[0].getAttribute("onclick").split('\'')[1];
         }
 
 
-        let flat = new Flat('Frieden', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flat = new Flat('Frieden', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
         await flats.push(JSON.stringify(flat));
 

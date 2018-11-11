@@ -89,7 +89,7 @@ function buildHTML(arr) {
         <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
           for (let f of arr) {
-            let flat = new Flat(f.website, f.district, f.city, f.adress, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
+            let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
             html += flat.getHTML() + '<br />';
 

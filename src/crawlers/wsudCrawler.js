@@ -32,7 +32,7 @@ class wsudCrawler {
       });
 
       let flats = [];
-      let district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
+      let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
       for (let project of JSON.parse(res.body)) {
         if (project.units.length > 0) {
@@ -57,7 +57,7 @@ class wsudCrawler {
 
             for (let unit of project.units) {
 
-              adress = street + ' (ID: ' + unit.id + ')'
+              address = street + ' (ID: ' + unit.id + ')'
               costs = unit.sampleRent;
               funds = unit.samplePrice;
               size = unit.size;
@@ -73,7 +73,7 @@ class wsudCrawler {
                 }
               }
 
-              let flat = new Flat('Wien Süd', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+              let flat = new Flat('Wien Süd', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
               await flats.push(JSON.stringify(flat));
 

@@ -37,7 +37,7 @@ class egwCrawler {
         let district, city, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
         let [destination, ...rest] = angebot[i].querySelectorAll('a')[0].innerHTML.split(",");
-        let adress = rest.join(',').trim();
+        let address = rest.join(',').trim();
 
         district = parseInt(destination.split(' ')[0]);
         city = destination.split(' ')[1];
@@ -47,7 +47,7 @@ class egwCrawler {
         costs = angebot[i].querySelectorAll('td')[4].innerHTML.split(" ")[1];
         funds = angebot[i].querySelectorAll('td')[3].innerHTML.split(" ")[1];
 
-        let flat = new Flat('EGW', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flat = new Flat('EGW', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
         flats.push(JSON.stringify(flat));
       }

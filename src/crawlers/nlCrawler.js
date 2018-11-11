@@ -73,11 +73,11 @@ class nlCrawler {
         let angebot = singleFlatsRequests[i].building.angebot;
         let singleFlat = singleFlatsRequests[i].singleFlat;
 
-        let district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, images;
+        let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, images;
         let info = '';
         let docs = [];
 
-        adress = singleFlat.querySelectorAll('span')[0].innerHTML.trim();
+        address = singleFlat.querySelectorAll('span')[0].innerHTML.trim();
         [district, city] = buildingDoc.querySelectorAll('.building-page')[0].querySelectorAll('h1')[0].innerHTML.split(',')[0].split(' ');
         link = singleFlatsRequests[i].res.request.uri.href;
         rooms = singleFlat.querySelectorAll('.room')[0].innerHTML;
@@ -122,7 +122,7 @@ class nlCrawler {
           }
         }
 
-        let flat = new Flat('Neuesleben', district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flat = new Flat('Neuesleben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
         await flats.push(JSON.stringify(flat));
       }
 

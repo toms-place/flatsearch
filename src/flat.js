@@ -1,10 +1,10 @@
 class Flat {
-  constructor(website, district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
-    this.id = adress;
+  constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
+    this.id = address;
     this.website = website;
     this.district = parseInt(district);
     this.city = city;
-    this.adress = adress;
+    this.address = address;
     this.link = link;
     this.rooms = rooms;
     this.size = size;
@@ -85,7 +85,7 @@ class Flat {
       `<div style="background-color:#eee; color:#333; box-shadow: 5px 5px 5px #aaa;">
         <div style="background-color:#ddd; padding:20px 0px 10px 20px;">
             <a href="${this.link}" style="line-height: 1;">
-              <h2>${this.adress}</h2>
+              <h2>${this.address}</h2>
             </a>
             <h3 style="line-height: 1;">${this.district} ${this.city} ${title}- ${this.website}</h3>
         </div>
