@@ -1,10 +1,10 @@
 class Flat {
-  constructor(website, district, city, adress, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
-    this.id = adress;
+  constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
+    this.id = address;
     this.website = website;
     this.district = parseInt(district);
     this.city = city;
-    this.adress = adress;
+    this.address = address;
     this.link = link;
     this.rooms = rooms;
     this.size = size;
@@ -23,17 +23,25 @@ class Flat {
     else return false;
   }
   getHTML() {
-    let menuIconStyle = `style="width: 40px;height: 5px;background-color: #333;margin: 10px 0px;"`
-    let menuIcon = `<div ${menuIconStyle}></div><div ${menuIconStyle}></div><div ${menuIconStyle}></div>`
 
     let title = '';
     if (this.title) {
       title = `- ${this.title} `
     }
+
     let info = '';
     if (this.info) {
       info = `<p>${this.info}</p>`;
     }
+
+    let images = '';
+    if (this.images) {
+      images = `<h3>Bilder</h3>`
+      for (let i = 0; i < this.images.length; i++) {
+        images += `<img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${this.images[i].src}" />`;
+      }
+    }
+
     let docs = '';
     if (this.docs) {
       docs = `<h3>Dokumente</h3><ul>`
@@ -77,12 +85,12 @@ class Flat {
       `<div style="background-color:#eee; color:#333; box-shadow: 5px 5px 5px #aaa;">
         <div style="background-color:#ddd; padding:20px 0px 10px 20px;">
             <a href="${this.link}" style="line-height: 1;">
-              <h2>${this.adress}</h2>
+              <h2>${this.address}</h2>
             </a>
             <h3 style="line-height: 1;">${this.district} ${this.city} ${title}- ${this.website}</h3>
         </div>
         <div style="padding: 5px 20px 10px 40px;">
-          ${details + docs + info}
+          ${details + docs + info + images}
         </div>
       </div>`
     return html;

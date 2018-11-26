@@ -33,10 +33,12 @@ class User {
   async sendMail(arr) {
     fs.readFile('./mailAuth.json', async (err, data) => {
       if (err) throw err;
+
       let mailAuth = JSON.parse(data);
 
-      var transporter = nodemailer.createTransport({
+      let transporter = nodemailer.createTransport({
         host: mailAuth.host,
+        service: mailAuth.service,
         port: 465,
         secure: true, // use SSL
         auth: {
@@ -45,10 +47,16 @@ class User {
         }
       });
 
+      let subject = `Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
+      
+      if (process.env.NODE_ENV == 'dev') {
+        subject = `TEST: Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
+      }
+
       let mailOptions = {
         from: mailAuth.user,
         to: this.email,
-        subject: `Hi ${this.name}, eine neue Wohnung wurde gefunden!`,
+        subject: subject,
         html: buildHTML(arr)
       };
 
@@ -81,7 +89,7 @@ function buildHTML(arr) {
         <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
           for (let f of arr) {
-            let flat = new Flat(f.website, f.district, f.city, f.adress, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
+            let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
             html += flat.getHTML() + '<br />';
 

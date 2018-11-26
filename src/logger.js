@@ -4,18 +4,22 @@ var os = require("os");
 
 
 function logErr(err) {
-  if (err.name == 'RequestError') {
-    let stack = '';
-    for (let i = 0; i < err.stack.length; i++) {
-      stack += err.stack[i];
+  try {
+    if (err.name == 'RequestError') {
+      logOut([err]);
+    } else {
+      let stack = '';
+      if (err.stack) {
+        for (let i = 0; i < err.stack.length; i++) {
+          stack += err.stack[i];
+        }
+        logOut([stack]);
+      } else {
+        console.log(err);
+      }
     }
-    logOut([stack]);
-  } else {
-    let stack = '';
-    for (let i = 0; i < err.stack.length; i++) {
-      stack += err.stack[i];
-    }
-    logOut([stack]);
+  } catch (error) {
+    console.log(error);
   }
 }
 
