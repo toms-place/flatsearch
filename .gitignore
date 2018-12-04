@@ -1,4 +1,8 @@
 node_modules
 package-lock.json
 auth.js
+users.js
 .DS_Store
+mailAuth.json
+users.json
+users_save.json
