@@ -9,6 +9,7 @@ const szbCrawler = require('./crawlers/szbCrawler');
 const hbCrawler = require('./crawlers/heimbauCrawler');
 const frCrawler = require('./crawlers/friedenCrawler');
 const wsudCrawler = require('./crawlers/wsudCrawler');
+const willCrawler = require('./crawlers/willCrawler');
 
 
 class Crawler {
@@ -21,38 +22,57 @@ class Crawler {
     this.hb = new hbCrawler();
     this.fr = new frCrawler();
     this.wsud = new wsudCrawler();
+    this.will = new willCrawler();
   }
   async crawl() {
     logOut('startCrawl');
 
-    let newFlats = [];
+    if (process.env.NODE_ENV == 'dev') {
+      let newFlats = [];
+  
+      let promises = [this.will.crawl()];
+  
+      await Promise.all(promises);
+  
+      let flats = [this.will.newFlats];
+  
+      await combine(newFlats, flats);
+  
+      return newFlats;
 
-    let promises = [
-      this.nl.crawl()
-      , this.szb.crawl()
-      , this.su.crawl()
-      , this.egw.crawl()
-      , this.ebg.crawl()
-      , this.hb.crawl()
-      , this.fr.crawl()
-      , this.wsud.crawl()
-    ];
+    } else {
 
-    await Promise.all(promises);
+      let newFlats = [];
 
-    let flats = [this.hb.newFlats
-      , this.nl.newFlats
-      , this.szb.newFlats
-      , this.su.newFlats
-      , this.egw.newFlats
-      , this.ebg.newFlats
-      , this.fr.newFlats
-      , this.wsud.newFlats
-    ];
+      let promises = [
+        this.nl.crawl()
+        , this.szb.crawl()
+        , this.su.crawl()
+        , this.egw.crawl()
+        , this.ebg.crawl()
+        , this.hb.crawl()
+        , this.fr.crawl()
+        , this.wsud.crawl()
+        , this.will.crawl()
+      ];
 
-    await combine(newFlats, flats);
+      await Promise.all(promises);
 
-    return newFlats;
+      let flats = [this.hb.newFlats
+        , this.nl.newFlats
+        , this.szb.newFlats
+        , this.su.newFlats
+        , this.egw.newFlats
+        , this.ebg.newFlats
+        , this.fr.newFlats
+        , this.wsud.newFlats
+        , this.will.newFlats
+      ];
+
+      await combine(newFlats, flats);
+
+      return newFlats;
+    }
 
   }
 }

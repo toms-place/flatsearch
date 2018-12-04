@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'dev') {
 }
 
 //starts the app
-startCron('0 */5 7-19 * * 1-5');
+startCron('0 */5 * * * *');
 
 
 

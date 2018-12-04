@@ -68,6 +68,9 @@ class nlCrawler {
       let flats = []
       for (let i = 0; i < singleFlatsRequests.length; i++) {
 
+        try {
+          
+
         let buildingDoc = new JSDOM(singleFlatsRequests[i].building.res.body).window.document;
         let flatDoc = new JSDOM(singleFlatsRequests[i].res.body).window.document;
         let angebot = singleFlatsRequests[i].building.angebot;
@@ -124,6 +127,10 @@ class nlCrawler {
 
         let flat = new Flat('Neuesleben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
         await flats.push(JSON.stringify(flat));
+        } catch (error) {
+          logOut(singleFlatsRequests[i].res.request.uri.href);
+          logErr(error);
+        }
       }
 
       this.newFlats = await this.flatChecker.compare(flats);
