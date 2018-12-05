@@ -28,7 +28,7 @@ class Flat {
 
       let title = '';
       if (this.title) {
-        title = `<h4 style="line-height: 1;">${this.title}</h4>`
+        title = `<h4 style="margin: 0px;">${this.title}</h4>`
       }
 
       let info = '';
@@ -84,18 +84,33 @@ class Flat {
       }
 
       let html =
-        `<div style="background-color:#eee; color:#333; box-shadow: 5px 5px 5px #aaa;">
-        <div style="background-color:#ddd; padding:20px 0px 10px 20px;">
-            <a href="${this.link}" style="line-height: 1;">
-              <h2>${this.address}</h2>
-            </a>
-            <h3 style="line-height: 1;">${this.district} ${this.city} - ${this.website}</h3>
+        `<div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa;">
+
+          <div style="padding: 12.5px 11px; background: #999; color: white;">
             ${title}
-        </div>
-        <div style="padding: 5px 20px 10px 40px;">
-          ${details + docs + info + images}
-        </div>
-      </div>`
+          </div>
+
+          <div style="background-color:#ddd; padding:20px;">
+              <a href="${this.link}" style="line-height: 1;">
+                <h2 style="margin: 0px;">${this.address}, ${this.district} ${this.city}</h2>
+              </a>
+          </div>
+
+          <div style="padding: 5px 20px 10px 40px; background-color:#eee;">
+            ${details + docs + info + images}
+          </div>
+
+          <div style="padding: 10px; background: #eee; color: #333; text-align:right;">
+            <h4 style="margin: 0px; padding: 0px;">${this.website}</h4>
+          </div>
+
+          <div style="padding: 12.5px 11px; background: #ddd; color: white; text-align:center;">
+            <a style="padding: 10px;" href="https://www.google.com/maps/search/${this.address}+${this.district}+${this.city}">
+              <img src="https://img.icons8.com/metro/50/ffffff/marker.png" alt="marker" width="25" height="25">
+            </a>
+          </div>
+
+        </div>`
       return html;
     } catch (error) {
       console.log(error)

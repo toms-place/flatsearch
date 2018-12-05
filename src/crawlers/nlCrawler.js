@@ -88,12 +88,13 @@ class nlCrawler {
         legalform = singleFlat.querySelectorAll('.legalForm')[0].innerHTML;
         title = angebot.querySelectorAll('.title')[0].innerHTML.trim();
         status = angebot.querySelectorAll('.tile-ribbon')[0].innerHTML.trim();
+        /*
         if (flatDoc.querySelectorAll('.description')[0]) {
           info += flatDoc.querySelectorAll('.description')[0].innerHTML;
         }
         if (flatDoc.querySelectorAll('.master-data')[0]) {
           info += flatDoc.querySelectorAll('.master-data')[0].innerHTML;
-        }
+        }*/
 
         let tempDocs = flatDoc.querySelectorAll('.materials')[0].querySelectorAll('a');
         if (tempDocs) {
