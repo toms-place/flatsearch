@@ -66,7 +66,10 @@ class willCrawler {
             let encoded = angebot[i].querySelectorAll('.info')[0].querySelectorAll('script')[0].innerHTML.split("'")[3];
             let bytes = base64.decode(encoded);
             costs = parseFloat(utf8.decode(bytes).trim().split(" ")[2].replace('.', '').replace(',', '.'));
-            console.log(costs);
+            
+            if (costs > 750) {
+              continue;
+            }
 
             title = angebot[i].querySelectorAll('.header')[0].querySelectorAll('a')[0].textContent.trim();
             images = [{
