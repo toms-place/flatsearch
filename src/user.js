@@ -95,13 +95,13 @@ function buildHTML(arr) {
       </head>
 
       <body style="font-family: 'IBM Plex Sans', sans-serif; width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;">
-        <div style="max-width: 800px; margin: auto auto; padding: 0px 10px;">
+        <div style="max-width: 800px; margin: auto auto; padding: 0px 20px;">
           <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
             for (let f of arr) {
               let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
-              html += flat.getHTML() + '<br />';
+              html += flat.getHTML() + '<br /><br /><br />';
 
             }
 

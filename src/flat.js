@@ -100,12 +100,12 @@ class Flat {
             ${details + docs + info + images}
           </div>
 
-          <div style="padding: 10px; background: #ddd; color: #333; text-align:right;">
+          <div style="padding: 10px; background: #eee; color: #333; text-align:right;">
             <h4 style="margin: 0px; padding: 0px;">${this.website}</h4>
           </div>
 
-          <div style="padding: 12.5px 11px; background: #999; color: white; text-align:center;">
-            <a style="padding: 10px; background: #999;" href="https://www.google.com/maps/search/${this.address}+${this.district}+${this.city}">
+          <div style="padding: 12.5px 11px; background: #ddd; color: white; text-align:center;">
+            <a style="padding: 10px;" href="https://www.google.com/maps/search/${this.address}+${this.district}+${this.city}">
               <img src="https://img.icons8.com/metro/50/ffffff/marker.png" alt="marker" width="25" height="25">
             </a>
           </div>
