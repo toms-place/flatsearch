@@ -13,7 +13,7 @@ var utf8 = require('utf8');
 
 class willCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 
