@@ -19,7 +19,7 @@ class willCrawler {
 
   async crawl() {
     try {
-      logOut('crawlWillhaben');
+      //logOut('crawlWillhaben');
 
       this.newFlats = [];
 
