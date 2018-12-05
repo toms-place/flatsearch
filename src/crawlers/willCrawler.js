@@ -65,7 +65,8 @@ class willCrawler {
             /* Willhaben encodes the span with the price in base64 */
             let encoded = angebot[i].querySelectorAll('.info')[0].querySelectorAll('script')[0].innerHTML.split("'")[3];
             let bytes = base64.decode(encoded);
-            costs = utf8.decode(bytes).trim().split(" ")[2];
+            costs = parseFloat(utf8.decode(bytes).trim().split(" ")[2].replace('.', '').replace(',', '.'));
+            console.log(costs);
 
             title = angebot[i].querySelectorAll('.header')[0].querySelectorAll('a')[0].textContent.trim();
             images = [{

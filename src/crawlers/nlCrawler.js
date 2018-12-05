@@ -112,7 +112,7 @@ class nlCrawler {
           for (let i = 0; i < financing.length; i++) {
             switch (financing[i].querySelectorAll('.financing-title')[0].innerHTML) {
               case 'monatliche Kosten:':
-                costs = financing[i].querySelectorAll('.financing-value')[0].innerHTML;
+                costs = parseFloat(financing[i].querySelectorAll('.financing-value')[0].innerHTML.replace('.', '').replace(',', '.'));
                 break;
               case 'Kaution:':
                 deposit = financing[i].querySelectorAll('.financing-value')[0].innerHTML;
