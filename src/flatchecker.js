@@ -1,6 +1,6 @@
 class FlatChecker {
   constructor(initOutput) {
-    this.initOutput = initOutput || false;
+    this.initOutput = false || initOutput;
     this.tempFlats = [];
   }
   compare(flats) {
@@ -9,7 +9,9 @@ class FlatChecker {
     let newFlats = [];
 
     if (this.tempFlats.length == 0 && this.initOutput) {
-      newFlats = flats;
+      for (let i = 0; i < flats.length; i++) {
+        newFlats.push(flats[i]);
+      }
     } else if (this.tempFlats.length !== 0) {
 
       let l;

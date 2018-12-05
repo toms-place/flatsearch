@@ -1,13 +1,40 @@
 # wohnen-crawler
-
 - crawls some websites for new apartments
 
 # requirements
 - nodejs - [download here](https://nodejs.org/en/download/)
-- generate an app-password for your gmail account - [generate password here](https://security.google.com/settings/security/apppasswords)
 
 # usage
-1. rename auth.js_save to auth.js and enter credentials for gmail
+1. add [mailAuth.json](#mailAuthjson) & [users.json](#usersjson)
 2. npm install
 3. npm start
-4. leave it running, you get notified if there is a new apartment
+4. leave it running, you get notified every 5 minutes if there is a new apartment
+
+## mailAuth.json
+- smtp Host
+- User of Host
+- Password of Host
+
+```
+{
+  "host": "",
+  "user": "",
+  "pass": ""
+}
+```
+
+## users.json
+- User objects with:
+- Name
+- Email
+- filter: [] Array of districts as Integers
+
+```
+{
+  "user1": {
+    "name": "",
+    "email": "",
+    "filter": []
+  }
+}
+```
