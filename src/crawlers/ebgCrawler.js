@@ -2,6 +2,8 @@ const Flat = require('../flat');
 const FlatChecker = require('../flatchecker');
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
+const CronJob = require('cron').CronJob;
+const flatListener = require('../flatListener');
 
 const rp = require('request-promise');
 const jsdom = require('jsdom');
@@ -16,56 +18,63 @@ class ebgCrawler {
     this.newFlats = [];
   }
 
-  async crawl() {
-    try {
+  async crawl(users) {
 
-      //logOut('crawlEBG');
-      this.newFlats = [];
+    const job = new CronJob('0 */5 * * * *', async () => {
+      try {
 
-      let url = 'http://www.ebg-wohnen.at/Suche.aspx';
+        //logOut('crawlEBG');
+        this.newFlats = [];
 
-      if (process.env.NODE_ENV == 'dev') {
-        url = 'http://127.0.0.1:8080/ebg';
-      }
+        let url = 'http://www.ebg-wohnen.at/Suche.aspx';
 
-      let flats = [];
-
-      let res1 = await rp({
-        'url': url,
-        resolveWithFullResponse: true
-      });
-
-      let document = new JSDOM(res1.body).window.document;
-      let angebot = document.querySelector('#MainContent_pnlSearchResultsBig').querySelectorAll('.teaser_wrapper');
-
-      let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
-
-      for (let i = 0; i < angebot.length; i++) {
-        link = 'http://www.ebg-wohnen.at/' + angebot[i].getAttribute("onclick").split('\'')[1];
-        if (angebot[i].querySelectorAll('.address')[0] && angebot[i].querySelectorAll('.number')[0]) {
-          address = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[1].trim();
-          district = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[0];
-          city = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[1];
-          rooms = parseInt(angebot[i].querySelectorAll('.number')[0].innerHTML);
-        } else {
-          address = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[1];
-          district = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[0];
-          city = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[1];
-          rooms = "deeper search necessary"
+        if (process.env.NODE_ENV == 'dev') {
+          url = 'http://127.0.0.1:8080/ebg';
         }
 
-        let flat = new Flat('EBG', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+        let flats = [];
 
-        flats.push(JSON.stringify(flat));
+        let res1 = await rp({
+          'url': url,
+          resolveWithFullResponse: true
+        });
+
+        let document = new JSDOM(res1.body).window.document;
+        let angebot = document.querySelector('#MainContent_pnlSearchResultsBig').querySelectorAll('.teaser_wrapper');
+
+        let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
+
+        for (let i = 0; i < angebot.length; i++) {
+          link = 'http://www.ebg-wohnen.at/' + angebot[i].getAttribute("onclick").split('\'')[1];
+          if (angebot[i].querySelectorAll('.address')[0] && angebot[i].querySelectorAll('.number')[0]) {
+            address = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[1].trim();
+            district = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[0];
+            city = angebot[i].querySelectorAll('.address')[0].innerHTML.split(',')[0].split(' ')[1];
+            rooms = parseInt(angebot[i].querySelectorAll('.number')[0].innerHTML);
+          } else {
+            address = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[1];
+            district = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[0];
+            city = angebot[i].querySelectorAll('.teasercenterdiv')[0].querySelectorAll('h5')[0].innerHTML.trim().split(',')[0].split(' ')[1];
+            rooms = "deeper search necessary"
+          }
+
+          let flat = new Flat('EBG', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
+
+          flats.push(JSON.stringify(flat));
+        }
+
+        this.newFlats = await this.flatChecker.compare(flats);
+
+        if (this.newFlats.length > 0) {
+          flatListener.emit('newFlat', this.newFlats, users);
+        }
+
+      } catch (error) {
+        logErr(error);
       }
 
-      this.newFlats = await this.flatChecker.compare(flats);
-
-    } catch (error) {
-      logErr(error);
-    }
-
-    return;
+    }, null, null, "Europe/Amsterdam", null, true);
+    job.start();
 
   }
 }

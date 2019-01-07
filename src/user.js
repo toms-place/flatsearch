@@ -3,13 +3,28 @@ const nodemailer = require('nodemailer');
 const Flat = require('./flat');
 const logOut = require('./logger').logOut;
 const logErr = require('./logger').logErr;
+const CronJob = require('cron').CronJob;
 
 class User {
-  constructor(name, email, filter) {
+  constructor(name, email, filter, notificationRate) {
     this.name = name;
     this.email = email;
     this.filter = filter;
+    this.notificationRate = notificationRate;
+    this.flats = [];
   }
+
+  addFlat(flat) {
+    this.flats.push(flat);
+  }
+
+  notify() {
+    const job = new CronJob('0 */10 * * * *', () => {
+      this.alert(this.flats);
+    }, null, null, "Europe/Amsterdam", null, true);
+    job.start();
+  }
+
   alert(flats) {
     let sendingFlats = [];
     for (let item of flats) {
@@ -48,7 +63,7 @@ class User {
       });
 
       let subject = `Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
-      
+
       if (process.env.NODE_ENV == 'dev') {
         subject = `TEST: Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
       }
@@ -98,14 +113,14 @@ function buildHTML(arr) {
         <div style="max-width: 800px; margin: auto auto; padding: 0px 20px;">
           <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
-            for (let f of arr) {
-              let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
+  for (let f of arr) {
+    let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
-              html += flat.getHTML() + '<br /><br /><br />';
+    html += flat.getHTML() + '<br /><br /><br />';
 
-            }
+  }
 
-              html += `
+  html += `
           <p style="color: #111;">
             Danke, dass du <i><strong>flatsearch</strong></i> benutzt!<br />
             Ich bitte um Feedback an <a href="mailto:kontakt@weber-thomas.at">Thomas Weber</a>!

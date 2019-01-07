@@ -7,6 +7,8 @@ const {
 } = jsdom;
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
+const CronJob = require('cron').CronJob;
+const flatListener = require('../flatListener');
 
 class egwCrawler {
   constructor() {
@@ -14,7 +16,9 @@ class egwCrawler {
     this.newFlats = [];
   }
 
-  async crawl() {
+  async crawl(users) {
+
+    const job = new CronJob('0 */5 * * * *', async () => {
     try {
       //logOut('crawlEGW');
       this.newFlats = [];
@@ -51,15 +55,19 @@ class egwCrawler {
 
         flats.push(JSON.stringify(flat));
       }
-
+      
       this.newFlats = await this.flatChecker.compare(flats);
+
+      if (this.newFlats.length > 0) {
+        flatListener.emit('newFlat', this.newFlats, users);
+      }
 
     } catch (error) {
       logErr(error);
     }
 
-    return;
-
+  }, null, null, "Europe/Amsterdam", null, true);
+  job.start();
   }
 }
 

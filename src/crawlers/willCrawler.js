@@ -9,6 +9,8 @@ const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
 var base64 = require('base-64');
 var utf8 = require('utf8');
+const CronJob = require('cron').CronJob;
+const flatListener = require('../flatListener');
 
 
 class willCrawler {
@@ -17,7 +19,9 @@ class willCrawler {
     this.newFlats = [];
   }
 
-  async crawl() {
+  async crawl(users) {
+
+    const job = new CronJob('0 */30 * * * *', async () => {
     try {
       //logOut('crawlWillhaben');
 
@@ -82,12 +86,16 @@ class willCrawler {
 
       this.newFlats = await this.flatChecker.compare(flats);
 
+      if (this.newFlats.length > 0) {
+        flatListener.emit('newFlat', this.newFlats, users);
+      }
+
     } catch (error) {
       logErr(error);
     }
 
-    return;
-
+  }, null, null, "Europe/Amsterdam", null, true);
+  job.start();
   }
 }
 

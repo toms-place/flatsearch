@@ -1,0 +1,20 @@
+January 7th 2019, 10:56:01 pm: Email sent to: kontakt@weber-thomas.at
+January 7th 2019, 10:57:00 pm: ReferenceError: users is not defined
+    at CronJob (/Users/thomas/git/flatsearch/src/crawlers/suCrawler.js:64:55)
+January 7th 2019, 11:00:03 pm: Email sent to: kontakt@weber-thomas.at
+January 7th 2019, 11:05:01 pm: Email sent to: kontakt@weber-thomas.at
+January 7th 2019, 11:10:01 pm: Email sent to: kontakt@weber-thomas.at
+January 7th 2019, 11:10:04 pm: StatusCodeError: 503 - "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n   \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n<head>\n    <title>ERROR 503 - Service Unavailable!</title>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n    <meta name=\"robots\" content=\"noindex\" />\n    <style type=\"text/css\"><!--\n    body {\n        color: #444444;\n        background-color: #EEEEEE;\n        font-family: 'Trebuchet MS', sans-serif;\n        font-size: 80%;\n    }\n    h1 {}\n    h2 { font-size: 1.2em; }\n    #page{\n        background-color: #FFFFFF;\n        width: 60%;\n        margin: 24px auto;\n        padding: 12px;\n    }\n    #header {\n        padding: 6px ;\n        text-align: center;\n    }\n    .status3xx { background-color: #475076; color: #FFFFFF; }\n    .status4xx { background-color: #C55042; color: #FFFFFF; }\n    .status5xx { background-color: #F2E81A; color: #000000; }\n    #content {\n        padding: 4px 0 24px 0;\n    }\n    #footer {\n        color: #666666;\n        background: #f9f9f9;\n        padding: 10px 20px;\n        border-top: 5px #efefef solid;\n        font-size: 0.8em;\n        text-align: center;\n    }\n    #footer a {\n        color: #999999;\n    }\n    --></style>\n</head>\n<body>\n    <div id=\"page\">\n        <div id=\"header\" class=\"status5xx\">\n            <h1>ERROR 503 - Service Unavailable!</h1>\n        </div>\n        <div id=\"content\">\n            <h2>The following error occurred:</h2>\n            <p>The Service is not available at the moment due to a temporary overloading or maintenance of the server. Please try again later.</p>\n\t\t\t<P>Please contact the <!--WEBMASTER//-->webmaster<!--WEBMASTER//--> with any queries.</p>\n        </div>\n        <div id=\"footer\">\n            <p>Powered by <a href=\"http://www.ispconfig.org\">ISPConfig</a></p>\n        </div>\n    </div>\n</body>\n</html>\n"
+    at new StatusCodeError (/Users/thomas/git/flatsearch/node_modules/request-promise-core/lib/errors.js:32:15)
+    at Request.plumbing.callback (/Users/thomas/git/flatsearch/node_modules/request-promise-core/lib/plumbing.js:104:33)
+    at Request.RP$callback [as _callback] (/Users/thomas/git/flatsearch/node_modules/request-promise-core/lib/plumbing.js:46:31)
+    at Request.self.callback (/Users/thomas/git/flatsearch/node_modules/request/request.js:185:22)
+    at Request.emit (events.js:188:13)
+    at Request.<anonymous> (/Users/thomas/git/flatsearch/node_modules/request/request.js:1161:10)
+    at Request.emit (events.js:188:13)
+    at IncomingMessage.<anonymous> (/Users/thomas/git/flatsearch/node_modules/request/request.js:1083:12)
+    at Object.onceWrapper (events.js:276:13)
+    at IncomingMessage.emit (events.js:193:15)
+    at endReadableNT (_stream_readable.js:1129:12)
+    at process.internalTickCallback (internal/process/next_tick.js:72:19)
+January 7th 2019, 11:11:00 pm: RequestError: Error: getaddrinfo ENOTFOUND www.heimbau.at www.heimbau.at:443

@@ -11,85 +11,37 @@ const frCrawler = require('./crawlers/friedenCrawler');
 const wsudCrawler = require('./crawlers/wsudCrawler');
 const willCrawler = require('./crawlers/willCrawler');
 
-
 class Crawler {
   constructor() {
-    this.nl = new nlCrawler();
-    this.szb = new szbCrawler();
-    this.su = new suCrawler();
-    this.egw = new egwCrawler();
-    this.ebg = new ebgCrawler();
-    this.hb = new hbCrawler();
-    this.fr = new frCrawler();
-    this.wsud = new wsudCrawler();
-    this.will = new willCrawler();
+    this.sites = {
+      neuesleben: {
+        url: "https://www.wohnen.at/angebot/unser-wohnungsangebot/",
+        refreshRate: 5
+      }
+    };
+    this.users = [];
   }
+
   async crawl() {
-    logOut('startCrawl');
 
-    if (process.env.NODE_ENV == 'dev') {
-      let newFlats = [];
-  
-      let promises = [this.will.crawl()];
-  
-      await Promise.all(promises);
-  
-      let flats = [this.will.newFlats];
-  
-      await combine(newFlats, flats);
-  
-      return newFlats;
+      let nl = new nlCrawler().crawl(this.users);
+      let szb = new szbCrawler().crawl(this.users);
+      let su = new suCrawler().crawl(this.users);
+      let egw = new egwCrawler().crawl(this.users);
+      let ebg = new ebgCrawler().crawl(this.users);
+      let hb = new hbCrawler().crawl(this.users);
+      let fr = new frCrawler().crawl(this.users);
+      let wsud = new wsudCrawler().crawl(this.users);
+      let will = new willCrawler().crawl(this.users);
 
-    } else {
+  }
 
-      let newFlats = [];
-
-      let promises = [
-        this.nl.crawl()
-        , this.szb.crawl()
-        , this.su.crawl()
-        , this.egw.crawl()
-        , this.ebg.crawl()
-        , this.hb.crawl()
-        , this.fr.crawl()
-        , this.wsud.crawl()
-        , this.will.crawl()
-      ];
-
-      await Promise.all(promises);
-
-      let flats = [this.hb.newFlats
-        , this.nl.newFlats
-        , this.szb.newFlats
-        , this.su.newFlats
-        , this.egw.newFlats
-        , this.ebg.newFlats
-        , this.fr.newFlats
-        , this.wsud.newFlats
-        , this.will.newFlats
-      ];
-
-      await combine(newFlats, flats);
-
-      return newFlats;
+  notify() {
+    for (let user of this.users) {
+      user.notify();
     }
-
   }
 }
 
 module.exports = Crawler;
 
-function combine(arr1, arr2) {
-  for (let a = 0; a < arr2.length; a++) {
-    if (arr1.length > 0) {
-      arr1.concat(arr2[a]);
-    }
-    try {
-      for (let i of arr2[a]) {
-        arr1.push(i)
-      }
-    } catch (err) {
-      logErr(err);
-    }
-  }
-}
