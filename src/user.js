@@ -17,9 +17,9 @@ class User {
   addFlat(flat) {
     this.flats.push(flat);
   }
-
   notify() {
-    const job = new CronJob('0 */10 * * * *', () => {
+    const job = new CronJob('0 */1 * * *', () => {
+      console.log("job started");
       this.alert(this.flats);
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
