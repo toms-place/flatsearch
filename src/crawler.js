@@ -32,7 +32,7 @@ class Crawler {
       let hb = new hbCrawler().crawl(this.users);
       let fr = new frCrawler().crawl(this.users);
       let wsud = new wsudCrawler().crawl(this.users);
-      let will = new willCrawler().crawl(this.users);
+      //let will = new willCrawler().crawl(this.users);
 
   }
 
