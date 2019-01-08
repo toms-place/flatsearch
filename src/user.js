@@ -42,6 +42,7 @@ class User {
       return;
     } else {
       this.sendMail(sendingFlats);
+      this.flats = [];
     }
   }
 
