@@ -2,7 +2,7 @@
   "name": "flatsearch",
   "version": "1.0.0",
   "description": "crawl wohnen.at & ebg and register for new appartments",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "start": "env NODE_ENV=prod node src/app.js",
     "test": "env NODE_ENV=dev node --inspect src/app.js",
