@@ -192,14 +192,15 @@ img { max-width: 100%; }
 .plzs {
 	margin: 5px 0;
 	width: 100%;
+	display: flex;
 }
 
 .plz_input {
     float: left;
-    width: 93%;
 }
 
 .plz_close {
+	min-width: 38px;
 	width: 7%;
     float: right;
     text-align: center;
@@ -215,7 +216,6 @@ img { max-width: 100%; }
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
 
 /***** Media queries *****/
 

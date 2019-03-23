@@ -9,6 +9,8 @@
 
 <p>This website let's you register for a newsletter of new flats in austria.</p>
 
+<% if (name.length == 0) { %>
 <%- include('login'); -%>
+<% } %>
 
 <%- include('includes/footer'); -%>

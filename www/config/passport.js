@@ -144,14 +144,14 @@ module.exports = function (passport) {
 
                 // if no user is found, return the message
                 if (!user)
-                    return done(null, false, req.flash('error', 'Sorry Your Account Not Exits ,Please Create Account.')); // req.flash is the way to set flashdata using connect-flash
+                    return done(null, false, req.flash('error', 'Sorry your account does not exist, please create one or try again.')); // req.flash is the way to set flashdata using connect-flash
 
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('error', 'Email and Password Does Not Match.')); // create the loginMessage and save it to session as flashdata
+                    return done(null, false, req.flash('error', 'Email and password do not match.')); // create the loginMessage and save it to session as flashdata
 
                 if (user.status === 'inactive')
-                    return done(null, false, req.flash('error', 'Your Account Not Activated ,Please Check Your Email')); // create the loginMessage and save it to session as flashdata
+                    return done(null, false, req.flash('error', 'Your Account has not yet been activated, please check your Email!')); // create the loginMessage and save it to session as flashdata
 
 
                 // all is well, return successful user

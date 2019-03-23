@@ -13,7 +13,7 @@ function add_Field() {
 
 	// Get template data
 	div1.innerHTML =
-		`   <input type='number' max='9999' id="plz_i_${count}" name='plz_interests' class='form-control form-username plz_input' required />
+		`   <input type='number' max='9999' id="plz_i_${count}" name='plz_interests' class='form-control form-username plz_input' />
 			<div id="plz_x_${count}" class="plz_close">❌</div>
 		`
 

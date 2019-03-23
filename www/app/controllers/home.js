@@ -115,24 +115,29 @@ exports.delete = function (req, res) {
 
 	if (req.session.user) {
 
-
 		User.deleteOne({
 			mail: req.session.user.mail
 		}, function (err, user) {
 			if (err) throw err;
-	
+
 			if (user.deletedCount == 1) {
 				res.render('signup', {
-					error: req.flash("error"),
+					error: "Your account has been deleted..",
 					success: "Do you want to signup again?",
 					session: req.session,
 					title: "signup"
 				});
 			} else {
-				throw err;
+				res.render('home', {
+					error: "You must be logged in to delete your account.",
+					success: req.flash("success"),
+					session: req.session,
+					title: "Flatsearch",
+					name: ""
+				});
 			}
-	
 		});
+
 
 	} else {
 		res.render('home', {
@@ -143,5 +148,6 @@ exports.delete = function (req, res) {
 			name: ""
 		});
 	}
+
 
 }
