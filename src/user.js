@@ -19,7 +19,6 @@ class User {
   }
   notify() {
     const job = new CronJob('0 */1 * * *', () => {
-      logOut("job started");
       this.alert(this.flats);
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();

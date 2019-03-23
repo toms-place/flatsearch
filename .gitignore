@@ -6,3 +6,5 @@ users.js
 mailAuth.json
 users.json
 users_save.json
+.env
+constants.js

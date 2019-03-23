@@ -1,0 +1,14 @@
+<%- include('includes/header'); -%>
+
+<h1>Welcome to <%= title %></h1>
+
+<% if (name.length > 0) { %>
+<p>Hi, <%= name %>! You are logged in.</p>
+<p><a href="/me">Visit your site!</a></p>
+<% } %>
+
+<p>This website let's you register for a newsletter of new flats in austria.</p>
+
+<%- include('login'); -%>
+
+<%- include('includes/footer'); -%>
