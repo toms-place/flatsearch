@@ -199,7 +199,7 @@ img { max-width: 100%; }
     float: left;
 }
 
-.plz_close {
+.plz_close, .plz_add {
 	min-width: 38px;
 	width: 7%;
     float: right;
@@ -215,6 +215,10 @@ img { max-width: 100%; }
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.plz_close:hover {
+	color: red;
 }
 
 /***** Media queries *****/

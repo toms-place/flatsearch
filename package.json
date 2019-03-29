@@ -23,6 +23,7 @@
     "lodash.initial": "^4.1.1",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
+    "mongoose": "^5.4.19",
     "nodemailer": "^4.6.8",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",

@@ -16,27 +16,21 @@ exports.loggedIn = function (req, res, next) {
 
 }
 
+exports.logout = function (req, res) {
+	req.session.destroy(function (err) {
+		if (err) throw err
+		res.redirect('/'); //Inside a callback… bulletproof!
+	})
+};
+
 exports.home = function (req, res) {
-	if (req.session.user) { // req.session.passport._id
 
-		res.render('home', {
-			title: "Flatsearch",
-			name: req.session.user.name,
-			error: req.flash("error"),
-			success: req.flash("success"),
-		});
-
-	} else {
-
-		res.render('home', {
-			title: "Flatsearch",
-			name: "",
-			error: req.flash("error"),
-			success: req.flash("success"),
-		});
-
-	}
-
+	res.render('home', {
+		title: "Flatsearch",
+		session: req.session,
+		error: req.flash("error"),
+		success: req.flash("success"),
+	});
 
 }
 
@@ -44,7 +38,7 @@ exports.me = function (req, res) {
 
 	res.render('me', {
 		title: "me",
-		user: req.session.user,
+		session: req.session,
 		error: req.flash("error"),
 		success: req.flash("success"),
 	});
@@ -121,12 +115,7 @@ exports.delete = function (req, res) {
 			if (err) throw err;
 
 			if (user.deletedCount == 1) {
-				res.render('signup', {
-					error: "Your account has been deleted..",
-					success: "Do you want to signup again?",
-					session: req.session,
-					title: "signup"
-				});
+				res.redirect("/logout");
 			} else {
 				res.render('home', {
 					error: "You must be logged in to delete your account.",

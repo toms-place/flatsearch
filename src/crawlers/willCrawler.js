@@ -19,7 +19,7 @@ class willCrawler {
     this.newFlats = [];
   }
 
-  async crawl(users) {
+  async crawl() {
 
     const job = new CronJob('0 */2 * * *', async () => {
     try {
@@ -87,7 +87,7 @@ class willCrawler {
       this.newFlats = await this.flatChecker.compare(flats);
 
       if (this.newFlats.length > 0) {
-        flatListener.emit('newFlat', this.newFlats, users);
+        flatListener.emit('newFlat', this.newFlats);
       }
 
     } catch (error) {

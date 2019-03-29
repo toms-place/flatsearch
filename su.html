@@ -1,0 +1,686 @@
+<!doctype html>
+<html>
+<head>
+    <title>Siedlungsunion - Freunde fürs leben. on</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="crm"/>
+    <meta name="apple-mobile-web-app-title" content="Settlers"/>    
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
+
+    
+        <meta name="robots" content="all">        
+    
+
+    
+    
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="layout" content="main"/>
+
+    <script type="text/javascript">
+        function resetFilterItem(filter) {
+            $('#' + filter).val('');
+        }
+
+        function resetFilters() {
+            resetFilterItem('region');
+            resetFilterItem('size');
+            resetFilterItem('room');
+            resetFilterItem('price');
+            resetFilterItem('addition');
+        }
+    </script>
+
+
+        
+
+            <link type="text/css" rel="stylesheet" href="/framework-build/css/c0ba28da.framework.full.css" />
+            <script type="text/javascript" src="/framework-build/js/4f1d8555.framework.libs.js"></script>
+            <script type="text/javascript" src="/framework-build/js/1ccd86b7.framework.full.js"></script>
+            <script type="text/javascript" src="/framework-build/js/lang/961b956c.framework.full.de.js"></script>
+            <script type="text/javascript" src="/framework-build/js/lib/tinymce/e8f8f5de.tiny_mce.js"></script>
+            <link type="text/css" rel="stylesheet" href="/css-build/1247d19b.settlers.full.css" />
+            <script type="text/javascript" src="/js-build/apps/40054da8.home.libs.js"></script>
+            <script type="text/javascript" src="/js-build/apps/f6be0959.home.full.js"></script>
+            <script type="text/javascript" src="/js-build/apps/lang/60d8286d.home.de.js"></script>
+            
+        
+
+        
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+              ga('create', 'UA-64490763-1', 'auto');
+              ga('send', 'pageview');
+            </script>        
+        
+
+</head>
+<body>
+
+	
+<div class="uk-container uk-container-center uk-margin-large-bottom">
+
+<div class="uk-grid uk-margin-remove">
+
+<div class="uk-width-1-1 uk-height-1-1 uk-margin-remove">
+    <div class="uk-grid">
+    <div class="uk-width-1-4 uk-hidden-small">
+        <div id="settlers-logo" class="uk-panel">
+            <a class="uk-navbar-brand uk-align-center" href="/">
+                <img src="/static/images/logo/logo_white_medium.png" id="logo-normal" class="uk-hidden-medium">
+                <img src="/static/images/logo/logo_white_small.png" id="logo-normal" class="uk-visible-medium">
+            </a>
+        </div>
+    </div>
+    <div class="uk-width-medium-3-4">
+
+        <nav id="settlers-header" class="uk-navbar uk-hidden-small">
+
+            <ul class="uk-navbar-nav uk-width-4-5">
+                <li >
+                    <a href="/siedlungsunion">Siedlungsunion<span class="arrow"></span></a>
+                </li>
+                <li >
+                    <a href="/neuigkeiten">Neuigkeiten<span class="arrow"></span></a>
+                </li>
+                <li >
+                    <a href="/mieterservice">Mieterservice<span class="arrow"></span></a>
+                </li>
+                <li  class='active' >
+                    <a href="/wohnen">Wohnungsdrehscheibe<span class="arrow"></span></a>
+                </li>
+                <li >
+                    <a href="/mieterservice/mieterservice-downloads">
+                        <span>Downloads & Formulare</span>
+                    </a>
+                </li>
+                <li >
+                    <a href="/kontakt">Kontakt<span class="arrow"></span></a>
+                </li>
+            </ul>
+
+            
+
+            
+
+                <ul class="uk-width-1-5 uk-display-inline uk-height-1-1 uk-navbar-nav">
+                    <li class="uk-align-right uk-margin-remove">
+                        <a id="settlers-form-link" href="/mieterservice/mieterservice-voranmeldung">
+                            <i class="uk-icon-pencil-square-o uk-icon-small"></i>&nbsp;&nbsp;<span class="uk-margin-top">Wohnungsvoranmeldung</span>
+                        </a>
+                    </li>
+                </ul>
+
+            
+
+        </nav>
+
+        <nav id="settlers-header" class="uk-navbar uk-visible-small">
+
+            <a href="#menuoffcanvas" class="settlers-menuoffcanvas-btn uk-navbar-toggle uk-float-left" data-uk-offcanvas></a>
+
+            
+
+                <a href="#useroffcanvas" class="settlers-useroffcanvas-btn uk-navbar-content uk-float-right" data-uk-offcanvas><i class="uk-icon-pencil-square-o uk-icon-small"></i></a>
+
+            
+
+            <div class="uk-navbar-center">
+                <a class="" href="/">
+                    <img src="/static/images/logo/logo_red_medium.png" id="logo-normal"/>
+                </a>
+            </div>
+
+        </nav>
+
+    </div>
+</div>
+
+<div id="menuoffcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            <li>
+                <a href="/siedlungsunion">Siedlungsunion</a>
+            </li>
+            <li>
+                <a href="/neuigkeiten">Neuigkeiten</a>
+            </li>
+            <li>
+                <a href="/mieterservice">Mieterservice</a>
+            </li>
+            <li>
+                <a href="/wohnen">Wohnungsdrehscheibe</a>
+            </li>
+            <li>
+                <a href="/mieterservice/mieterservice-downloads">Downloads & Formulare</a>
+            </li>
+            <li>
+                <a href="/kontakt">Kontakt</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="useroffcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+        <ul class="uk-nav uk-nav-offcanvas">
+            
+            <li>
+                <a id="settlers-form-link" href="/mieterservice/mieterservice-voranmeldung">
+                    Wohnungsvoranmeldung
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="userloginoffcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+        <ul class="uk-nav uk-nav-offcanvas">
+            
+            <li>
+                <a id="settlers-form-link" href="/mieterservice/mieterservice-voranmeldung">
+                    Wohnungsvoranmeldung
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<div class="uk-grid uk-width-medium-1-4 uk-width-1-1 uk-margin-remove" data-uk-grid-margin>
+    <div class="uk-width-medium-1-1 uk-width-1-1 uk-margin-remove">
+        
+
+<div class="uk-panel uk-panel-box">
+    <form class="uk-form uk-width-1-1" data-uk-search>
+        <div id="settlers-search" ng-controller="header">
+            <input class="uk-width-8-10 uk-float-left" type="search" placeholder="Suchen" ng-model="query.string"
+                   data-test-field="menu_search" priorities="searchPriorities"/> 
+            <button class="uk-width-2-10" type="submit" primary-icon="search"
+                    url="'/search?phrase={{query.encodedQuery}}'"></button>
+        </div>
+    </form>
+</div>
+
+    <div id="settlers-leftnav" class="uk-hidden-small uk-panel uk-panel-box">
+        <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+
+            <li  class='active' >
+                <a class="sofort" href="/wohnen/sofort">
+                    <span>Sofort Wohnen</span>
+                </a>
+            </li>
+            <li >
+                <a class="inbau" href="/wohnen/inbau">
+                    <span>Projekte in Bau</span>
+                </a>
+            </li>
+            <li >
+                <a class="inplanung" href="/wohnen/inplanung">
+                    <span>Projekte in Planung</span>
+                </a>
+            </li>
+            <li >
+                <a class="gewerblich" href="/wohnen/gewerblich">
+                    <span>Büros und Geschäftslokale</span>
+                </a>
+            </li>
+            <li >
+                <a class="garagen" href="/wohnen/garagen">
+                    
+                    <span>Garagen und Abstellplätze</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="settlers-leftnav" class="uk-visible-small uk-panel uk-panel-box">
+        <ul class="uk-nav uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+            <li class="uk-parent">
+                <a href="#"><span class="uk-margin-small-top">Projektart</span></a>
+                <ul class="uk-nav-sub">
+
+                    <li  class='active' >
+                        <a class="sofort" href="/wohnen/sofort">
+                            <span>Sofort Wohnen</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a class="inbau" href="/wohnen/inbau">
+                            <span>Projekte in Bau</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a class="inplanung" href="/wohnen/inplanung">
+                            <span>Projekte in Planung</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a class="gewerblich" href="/wohnen/gewerblich">
+                            <span>Büros und Geschäftslokale</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a class="garagen" href="/wohnen/garagen">
+                            
+                            <span>Garagen und Abstellplätze</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+<div id="settlers-hours" class="uk-panel uk-panel-box uk-hidden-small">
+    <h3 class="uk-panel-title">Öffnungszeiten</h3>
+    <span class="arrow"></span>
+
+    <div><p><strong>Montag, Dienstag und Mittwoch:</strong></p>
+<p>08.00 Uhr bis 12.00 Uhr<br />14.00 Uhr bis 16.00 Uhr</p>
+<p><strong>Donnerstag:</strong></p>
+<p>08.00 Uhr bis 12.00 Uhr<br />14.00 Uhr bis 17.30 Uhr</p>
+<p><em>Technikersprechstunden:</em><br /><em>ohne Terminvereinbarung von 14.00 Uhr bis 17.30 Uhr</em></p>
+<p><strong>Freitag:</strong></p>
+<p>Kein Parteienverkehr.<br /><em>Termine nach telefonischer Vereinbarung</em></p>
+<p> </p>
+<p>SIEDLUNGS<strong>UNION</strong></p>
+<p>1220 Wien, Mergenthalerplatz 10</p>
+<p><strong>Tel.:</strong> +43 1 203 12 46 <br /><strong>Fax:</strong> +43 1 203 12 48-25<br /><strong>E-Mail:</strong> <span style="color: #fd7858;"><a href="mailto:office@siedlungsunion.at"><span style="color: #fd7858;">office@siedlungsunion.at</span></a></span></p>
+<p> </p>
+<p> </p></div>
+</div>
+
+
+
+    </div>
+</div>
+
+<div class="uk-width-medium-3-4 uk-width-1-1 uk-margin-remove">
+
+<div id="settlers-wohnen" ng-controller="index">
+
+    <div class="uk-grid filter-label">
+        <div class="uk-width-8-10 settlers-search-criteria">
+            Suchkriterien
+        </div>
+
+        <div class="uk-width-2-10">
+            <button class="uk-button uk-float-right settles-button-filter" title="
+            Filter anzeigen / ausblenden " data-uk-tooltip ng-click="toggleFilter()">
+                <i class="uk-icon-filter"></i>
+            </button>
+            <button class="uk-button uk-float-right uk-hidden-small settles-button-filter-clear" title="
+            Alle Filter" data-uk-tooltip onclick="resetFilters()">
+                <i class="uk-icon-eraser"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="uk-panel-box filter-search background-remove uk-width-1-1" ng-if="flatFilter">
+        <div>
+            <div class="uk-grid" id="flat-filter">
+
+                <div class="uk-width-1-5">
+                    <div class="uk-width-1-1 uk-text-center filter-header-light settlers-filter-header filter-select-white">REGION</div>
+                    <select class="uk-width-1-1 filter-select-white" size="8" id="region" name="region">
+                        
+                            <option 
+                                    value="1100">1100</option>
+                        
+                            <option 
+                                    value="1110">1110</option>
+                        
+                            <option 
+                                    value="1170">1170</option>
+                        
+                            <option 
+                                    value="1200">1200</option>
+                        
+                            <option 
+                                    value="1210">1210</option>
+                        
+                            <option 
+                                    value="1220">1220</option>
+                        
+                    </select>
+                    <button class="uk-button-secondary uk-width-1-1 settlers-filter-header-egal settlers-filter-button-light"
+                            onclick="resetFilterItem('region')">Egal</button>
+                </div>
+
+                <div class="uk-width-1-5">
+                    <div class="uk-width-1-1 uk-text-center filter-header-dark settlers-filter-header filter-select-white">GRÖSSE</div>
+                    <select class="uk-width-1-1 filter-select-dark" size="8" name="size" id="size">
+                        
+                            <option 
+                                    value="bis50">bis 50m2</option>
+                        
+                            <option 
+                                    value="50bis75">50m2 - 75m2</option>
+                        
+                            <option 
+                                    value="75bis100">75m2 - 100m2</option>
+                        
+                            <option 
+                                    value="uber100">über 100m2</option>
+                        
+                    </select>
+                    <button class="uk-button-secondary uk-width-1-1 settlers-filter-header-egal"
+                            onclick="resetFilterItem('size')">Egal</button>
+                </div>
+
+                <div class="uk-width-1-5">
+                    <div class="filter-header-light uk-width-1-1 uk-text-center settlers-filter-header filter-select-white">ZIMMER</div>
+                    <select class="uk-width-1-1 filter-select-white" size="8" name="room" id="room">
+                        
+                            <option 
+                                    value="1">1 Zimmer</option>
+                        
+                            <option 
+                                    value="2">2 Zimmer</option>
+                        
+                            <option 
+                                    value="3">3 Zimmer</option>
+                        
+                            <option 
+                                    value="4">4 Zimmer</option>
+                        
+                            <option 
+                                    value="5">5 Zimmer</option>
+                        
+                    </select>
+                    <button class="uk-button-secondary uk-width-1-1 settlers-filter-header-egal settlers-filter-button-light"
+                            onclick="resetFilterItem('room')">Egal</button>
+                </div>
+
+                <div class="uk-width-1-5">
+                    <div class="filter-header-dark uk-width-1-1 uk-text-center settlers-filter-header filter-select-white">NUTZUNGSENTGELT</div>
+                    <select class="uk-width-1-1 filter-select-dark" size="8" name="price" id="price">
+                        
+                            <option 
+                                    value="bis250">bis 250 €</option>
+                        
+                            <option 
+                                    value="bis400">bis 400 €</option>
+                        
+                            <option 
+                                    value="bis650">bis 650 €</option>
+                        
+                            <option 
+                                    value="bis900">bis 900 €</option>
+                        
+                    </select>
+                    <button class="uk-button-secondary uk-width-1-1 settlers-filter-header-egal"
+                            onclick="resetFilterItem('price')">Egal</button>
+                </div>
+
+                <div class="uk-width-1-5">
+                    <div class="filter-header-light uk-width-1-1 uk-text-center  settlers-filter-header filter-select-white">FREIFLÄCHEN</div>
+                    <select class="uk-width-1-1 filter-select-white" size="8" name="addition" id="addition">
+                        
+                            <option
+                                
+                                    value="Terrasse">Terrasse</option>
+                        
+                            <option
+                                
+                                    value="Loggia">Loggia</option>
+                        
+                            <option
+                                
+                                    value="Balkon">Balkon</option>
+                        
+                            <option
+                                
+                                    value="Garten">Garten</option>
+                        
+                            <option
+                                
+                                    value="Dachterrasse">Dachterrasse</option>
+                        
+                    </select>
+                    <button class="uk-button-secondary uk-width-1-1 settlers-filter-header-egal settlers-filter-button-light"
+                            onclick="resetFilterItem('addition')">Egal</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="uk-grid filter-label uk-margin-top-remove">
+        <div class="uk-width-8-10 settlers-search-criteria">
+            Karte
+        </div>
+
+        <div class="uk-width-2-10">
+            <button class="uk-button uk-float-right settles-button-filter" title="
+            Karten ein- oder ausblenden" data-uk-tooltip ng-click="toggleMap()" id='toggleMap'>
+                <i class="uk-icon-map-marker"></i>
+            </button>
+            <button class="uk-button uk-float-right uk-hidden-small settles-button-filter-clear" data-uk-tooltip title="
+            Karte leeren" ng-click="clearMap()" id='clearMap'>
+                <i class="uk-icon-eraser"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="uk-width-1-1">
+        <div id="flat-map" ng-if="mapVisible">
+
+            <div class="uk-panel-box background-remove">
+
+                <div class="border-dashed-bottom">
+
+                             <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" style="height: 420px; display: block">
+                                <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" title="'title'" options="'options'" events='markerEvents'>
+                                </ui-gmap-markers>
+                            </ui-gmap-google-map>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-grid uk-margin-top-remove">
+        <div class="uk-width-1-1">
+            <button class="uk-button uk-button-primary uk-width-1-1 settlers-upper-case" id="ad-filter"
+                    ng-click="search()">
+                Suche Angebot&nbsp;
+                <i class="uk-icon-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="uk-grid uk-margin-top-remove">
+        <div class="uk-width-1-1 settlers-search-criteria settlers-upper-case settlers-filter-result">
+            Suchergebnisse
+        </div>
+    </div>
+</div>
+
+<div id="settlers-estates" class="uk-width-1-1">
+    <div class="uk-grid uk-margin-remove">
+        
+        
+            <div class="uk-width-1-1 uk-panel-box background-remove">
+                <article class="uk-article uk-width-1-1 ">
+                    <div class="uk-width-1-1">
+                        <div class="uk-grid settlers-estate" data-uk-grid-match>
+                            <div class="uk-width-2-3">
+
+                                <div class="uk-grid uk-width-1-1">
+                                    
+                                    <div class="uk-width-1-5 uk-grid settlers-wohnen-image no-image">
+                                        <span class="uk-width-1-1 uk-text-center">kein Bild</span>
+                                    </div>
+                                    
+
+                                    <div class="uk-width-3-4 uk-height-1-1">
+                                        <div class="settlers-wohnen-title uk-grid uk-width-1-1">
+                                            <div class="uk-width-3-10 uk-width-large-1-10 uk-width-medium-2-10 uk-width-small-2-10 uk-height-1-1">
+                                                <img ng-src="{{ 'IMMIDIATE' | estateIcon }}" alt="" align="left" style="height: 32px; margin-left:10px;" width="32px">
+                                            </div>
+                                            <div class="uk-width-7-10 uk-width-large-9-10 uk-width-medium-8-10 uk-width-small-8-10">
+                                                <div class="uk-width-1-1 uk-text-bold">
+                                                    <a href="/wohnen/sofort/1210-wien-am-nordwestbahnhof-3-6-1-612">
+                                                        1210 Wien, Am Nordwestbahnhof 3/6/1/612
+                                                    </a>
+                                                </div>
+                                            
+                                            </div>
+
+                                        </div>
+
+                                            
+
+                                            
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="uk-width-1-3 settlers-wohnen-properities">
+                                
+                                    <div class="uk-grid uk-text-center">
+                                        <div class="uk-width-2-10">
+                                            <i class="uk-icon-key" style="color:#ad0830"></i>
+
+                                            <div class="uk-text-bold">4 Zimmer</div>
+                                        </div>
+
+                                        <div class="uk-width-4-10">
+                                            <i class="uk-icon-arrows-h" style="color:#ad0830"></i>
+
+                                            <div class="uk-text-bold">125.64 m<sup>2</sup></div>
+                                        </div>
+
+                                        <div class="uk-width-4-10">
+                                            <i class="uk-icon-money" style="color:#ad0830"></i>
+
+                                            <div class="uk-text-bold">777.90 <i class="uk-icon-euro"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+
+                            </div>
+                        </div>
+
+                        <div class="uk-width-1-1 link-details">
+                            <a href="/wohnen/sofort/1210-wien-am-nordwestbahnhof-3-6-1-612" class="uk-width-1-1 uk-button uk-button-primary">
+                                Klicken Sie hier, <b>um mehr Details zu sehen</b>
+                            </a>
+                        </div>
+
+                </article>
+            </div>
+        
+
+        
+
+        <div class="uk-margin-top uk-margin-bottom uk-width-1-1 uk-align-center">
+
+            
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<div ng-controller="cookies"></div>
+<footer id="settlers-footer" class="uk-grid uk-width-1-1 uk-margin-remove uk-grid-margin">
+
+    <div class="uk-width-medium-1-4 uk-width-1-1 uk-hidden-medium uk-hidden-large" style="background-color:#ecdfc8">
+    	 <ul class="uk-subnav uk-subnav-line uk-text-center">
+	        <li  >
+	            <a href="/impressum">Impressum</a>
+	        </li>
+	        <li  >
+	            <a href="/datenschutz">Datenschutz</a>
+	        </li>
+	        <li>
+	        	<a href="/">
+	            <span id="settlers-font-bordo">2015-2019 &copy;</span> SIEDLUNGS<b>UNION</b>
+	        	</a>
+	        </li>
+	    </ul>
+
+    </div>
+
+    <div class="uk-width-medium-1-4 uk-width-1-1 uk-hidden-small" style="background-color:#ecdfc8">
+        <div class="uk-text-center">
+        	<a href="/">
+        		<span id="settlers-font-bordo">2015-2019 &copy; SIEDLUNGS<b>UNION</b></span>
+        	</a>
+        </div>
+    </div>
+
+    <div class="uk-width-3-4 uk-hidden-small">
+        <ul class="uk-subnav uk-subnav-line uk-float-left">
+	        <li  >
+	            <a href="/siedlungsunion">Siedlungsunion</a>
+	        </li>
+	        <li  >
+	            <a href="/neuigkeiten">Neuigkeiten</a>
+	        </li>
+	        <li  >
+	            <a href="/mieterservice">Mieterservice</a>
+	        </li>
+	        <li  class='active'  >
+	            <a href="/wohnen">Wohnungsdrehscheibe</a>
+	        </li>
+	        <li  >
+	            <a href="/impressum">Impressum</a>
+	        </li>
+	        <li  >
+	            <a href="/datenschutz">Datenschutz</a>
+	        </li>
+	        <li  >
+	            <a href="/kontakt">Kontakt</a>
+	        </li>
+	    </ul>
+
+    </div>
+
+</footer>
+
+
+    <script type="text/javascript">
+        app.buildings = [{"buildingType":"sofort","latitude":48.266051,"longitude":16.395722,"name":"1210-wien-am-nordwestbahnhof-3-5-4-21","regionNumber":"1210","root":"Wien","street":"AM NORDWESTBAHNHOF","streetNumber":"3","title":"1210 Wien, Am Nordwestbahnhof 3/5/4/21"}];
+        app.session = {
+            user: {"key":"undefined-user","name":"undefined","roles":["ROLE_ANONYMOUS"]},
+            kiosk: false
+        };
+        app.config = {"baseUrl":"/","files":{"maxFileSize":52428800,"maxImageSize":10485760,"allowedImageExtensions":["png","jpg","jpeg"]}};
+        app.version = '2.4.2';
+        app.env = 'production';
+        $(function () {
+            var html = $('html');
+            html.addClass('ng-app');
+            angular.bootstrap(html, [app.name]);
+        });
+    </script>
+
+
+</body>
+</html>

@@ -8,3 +8,4 @@ users.json
 users_save.json
 .env
 constants.js
+auth.js

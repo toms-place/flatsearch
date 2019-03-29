@@ -3,9 +3,9 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
     
-    <% if (user.plz_interests.length > 0) { %>
+    <% if (session.user.plz_interests.length > 0) { %>
     <ul>
-    <% user.plz_interests.forEach(function(plz){ %>
+    <% session.user.plz_interests.forEach(function(plz){ %>
         <li><%= plz %></li>
       <% }); %>
     </ul>

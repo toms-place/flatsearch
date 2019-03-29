@@ -4,19 +4,14 @@ var home = require('../app/controllers/home');
 
 module.exports = function (app, passport) {
 
+    app.get('/', home.home);
     app.get('/signup', home.signup);
-
-    app.get('/', home.home); //home
-    app.get('/me', home.loggedIn, home.me); //home
+    app.get('/me', home.loggedIn, home.me);
     app.get('/confirm', home.confirm);
-    app.get('/logout', function (req, res) {
-        req.session.destroy(function (err) {
-            if (err) throw err
-            res.redirect('/'); //Inside a callback… bulletproof!
-        });
-    });
+    app.get('/logout', home.logout);
     app.get('/delete', home.delete);
 
+    //posts
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error

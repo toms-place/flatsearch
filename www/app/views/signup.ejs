@@ -45,10 +45,10 @@
 
                         <div class="form-group">
                             <label for="plz_i_0" >Please enter your desired PLZ numbers!</label>
-                            <div id="plzContainer">
+                            <div id="plzContainer" class="field_wrapper">
                                 <div class="plzs">
-                                    <input type='number' id="plz_i_0" max='9999' name="plz_interests" class="form-control form-username plz_input" required />
-                                    <div id="plz_x_0" class="plz_close">❌</div>
+                                    <input type='number' max='9999' min='1000' name="plz_interests" class="form-control form-username plz_input" required />
+                                    <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
                                 </div>
                             </div>
                         </div>
@@ -64,4 +64,5 @@
 </div>
 
 <script src="/js/addFormField.js"></script>
+
 <%- include('includes/footer'); -%>

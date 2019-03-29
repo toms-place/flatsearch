@@ -71,7 +71,6 @@ module.exports = function (passport) {
                             ['_id', 'descending']
                         ]).limit(1).exec(function (err, userdata) {
 
-
                             // if there is no user with that email
                             // create the user
                             var newUser = new User();

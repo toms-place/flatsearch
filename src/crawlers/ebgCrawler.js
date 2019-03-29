@@ -18,7 +18,7 @@ class ebgCrawler {
     this.newFlats = [];
   }
 
-  async crawl(users) {
+  async crawl() {
 
     const job = new CronJob('*/5 * * * *', async () => {
       try {
@@ -66,7 +66,7 @@ class ebgCrawler {
         this.newFlats = await this.flatChecker.compare(flats);
 
         if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats, users);
+          flatListener.emit('newFlat', this.newFlats);
         }
 
       } catch (error) {
