@@ -1,52 +1,52 @@
-const fs = require('fs');
+const Filereader = require('./Filereader');
 const nodemailer = require('nodemailer');
-const Flat = require('./flat');
+const dbUser = require('./model/user');
 const logOut = require('./logger').logOut;
 const logErr = require('./logger').logErr;
 const CronJob = require('cron').CronJob;
 
-class User {
-  constructor(name, email, filter, notificationRate) {
-    this.name = name;
-    this.email = email;
-    this.filter = filter;
-    this.notificationRate = notificationRate;
-    this.flats = [];
-  }
-
-  addFlat(flat) {
-    this.flats.push(flat);
+class Notifier {
+  constructor(notificationRate) {
+    this.notificationRate = notificationRate || 1;
   }
   notify() {
-    const job = new CronJob('0 */1 * * *', () => {
-      this.alert(this.flats);
+    const job = new CronJob('*/' + this.notificationRate + ' * * * *', () => {
+      this.alert();
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
   }
 
-  alert(flats) {
-    let sendingFlats = [];
-    for (let item of flats) {
-      let flat = JSON.parse(item);
-      if (this.filter) {
-        if (this.filter.includes(flat.district)) {
-          sendingFlats.push(flat);
+  async alert() {
+    try {
+      const users = await dbUser.find({});
+      for (let user of users) {
+        let flag = false;
+        if (user.flats.length > 0) {
+          flag = true;
+          let sendingFlats = [];
+
+          for (let flat of user.flats) {
+            sendingFlats.push(flat);
+          }
+
+          this.sendMail(sendingFlats);
+          user.flats = [];
         }
-      } else {
-        sendingFlats.push(flat);
+
+        if (flag) {
+          user.save(function (err) {
+            if (err) throw err;
+          });
+        }
       }
+    } catch (err) {
+      throw err;
     }
 
-    if (sendingFlats.length == 0) {
-      return;
-    } else {
-      this.sendMail(sendingFlats);
-      this.flats = [];
-    }
   }
 
   async sendMail(arr) {
-    fs.readFile('./mailAuth.json', async (err, data) => {
+    Filereader.readFile('./mailAuth.json', async (err, data) => {
       if (err) throw err;
 
       let mailAuth = JSON.parse(data);
@@ -87,14 +87,14 @@ class User {
         }
       });
 
-      fs.writeFile('./messageTest.html', html, (err) => {
+      Filereader.writeFile('./messageTest.html', html, (err) => {
         if (err) throw err;
       });
 
     });
   }
 }
-module.exports = User;
+module.exports = Notifier;
 
 
 function buildHTML(arr) {
@@ -114,6 +114,7 @@ function buildHTML(arr) {
           <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
   for (let f of arr) {
+    console.log(f);
     let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
     html += flat.getHTML() + '<br /><br /><br />';

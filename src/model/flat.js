@@ -1,6 +1,6 @@
 class Flat {
   constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
-    this.id = address;
+    this.id = getHash(address, city, district);
     this.website = website;
     this.district = parseInt(district);
     this.city = city;
@@ -18,10 +18,12 @@ class Flat {
     this.docs = docs;
     this.images = images;
   }
-  compare(flat) {
+  
+  isSameAs(flat) {
     if (this.id == flat.id) return true;
     else return false;
   }
+
   getHTML() {
 
     try {
@@ -117,5 +119,18 @@ class Flat {
     }
   }
 };
+
+function getHash(address, city, district) {
+  let value = address + city + district;
+  let hash = 0,
+    i, chr;
+  if (value.length === 0) return hash;
+  for (i = 0; i < value.length; i++) {
+    chr = value.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
 
 module.exports = Flat;

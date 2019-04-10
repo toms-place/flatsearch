@@ -2,7 +2,7 @@
 //app/models/user.js
 //load the things we need
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt-nodejs');
 
 //define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -17,6 +17,8 @@ var userSchema = mongoose.Schema({
 	role_id: { type: Number, default: 2 },
 	newsletter: { type: Boolean, default: true },
 	plz_interests: { type: Array, default: [] },
+	flats: { type: Array, default: [] },
+	notificationrate: { type: Number, default: 1 },
 });
 
 

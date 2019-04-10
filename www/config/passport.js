@@ -86,6 +86,12 @@ module.exports = function (passport) {
 
                             var active_code = bcrypt.hashSync(Math.floor((Math.random() * 99999999) * 54), null, null);
 
+                            let plz_interests = [];
+
+                            for (let plz of req.body.plz_interests) {
+                                plz_interests.push(parseInt(plz));
+                            }
+
                             newUser.mail = email;
                             newUser.password = newUser.generateHash(password);
                             newUser.name = req.body.username;
@@ -94,7 +100,8 @@ module.exports = function (passport) {
                             newUser.status = 'inactive'; //inactive for email actiavators
                             newUser.active_hash = active_code;
                             newUser._id = userdata[0]._id + 1;
-                            newUser.plz_interests = req.body.plz_interests;
+                            newUser.plz_interests = plz_interests;
+                            newUser.flats = [];
 
                             // save the user
                             newUser.save(function (err) {

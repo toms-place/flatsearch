@@ -1,13 +1,22 @@
 <%- include('includes/header'); -%>
 
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h2>You selected following districts to show flats in:</h2>
     
     <% if (session.user.plz_interests.length > 0) { %>
-    <ul>
+    <ul id='districts' class='list'>
     <% session.user.plz_interests.forEach(function(plz){ %>
         <li><%= plz %></li>
       <% }); %>
+    </ul>
+    <% } %>
+
+    <% if (session.user.flats.length > 0) { %>
+      <h2>There are <%= session.user.flats.length %> new Flats for your Account:</h2>
+    <ul id='flats' class='list'>
+      <% session.user.flats.forEach(function(flat){ %>
+          <a href="<%= flat.link %>"><li><%= flat.district + ' - ' +  flat.address %></li></a>
+        <% }); %>
     </ul>
     <% } %>
 

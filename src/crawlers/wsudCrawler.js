@@ -1,4 +1,4 @@
-const Flat = require('../flat');
+const Flat = require('../model/flat');
 const FlatChecker = require('../flatchecker');
 const rp = require('request-promise');
 const logErr = require('../logger').logErr;

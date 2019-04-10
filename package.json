@@ -6,8 +6,7 @@
   "scripts": {
     "start": "env NODE_ENV=prod node src/app.js",
     "test": "env NODE_ENV=dev node --inspect src/app.js",
-    "restart": "git pull && npm start",
-    "server": "node startServer.js"
+    "restart": "git pull && npm start"
   },
   "keywords": [],
   "author": "Thomas Weber",

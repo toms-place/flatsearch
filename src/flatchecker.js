@@ -1,38 +1,78 @@
+const dbUser = require('./model/user');
+
 class FlatChecker {
   constructor(initOutput) {
     this.initOutput = false || initOutput;
     this.tempFlats = [];
   }
   compare(flats) {
-    //console.log('startCompare');
-    //clear changedFlats on init
     let newFlats = [];
 
-    if (this.tempFlats.length == 0 && this.initOutput) {
-      for (let i = 0; i < flats.length; i++) {
+    /* Checks which array is longer */
+    let longerFlatArray;
+    if (flats.length >= this.tempFlats.length) {
+      longerFlatArray = flats.length;
+    } else {
+      longerFlatArray = this.tempFlats.length;
+    }
+
+    if (this.initOutput) {
+
+      for (let i = 0; i < longerFlatArray; i++) {
         newFlats.push(flats[i]);
       }
-    } else if (this.tempFlats.length !== 0) {
 
-      let l;
-      if (flats.length >= this.tempFlats.length) {
-        l = flats.length;
-      } else {
-        l = this.tempFlats.length;
+      this.initOutput = false;
+
+    } else {
+
+      /* this is the actual testing part */
+      for (let i = 0; i < longerFlatArray; i++) {
+        for (let y = 0; y < this.tempFlats.length; y++) {
+          let sameFlat = flats[i].isSameAs(this.tempFlats[y]);
+          if (!sameFlat && flats[i] !== undefined) {
+            newFlats.push(flats[i]);
+          }
+        }
       }
 
-      for (let i = 0; i < l; i++) {
-        if ( !this.tempFlats.includes(flats[i]) && flats[i] !== undefined ) {
-          //console.log('new flat', JSON.parse(flats[i]));
-          newFlats.push(flats[i]);
-        }
+    }
+
+    /* New Flats are pushed to each user if plz_interests match*/
+    if (newFlats.length > 0 || (this.initOutput == true && newFlats.length > 0)) {
+      try {
+        dbUser.find({}).exec(function (err, users) {
+          if (!err) {
+
+            for (let user of users) {
+              let flag = false;
+
+              for (let flat of newFlats) {
+                if (user.plz_interests.includes(flat.district)) {
+                  user.flats.push(flat);
+                  flag = true;
+                }
+              }
+
+              if (flag) {
+                console.log("saving");
+                user.save(function (err) {
+                  if (err) throw err;
+                });
+              }
+              
+            }
+
+          }
+        })
+      } catch (err) {
+        throw err;
       }
     }
 
     //set tempFlats to just crawled flats
     this.tempFlats = flats;
 
-    return newFlats;
   }
 };
 

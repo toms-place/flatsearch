@@ -16,6 +16,7 @@ var userSchema = mongoose.Schema({
 	role_id: { type: Number, default: 2 },
 	newsletter: { type: Boolean, default: true },
 	plz_interests: { type: Array, default: [] },
+	flats: { type: Array, default: [] },
 });
 
 //create the model for users and expose it to our app

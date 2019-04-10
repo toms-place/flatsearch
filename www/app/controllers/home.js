@@ -37,7 +37,7 @@ exports.home = function (req, res) {
 exports.me = function (req, res) {
 
 	res.render('me', {
-		title: "me",
+		title: "Your Account",
 		session: req.session,
 		error: req.flash("error"),
 		success: req.flash("success"),

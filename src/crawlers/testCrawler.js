@@ -1,9 +1,8 @@
-const Flat = require('../flat');
+const Flat = require('../model/flat');
 const FlatChecker = require('../flatchecker');
 const rp = require('request-promise');
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
-const flatListener = require('../flatListener');
 const CronJob = require('cron').CronJob;
 const fs = require('../Filereader');
 const jsdom = require('jsdom');
@@ -13,14 +12,14 @@ const {
 
 class testCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker();
+    this.flatChecker = new FlatChecker(true);
     this.newFlats = [];
   }
 
   async crawl() {
-    const job = new CronJob('*/1 * * * *', async () => {
+    const job = new CronJob(' */1 * * * *', async () => {
       try {
-        console.log('test');
+        console.log('executing testCrawler.js');
         this.newFlats = [];
 
         let url = 'su.html';
@@ -46,16 +45,10 @@ class testCrawler {
 
           let flat = new Flat('SU', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
-          flats.push(JSON.stringify(flat));
+          flats.push(flat);
         }
 
-        //this.newFlats = await this.flatChecker.compare(flats);
-        this.newFlats = flats;
-        console.log(flats);
-
-        if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats);
-        }
+        this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
         console.log(error);

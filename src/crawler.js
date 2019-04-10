@@ -1,47 +1,28 @@
-const logErr = require('./logger').logErr;
-const logOut = require('./logger').logOut;
-
-const nlCrawler = require('./crawlers/nlCrawler');
-const egwCrawler = require('./crawlers/egwCrawler');
-const ebgCrawler = require('./crawlers/ebgCrawler');
-const suCrawler = require('./crawlers/suCrawler');
-const szbCrawler = require('./crawlers/szbCrawler');
-const hbCrawler = require('./crawlers/heimbauCrawler');
-const frCrawler = require('./crawlers/friedenCrawler');
-const wsudCrawler = require('./crawlers/wsudCrawler');
-const willCrawler = require('./crawlers/willCrawler');
+//const nlCrawler = require('./crawlers/nlCrawler');
+//const egwCrawler = require('./crawlers/egwCrawler');
+//const ebgCrawler = require('./crawlers/ebgCrawler');
+//const suCrawler = require('./crawlers/suCrawler');
+//const szbCrawler = require('./crawlers/szbCrawler');
+//const hbCrawler = require('./crawlers/heimbauCrawler');
+//const frCrawler = require('./crawlers/friedenCrawler');
+//const wsudCrawler = require('./crawlers/wsudCrawler');
+//const willCrawler = require('./crawlers/willCrawler');
 const testCrawler = require('./crawlers/testCrawler');
 
 class Crawler {
-  constructor() {
-    this.sites = {
-      neuesleben: {
-        url: "https://www.wohnen.at/angebot/unser-wohnungsangebot/",
-        refreshRate: 5
-      }
-    };
-    this.users = [];
-  }
+  crawl() {
 
-  async crawl() {
-
-      //let nl = new nlCrawler().crawl(this.users);
-      //let szb = new szbCrawler().crawl(this.users);
-      //let su = new suCrawler().crawl(this.users);
-      //let egw = new egwCrawler().crawl(this.users);
-      //let ebg = new ebgCrawler().crawl(this.users);
-      //let hb = new hbCrawler().crawl(this.users);
-      //let fr = new frCrawler().crawl(this.users);
-      //let wsud = new wsudCrawler().crawl(this.users);
-      //let will = new willCrawler().crawl(this.users);
+      //let nl = new nlCrawler().crawl();
+      //let szb = new szbCrawler().crawl();
+      //let su = new suCrawler().crawl();
+      //let egw = new egwCrawler().crawl();
+      //let ebg = new ebgCrawler().crawl();
+      //let hb = new hbCrawler().crawl();
+      //let fr = new frCrawler().crawl();
+      //let wsud = new wsudCrawler().crawl();
+      //let will = new willCrawler().crawl();
       let test = new testCrawler().crawl();
 
-  }
-
-  notify() {
-    for (let user of this.users) {
-      user.notify();
-    }
   }
 }
 
