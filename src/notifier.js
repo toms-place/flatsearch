@@ -4,13 +4,14 @@ const dbUser = require('./model/user');
 const logOut = require('./logger').logOut;
 const logErr = require('./logger').logErr;
 const CronJob = require('cron').CronJob;
+const Flat = require('./model/flat');
 
 class Notifier {
   constructor(notificationRate) {
-    this.notificationRate = notificationRate || 1;
+    this.notificationRate = notificationRate || 5;
   }
   notify() {
-    const job = new CronJob('*/' + this.notificationRate + ' * * * *', () => {
+    const job = new CronJob('*/10 * * * * *', async () => {
       this.alert();
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
@@ -28,8 +29,8 @@ class Notifier {
           for (let flat of user.flats) {
             sendingFlats.push(flat);
           }
-
-          this.sendMail(sendingFlats);
+          console.log("try to send!")
+          this.sendMail(sendingFlats, user);
           user.flats = [];
         }
 
@@ -45,53 +46,50 @@ class Notifier {
 
   }
 
-  async sendMail(arr) {
-    Filereader.readFile('./mailAuth.json', async (err, data) => {
-      if (err) throw err;
+  async sendMail(arr, user) {
+    let data = await Filereader.readFile('./mailAuth.json');
+    let mailAuth = JSON.parse(data);
 
-      let mailAuth = JSON.parse(data);
-
-      let transporter = nodemailer.createTransport({
-        host: mailAuth.host,
-        service: mailAuth.service,
-        port: 465,
-        secure: true, // use SSL
-        auth: {
-          user: mailAuth.user,
-          pass: mailAuth.pass
-        }
-      });
-
-      let subject = `Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
-
-      if (process.env.NODE_ENV == 'dev') {
-        subject = `TEST: Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
+    let transporter = nodemailer.createTransport({
+      host: mailAuth.host,
+      service: mailAuth.service,
+      port: 465,
+      secure: true, // use SSL
+      auth: {
+        user: mailAuth.user,
+        pass: mailAuth.pass
       }
-
-      let html = buildHTML(arr);
-
-      let mailOptions = {
-        from: mailAuth.user,
-        to: this.email,
-        subject: subject,
-        html: html
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          logErr(error);
-        } else {
-          for (let a of info.accepted) {
-            logOut(`Email sent to: ${a}`);
-          }
-        }
-      });
-
-      Filereader.writeFile('./messageTest.html', html, (err) => {
-        if (err) throw err;
-      });
-
     });
+
+    let subject = `Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
+
+    if (process.env.NODE_ENV == 'dev') {
+      subject = `TEST: Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
+    }
+
+    let html = buildHTML(arr);
+
+    let mailOptions = {
+      from: mailAuth.user,
+      to: user.mail,
+      subject: subject,
+      html: html
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        logErr(error);
+      } else {
+        for (let a of info.accepted) {
+          logOut(`Email sent to: ${a}`);
+        }
+      }
+    });
+
+    Filereader.writeFile('./messageTest.html', html, (err) => {
+      if (err) throw err;
+    });
+
   }
 }
 module.exports = Notifier;

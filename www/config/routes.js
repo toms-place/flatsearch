@@ -6,10 +6,10 @@ module.exports = function (app, passport) {
 
     app.get('/', home.home);
     app.get('/signup', home.signup);
-    app.get('/me', home.loggedIn, home.me);
     app.get('/confirm', home.confirm);
     app.get('/logout', home.logout);
     app.get('/delete', home.delete);
+    app.get('/me', home.userReload, home.me);
 
     //posts
     app.post('/signup', passport.authenticate('local-signup', {

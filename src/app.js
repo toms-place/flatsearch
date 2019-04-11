@@ -12,4 +12,4 @@ const Notifier = require('./notifier');
 const notifier = new Notifier();
 
 crawler.crawl();
-//notifier.notify();
+notifier.notify();

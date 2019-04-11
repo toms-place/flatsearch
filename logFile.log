@@ -1,0 +1,19 @@
+April 11th 2019, 1:56:20 pm: Error: No recipients defined
+    at SMTPConnection._formatError (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:605:19)
+    at SMTPConnection._setEnvelope (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:817:34)
+    at SMTPConnection.send (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:443:14)
+    at sendMessage (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-transport/index.js:226:28)
+    at connection.login.err (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-transport/index.js:284:25)
+    at SMTPConnection._actionAUTHComplete (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:1354:9)
+    at SMTPConnection._responseActions.push.str (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:378:26)
+    at SMTPConnection._processResponse (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:764:20)
+    at SMTPConnection._onData (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:570:14)
+    at TLSSocket._socket.on.chunk (/Users/thomas/git/flatsearch/node_modules/nodemailer/lib/smtp-connection/index.js:522:47)
+    at TLSSocket.emit (events.js:197:13)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at TLSSocket.Readable.push (_stream_readable.js:224:10)
+    at TLSWrap.onStreamRead [as onread] (internal/stream_base_commons.js:145:17)
+April 11th 2019, 1:57:40 pm: Email sent to: kontakt@weber-thomas.at
+April 11th 2019, 1:58:30 pm: Email sent to: kontakt@weber-thomas.at
+April 11th 2019, 2:02:20 pm: Email sent to: kontakt@weber-thomas.at

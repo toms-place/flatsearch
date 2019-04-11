@@ -16,11 +16,32 @@ exports.loggedIn = function (req, res, next) {
 
 }
 
+exports.userReload = async function (req, res, next) {
+	if (req.session.user) { // req.session.passport._id
+
+		try {
+			// find a user whose email is the same as the sessions email
+			let user = await User.findOne({
+				'mail': req.session.user.mail
+			});
+
+			req.session.user = user;
+		} catch (error) {
+			if (error) req.flash("error", error)
+		}
+
+		next();
+
+	} else {
+
+		res.redirect('/');
+
+	}
+};
+
 exports.logout = function (req, res) {
-	req.session.destroy(function (err) {
-		if (err) throw err
-		res.redirect('/'); //Inside a callback… bulletproof!
-	})
+	req.logout();
+	res.redirect('/');
 };
 
 exports.home = function (req, res) {

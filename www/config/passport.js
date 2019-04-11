@@ -11,9 +11,6 @@ var fs = require('fs');
 const querystring = require('querystring');
 
 
-var bcrypt = require('bcrypt-nodejs');
-
-
 //expose this function to our app using module.exports
 module.exports = function (passport) {
 
