@@ -34,6 +34,7 @@ exports.home = function (req, res) {
 
 }
 
+//TODO on every reload the session must be reloaded to check db for flats
 exports.me = function (req, res) {
 
 	res.render('me', {
