@@ -1,7 +1,7 @@
 {
   "name": "flatsearch",
   "version": "1.0.0",
-  "description": "crawl wohnen.at & ebg and register for new appartments",
+  "description": "crawls different websites for flats and informs user about new ones",
   "main": "src/app.js",
   "scripts": {
     "start": "env NODE_ENV=prod node src/app.js",

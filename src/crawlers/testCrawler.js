@@ -12,12 +12,12 @@ const {
 
 class testCrawler {
   constructor() {
-    this.flatChecker = new FlatChecker(true);
+    this.flatChecker = new FlatChecker();
     this.newFlats = [];
   }
 
   async crawl() {
-    const job = new CronJob('*/5 * * * * *', async () => {
+    const job = new CronJob('*/10 * * * * *', async () => {
       try {
         console.log('executing testCrawler.js');
         this.newFlats = [];

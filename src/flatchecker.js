@@ -5,36 +5,17 @@ class FlatChecker {
     this.initOutput = false || initOutput;
     this.tempFlats = [];
   }
-  compare(flats) {
+  async compare(flats) {
     let newFlats = [];
-
-    /* Checks which array is longer */
-    let longerFlatArray;
-    if (flats.length >= this.tempFlats.length) {
-      longerFlatArray = flats.length;
-    } else {
-      longerFlatArray = this.tempFlats.length;
-    }
 
     if (this.initOutput) {
 
-      for (let i = 0; i < longerFlatArray; i++) {
-        newFlats.push(flats[i]);
-      }
-
+      newFlats = flats;
       this.initOutput = false;
 
     } else {
 
-      /* this is the actual testing part */
-      for (let i = 0; i < longerFlatArray; i++) {
-        for (let y = 0; y < this.tempFlats.length; y++) {
-          let sameFlat = flats[i].isSameAs(this.tempFlats[y]);
-          if (!sameFlat && flats[i] !== undefined) {
-            newFlats.push(flats[i]);
-          }
-        }
-      }
+      newFlats = getJustUniqueElementsFromArray2(this.tempFlats, flats);
 
     }
 
@@ -60,7 +41,7 @@ class FlatChecker {
                   if (err) throw err;
                 });
               }
-              
+
             }
 
           }
@@ -77,3 +58,25 @@ class FlatChecker {
 };
 
 module.exports = FlatChecker;
+
+
+function getJustUniqueElementsFromArray2(array1, array2) {
+
+  let uniqueElements = [];
+
+  /* Nested for loop starting with longer array */
+  for (let elem2 of array2) {
+    let found = false;
+
+    for (let elem1 of array1) {
+      if (elem2.isSameAs(elem1)) {
+        found = true;
+      }
+    }
+
+    if (!found) uniqueElements.push(elem2)
+  }
+
+  return uniqueElements;
+
+}

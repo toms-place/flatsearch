@@ -7,95 +7,124 @@ const CronJob = require('cron').CronJob;
 const Flat = require('./model/flat');
 
 class Notifier {
-  constructor(notificationRate) {
-    this.notificationRate = notificationRate || 5;
+  constructor(notificationrate) {
+    this.notificationrate = notificationrate || 5;
   }
-  notify() {
-    const job = new CronJob('*/10 * * * * *', async () => {
+  startCron() {
+    const job = new CronJob('*/30 * * * * *', () => {
       this.alert();
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
   }
 
-  async alert() {
-    try {
-      const users = await dbUser.find({});
-      for (let user of users) {
-        let flag = false;
-        if (user.flats.length > 0) {
-          flag = true;
-          let sendingFlats = [];
+  alert() {
 
-          for (let flat of user.flats) {
-            sendingFlats.push(flat);
-          }
-          console.log("try to send!")
-          this.sendMail(sendingFlats, user);
-          user.flats = [];
-        }
+    let date = new Date();
+    let current_hour = date.getHours();
+    let current_day = date.getDay();
+    let current_minute = date.getMinutes();
 
-        if (flag) {
-          user.save(function (err) {
-            if (err) throw err;
-          });
-        }
-      }
-    } catch (err) {
-      throw err;
-    }
-
-  }
-
-  async sendMail(arr, user) {
-    let data = await Filereader.readFile('./mailAuth.json');
-    let mailAuth = JSON.parse(data);
-
-    let transporter = nodemailer.createTransport({
-      host: mailAuth.host,
-      service: mailAuth.service,
-      port: 465,
-      secure: true, // use SSL
-      auth: {
-        user: mailAuth.user,
-        pass: mailAuth.pass
-      }
-    });
-
-    let subject = `Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
-
-    if (process.env.NODE_ENV == 'dev') {
-      subject = `TEST: Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
-    }
-
-    let html = buildHTML(arr);
-
-    let mailOptions = {
-      from: mailAuth.user,
-      to: user.mail,
-      subject: subject,
-      html: html
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        logErr(error);
-      } else {
-        for (let a of info.accepted) {
-          logOut(`Email sent to: ${a}`);
-        }
-      }
-    });
-
-    Filereader.writeFile('./messageTest.html', html, (err) => {
+    dbUser.find({}, async function (err, users) {
       if (err) throw err;
-    });
+      for (let user of users) {
+        let sendFlag = false;
+        if (user.flats.length > 0) {
+          switch (user.notificationrate) {
+            case 1:
+              sendFlag = true;
+              break;
+            case 2 && current_minute == 0:
+              sendFlag = true;
+              break;
+            case 3 && current_minute == 0 && (current_hour == 6 || current_hour == 12 || current_hour == 18):
+              sendFlag = true;
+              break;
+            case 4 && current_minute == 0 && (current_hour == 10 || current_hour == 15):
+              sendFlag = true;
+              break;
+            case 5 && current_minute == 0 && current_hour == 6:
+              sendFlag = true;
+              break;
+            case 6 && current_minute == 0 && current_day == 3:
+              sendFlag = true;
+              break;
+            default:
+              sendFlag = false;
+              break;
+          }
 
+          if (sendFlag == true) {
+            console.log("try to send!")
+            await sendMail(user.flats, user);
+            user.flats = [];
+            user.save(function (err) {
+              if (err) throw err;
+            });
+          }
+        }
+      }
+
+    });
   }
 }
 module.exports = Notifier;
 
+async function sendMail(flatsJSON, user) {
 
-function buildHTML(arr) {
+  let mailAuth;
+  try {
+    let data = await Filereader.readFile('./mailAuth.json');
+    mailAuth = JSON.parse(data);
+
+  } catch (error) {
+    if (error) throw error
+  }
+
+  let transporter = nodemailer.createTransport({
+    host: mailAuth.host,
+    service: mailAuth.service,
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: mailAuth.user,
+      pass: mailAuth.pass
+    }
+  });
+
+  let subject = `Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
+
+  if (process.env.NODE_ENV == 'dev') {
+    subject = `TEST: Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
+  }
+
+  let html = buildHTML(flatsJSON);
+
+  let mailOptions = {
+    from: mailAuth.user,
+    to: user.mail,
+    subject: subject,
+    html: html
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      logErr(error);
+    } else {
+      for (let a of info.accepted) {
+        logOut(`Email sent to: ${a}`);
+      }
+    }
+  });
+
+  /* Just to see the output of the mail */
+  Filereader.writeFile('./messageTest.html', html, (err) => {
+    if (err) throw err;
+  });
+
+}
+
+
+function buildHTML(flatsJSON) {
   let html = `
   <!DOCTYPE html>
     <head>
@@ -111,12 +140,9 @@ function buildHTML(arr) {
         <div style="max-width: 800px; margin: auto auto; padding: 0px 20px;">
           <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
-  for (let f of arr) {
-    console.log(f);
-    let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
-
+  for (let flatJSON of flatsJSON) {
+    let flat = new Flat(flatJSON.website, flatJSON.district, flatJSON.city, flatJSON.address, flatJSON.link, flatJSON.rooms, flatJSON.size, flatJSON.costs, flatJSON.deposit, flatJSON.funds, flatJSON.legalform, flatJSON.title, flatJSON.status, flatJSON.info, flatJSON.docs, flatJSON.images);
     html += flat.getHTML() + '<br /><br /><br />';
-
   }
 
   html += `

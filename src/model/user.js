@@ -17,6 +17,7 @@ var userSchema = mongoose.Schema({
 	newsletter: { type: Boolean, default: true },
 	plz_interests: { type: Array, default: [] },
 	flats: { type: Array, default: [] },
+	notificationrate: { type: Number, default: 1 },
 });
 
 //create the model for users and expose it to our app
