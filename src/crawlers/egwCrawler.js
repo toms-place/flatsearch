@@ -17,7 +17,7 @@ class egwCrawler {
 
   async crawl() {
 
-    const job = new CronJob('* */5 * * * *', async () => {
+    const job = new CronJob('0 */5 * * * *', async () => {
     try {
       //logOut('crawlEGW');
       this.newFlats = [];

@@ -17,7 +17,7 @@ class szbCrawler {
 
   async crawl() {
 
-    const job = new CronJob('* */5 * * * *', async () => {
+    const job = new CronJob('0 */5 * * * *', async () => {
       try {
         //logOut('crawlSZB');
         this.newFlats = [];

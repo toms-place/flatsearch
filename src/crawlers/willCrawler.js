@@ -19,7 +19,7 @@ class willCrawler {
 
   async crawl() {
 
-    const job = new CronJob('* */30 * * * *', async () => {
+    const job = new CronJob('0 */30 * * * *', async () => {
     try {
       //logOut('crawlWillhaben');
 

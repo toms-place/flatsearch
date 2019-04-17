@@ -20,7 +20,7 @@ class FlatChecker {
     }
 
     /* New Flats are pushed to each user if plz_interests match*/
-    if (newFlats.length > 0 || (this.initOutput == true && newFlats.length > 0)) {
+    if (this.initOutput == true && newFlats.length > 0) {
       try {
         dbUser.find({}).exec(function (err, users) {
           if (!err) {
@@ -49,6 +49,7 @@ class FlatChecker {
       } catch (err) {
         throw err;
       }
+      this.initOutput = true;
     }
 
     //set tempFlats to just crawled flats

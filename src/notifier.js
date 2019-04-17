@@ -11,7 +11,7 @@ class Notifier {
     this.notificationrate = notificationrate || 5;
   }
   startCron() {
-    const job = new CronJob('* */5 * * * *', () => {
+    const job = new CronJob('0 */5 * * * *', () => {
       this.alert();
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
