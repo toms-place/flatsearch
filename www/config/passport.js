@@ -85,9 +85,18 @@ module.exports = function (passport) {
 
                             let plz_interests = [];
 
-                            for (let plz of req.body.plz_interests) {
-                                plz_interests.push(parseInt(plz));
+                            if (Array.isArray(req.body.plz_interests)) {
+                                for (let plz of req.body.plz_interests) {
+                                    plz_interests.push(parseInt(plz));
+                                }
+                            } else if (req.body.plz_interests != undefined) {
+                                if (req.body.plz_interests.length > 0) {
+                                    plz_interests.push(parseInt(req.body.plz_interests));
+                                }
                             }
+
+                            let uniq = a => [...new Set(a)];
+                            user.plz_interests = uniq(user.plz_interests);
 
                             newUser.mail = email;
                             newUser.password = newUser.generateHash(password);

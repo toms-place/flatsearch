@@ -4,13 +4,11 @@ var home = require('../app/controllers/home');
 
 module.exports = function (app, passport) {
 
-    app.get('/', home.home);
+    app.get('/', home.userReload, home.home);
     app.get('/signup', home.signup);
     app.get('/confirm', home.confirm);
     app.get('/logout', home.logout);
     app.get('/delete', home.delete);
-    app.get('/me', home.userReload, home.me);
-
     //posts
     app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
@@ -19,9 +17,11 @@ module.exports = function (app, passport) {
     }));
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/me', // redirect to the secure profile section
+        successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/', // redirect back to the login page if there is an error
         failureFlash: true // allow flash messages
     }));
+
+    app.post('/change_plz_interests', home.change_plz_interests, home.userReload, home.home);
 
 }

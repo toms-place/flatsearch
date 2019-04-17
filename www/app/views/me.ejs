@@ -1,23 +1,179 @@
-<%- include('includes/header'); -%>
+<% if (error.length > 0) { %>
+<div class="alert alert-danger"><%- error %></div>
+<% } %>
 
-    <h1><%= title %></h1>
-    <h2>You selected following districts to show flats in:</h2>
-    
-    <% if (session.user.plz_interests.length > 0) { %>
-    <ul id='districts' class='list'>
-    <% session.user.plz_interests.forEach(function(plz){ %>
-        <li><%= plz %></li>
-      <% }); %>
-    </ul>
-    <% } %>
+<% if (success.length > 0) { %>
+<div class="alert alert-success"><%- success %></div>
+<% } %>
 
-    <% if (session.user.flats.length > 0) { %>
-      <h2>There are <%= session.user.flats.length %> new Flats for your Account:</h2>
-    <ul id='flats' class='list'>
-      <% session.user.flats.forEach(function(flat){ %>
-          <a href="<%= flat.link %>"><li><%= flat.district + ' - ' +  flat.address %></li></a>
+<div class="top-content">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="form-bottom">
+          <form role="form" action="/change_plz_interests" role="form" method="post" method="post" class="login-form">
+
+            <div class="form-group">
+              <% if (session.user.plz_interests.length > 0) { %>
+
+              <h2>You selected following districts to show flats in:</h2>
+              <ul id='districts' class='list'>
+                <% session.user.plz_interests.forEach(function(plz){ %>
+                <li id="<%= plz %>" class="plz"><%= plz %><span>X</span></li>
+                <% }); %>
+              </ul>
+
+              <% } %>
+
+              <label for="plzContainer">Add your PLZ interests:</label>
+              <div id="plzContainer" class="field_wrapper">
+                <div class="plzs">
+                  <input type='number' max='9999' min='1000' name="plz_interests"
+                    class="form-control form-username plz_input" />
+                  <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
+                </div>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn">Save!</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% if (session.user.flats.length > 0) { %>
+<div id='flats'>
+  <div class="top-content">
+    <div class="inner-bg">
+      <div class="container">
+
+          <% let count = 0;
+            let flatCountString = "new Flats";
+            session.user.flats.forEach(function(flat){ %>
+            <% if (session.user.plz_interests.includes(flat.district)) {
+              count++;
+              if (count == 1) {
+                flatCountString = "new Flat"
+              } else {
+                flatCountString = "new Flats"
+              }}
+            }); %>
+        <h2>We found <%- count + " " + flatCountString%> for your Account:</h2>
+        <% session.user.flats.forEach(function(flat){ %>
+        <% if (session.user.plz_interests.includes(flat.district)) {
+
+        let title = '';
+        if (flat.title) {
+          title = `<h4 style="margin: 0px;">${flat.title}</h4>`
+        }
+
+        let info = '';
+        if (flat.info) {
+          info = `<p>${flat.info}</p>`;
+        }
+
+        let images = '';
+        if (flat.images) {
+          images = `<h3>Bilder</h3>`
+          for (let i = 0; i < flat.images.length; i++) {
+            images += `<img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${flat.images[i].src}" />`;
+          }
+        }
+
+        let docs = '';
+        if (flat.docs) {
+          docs = `<h3>Dokumente</h3><ul>`
+          for (let i = 0; i < flat.docs.length; i++) {
+            if (i == flat.docs.length - 1) {
+              docs += `<li><a href="${flat.docs[i].href}">${flat.docs[i].text}</a></li></ul>`
+            } else {
+              docs += `<li><a href="${flat.docs[i].href}">${flat.docs[i].text}</a></li>`;
+            }
+          }
+        }
+
+        let details = '';
+        if (flat.status !== undefined || flat.legalform !== undefined || flat.costs !== undefined || flat.deposit !== undefined || flat.funds !== undefined || flat.size !== undefined || flat.rooms !== undefined) {
+          details += `<h3>Details</h3><table>`;
+          if (flat.status !== undefined) {
+            details += `<tr><td>Status:</td> <td>${flat.status}</td></tr>`;
+          }
+          if (flat.legalform !== undefined) {
+            details += `<tr><td>Art:</td> <td>${flat.legalform}</td></tr>`;
+          }
+          if (flat.costs !== undefined) {
+            details += `<tr><td>Kosten:</td> <td>${flat.costs}</td></tr>`;
+          }
+          if (flat.deposit !== undefined) {
+            details += `<tr><td>Kaution:</td> <td>${flat.deposit}</td></tr>`;
+          }
+          if (flat.funds !== undefined) {
+            details += `<tr><td>Eigenmittel:</td> <td>${flat.funds}</td></tr>`;
+          }
+          if (flat.size !== undefined) {
+            details += `<tr><td>Größe:</td> <td>${flat.size} m&sup2;</td></tr>`;
+          }
+          if (flat.rooms !== undefined) {
+            details += `<tr><td>Raumanzahl:</td> <td>${flat.rooms}</td></tr>`;
+          }
+          details += `</table>`;
+        }
+
+        let html =
+          `<div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa; width: 100%; margin-bottom: 30px;">
+
+            <div style="padding: 12.5px 11px; background: #999; color: white;">
+              ${title}
+            </div>
+
+            <div style="background-color:#ddd; padding:20px;">
+                <a href="${flat.link}" style="line-height: 1;">
+                  <h2 style="margin: 0px;">${flat.address}, ${flat.district} ${flat.city}</h2>
+                </a>
+            </div>
+
+            <div style="padding: 5px 20px 10px 40px; background-color:#eee;">
+              ${details + docs + info + images}
+            </div>
+
+            <div style="padding: 10px; background: #eee; color: #333; text-align:right;">
+              <h4 style="margin: 0px; padding: 0px;">${flat.website}</h4>
+            </div>
+
+            <div style="padding: 12.5px 11px; background: #ddd; color: white; text-align:center;">
+              <a style="padding: 10px;" href="https://www.google.com/maps/search/${flat.address}+${flat.district}+${flat.city}">
+                <img src="https://img.icons8.com/metro/50/ffffff/marker.png" alt="marker" width="25" height="25">
+              </a>
+            </div>
+
+          </div>`
+          
+          %>
+
+
+        <div class="row">
+          <%- html %>
+        </div>
+
+
+
+        <% } %>
+
         <% }); %>
-    </ul>
-    <% } %>
 
-<%- include('includes/footer'); -%>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% } %>
+
+
+<script src="/js/addFormField.js"></script>
+<script src="/js/addHiddenInputField.js"></script>

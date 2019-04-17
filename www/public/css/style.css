@@ -46,6 +46,15 @@ a:hover li{
 	background-color: #ddd;
 }
 
+.btn {
+	background-color: #555;
+	color: white;
+}
+
+.btn:hover {
+	background-color: #333;
+	color: white;
+}
 
 h1 {
 	margin-top: 10px;
@@ -195,13 +204,6 @@ img { max-width: 100%; }
 
 .form-bottom form button.btn {
 	width: 100%;
-	background-color: #555;
-	color: white;
-}
-
-.form-bottom form button.btn:hover {
-	background-color: #333;
-	color: white;
 }
 
 .form-bottom form .input-error {

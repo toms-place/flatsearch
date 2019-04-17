@@ -3,13 +3,14 @@
 <h1>Welcome to <%= title %></h1>
 
 <% if (session.user == undefined) { %>
+	<p>This website let's you register for a newsletter of new flats in austria.</p>
+	<a href="/signup"> <button class="btn">Sign up!</button></a>
 	<%- include('login'); -%>
-<% } else {%>
-<p>Hi, <%= session.user.name %>! You are logged in.</p>
-<p><a href="/me">Visit your site!</a></p>
+<% } else { %>
+	<p>Hi, <%= session.user.name %>! You are logged in. - <a href="/logout">logout?</a></p>
+	<%- include('me'); -%>
 <% } %>
 
-<p>This website let's you register for a newsletter of new flats in austria.</p>
 
 
 <%- include('includes/footer'); -%>

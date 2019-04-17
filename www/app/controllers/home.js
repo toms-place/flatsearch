@@ -1,6 +1,3 @@
-var numeral = require('numeral');
-var bcrypt = require('bcrypt-nodejs');
-var dateFormat = require('dateformat');
 var User = require('../models/home');
 
 exports.loggedIn = function (req, res, next) {
@@ -34,14 +31,68 @@ exports.userReload = async function (req, res, next) {
 
 	} else {
 
+		next();
+
+	}
+};
+
+exports.change_plz_interests = async function (req, res, next) {
+	if (req.session.user) { // req.session.passport._id
+
+		try {
+			// find a user whose email is the same as the sessions email
+			let user = await User.findOne({
+				'mail': req.session.user.mail
+			});
+
+			let plz_interests = [];
+			let plz_remove = [];
+
+			if (Array.isArray(req.body.plz_interests)) {
+				for (let plz of req.body.plz_interests) {
+					plz_interests.push(parseInt(plz));
+				}
+			} else if (req.body.plz_interests != undefined) {
+				if (req.body.plz_interests.length > 0) {
+					plz_interests.push(parseInt(req.body.plz_interests));
+				}
+			}
+			if (Array.isArray(req.body.plz_remove)) {
+				for (let plz of req.body.plz_remove) {
+					plz_remove.push(parseInt(plz));
+				}
+			} else if (req.body.plz_remove != undefined) {
+				if (req.body.plz_remove.length > 0) {
+					plz_remove.push(parseInt(req.body.plz_remove));
+				}
+			}
+
+			user.plz_interests = user.plz_interests.concat(plz_interests);
+			user.plz_interests = user.plz_interests.filter(plz => plz_remove.indexOf(plz) === -1);
+			user.plz_interests.sort();
+
+			let uniq = a => [...new Set(a)];
+			user.plz_interests = uniq(user.plz_interests);
+
+			await user.save();
+
+		} catch (error) {
+			if (error) req.flash("error", error);
+		}
+
+		next();
+
+	} else {
+
 		res.redirect('/');
 
 	}
 };
 
 exports.logout = function (req, res) {
-	req.logout();
-	res.redirect('/');
+	req.session.destroy(() => {
+		res.redirect('/');
+	});
 };
 
 exports.home = function (req, res) {
@@ -54,19 +105,6 @@ exports.home = function (req, res) {
 	});
 
 }
-
-//TODO on every reload the session must be reloaded to check db for flats
-exports.me = function (req, res) {
-
-	res.render('me', {
-		title: "Your Account",
-		session: req.session,
-		error: req.flash("error"),
-		success: req.flash("success"),
-	});
-
-}
-
 
 exports.signup = function (req, res) {
 
