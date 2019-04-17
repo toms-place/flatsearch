@@ -12,7 +12,7 @@ const willCrawler = require('./crawlers/willCrawler');
 class Crawler {
   crawl() {
 
-      let nl = new nlCrawler(true).crawl('0 */1 * * * *');
+      let nl = new nlCrawler(true).crawl('0 */5 * * * *');
       let szb = new szbCrawler().crawl('0 */5 * * * *');
       let su = new suCrawler().crawl('0 */5 * * * *');
       let egw = new egwCrawler().crawl('0 */5 * * * *');
