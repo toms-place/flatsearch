@@ -1,14 +1,18 @@
-# wohnen-crawler
-- crawls some websites for new apartments
+# flatsearch
+- crawls different websites for flats and informs user about new ones
 
 # requirements
 - nodejs - [download here](https://nodejs.org/en/download/)
 
 # usage
-1. add [mailAuth.json](#mailAuthjson) & [users.json](#usersjson)
-2. npm install
-3. npm start
-4. leave it running, you get notified every 5 minutes if there is a new apartment
+1. npm install
+2. setup a mongodb on your localhost
+3. npm start //starts crawler
+3. cd www node app.js //starts webserver
+
+# webserver
+on the webserver you can register for the mailinglist
+
 
 ## mailAuth.json
 - smtp Host
@@ -20,21 +24,5 @@
   "host": "",
   "user": "",
   "pass": ""
-}
-```
-
-## users.json
-- User objects with:
-- Name
-- Email
-- filter: [] Array of districts as Integers
-
-```
-{
-  "user1": {
-    "name": "",
-    "email": "",
-    "filter": []
-  }
 }
 ```
