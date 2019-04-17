@@ -3,7 +3,6 @@ const FlatChecker = require('../flatchecker');
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
 const CronJob = require('cron').CronJob;
-const flatListener = require('../flatListener');
 
 const rp = require('request-promise');
 const jsdom = require('jsdom');
@@ -20,7 +19,7 @@ class ebgCrawler {
 
   async crawl() {
 
-    const job = new CronJob('*/5 * * * *', async () => {
+    const job = new CronJob('* */5 * * * *', async () => {
       try {
 
         //logOut('crawlEBG');
@@ -60,14 +59,10 @@ class ebgCrawler {
 
           let flat = new Flat('EBG', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
-          flats.push(JSON.stringify(flat));
+          flats.push(flat);
         }
 
         this.newFlats = await this.flatChecker.compare(flats);
-
-        if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats);
-        }
 
       } catch (error) {
         logErr(error);

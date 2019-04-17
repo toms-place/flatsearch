@@ -3,7 +3,6 @@ const FlatChecker = require('../flatchecker');
 const rp = require('request-promise');
 const logErr = require('../logger').logErr;
 const CronJob = require('cron').CronJob;
-const flatListener = require('../flatListener');
 
 class wsudCrawler {
   constructor() {
@@ -13,7 +12,7 @@ class wsudCrawler {
 
   async crawl() {
 
-    const job = new CronJob('*/5 * * * *', async () => {
+    const job = new CronJob('* */5 * * * *', async () => {
       try {
         //logOut('crawlWSUD');
         this.newFlats = [];
@@ -79,18 +78,14 @@ class wsudCrawler {
 
                 let flat = new Flat('Wien Süd', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
-                await flats.push(JSON.stringify(flat));
+                await flats.push(flat);
 
               }
             }
           }
         }
-        
-        this.newFlats = await this.flatChecker.compare(flats);
 
-        if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats);
-        }
+      this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
         logErr(error);

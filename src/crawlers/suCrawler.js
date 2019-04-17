@@ -8,7 +8,6 @@ const {
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
 const CronJob = require('cron').CronJob;
-const flatListener = require('../flatListener');
 
 class suCrawler {
   constructor() {
@@ -18,7 +17,7 @@ class suCrawler {
 
   async crawl() {
 
-    const job = new CronJob('*/5 * * * *', async () => {
+    const job = new CronJob('* */5 * * * *', async () => {
       try {
         //logOut('crawlSU');
         this.newFlats = [];
@@ -54,14 +53,10 @@ class suCrawler {
 
           let flat = new Flat('SU', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
-          flats.push(JSON.stringify(flat));
+          flats.push(flat);
         }
 
         this.newFlats = await this.flatChecker.compare(flats);
-
-        if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats);
-        }
 
       } catch (error) {
         logErr(error);

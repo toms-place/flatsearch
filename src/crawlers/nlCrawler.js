@@ -8,8 +8,6 @@ const {
 const logErr = require('../logger').logErr;
 const logOut = require('../logger').logOut;
 const CronJob = require('cron').CronJob;
-const flatListener = require('../flatListener');
-
 
 class nlCrawler {
   constructor() {
@@ -19,7 +17,7 @@ class nlCrawler {
 
   async crawl() {
 
-    const job = new CronJob('*/5 * * * *', async () => {
+    const job = new CronJob('* */5 * * * *', async () => {
       try {
         //logOut('crawlNL');
 
@@ -132,7 +130,7 @@ class nlCrawler {
             }
 
             let flat = new Flat('Neuesleben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
-            await flats.push(JSON.stringify(flat));
+            await flats.push(flat);
           } catch (error) {
             logOut("NL")
             logOut(singleFlatsRequests[i].res.request.uri.href);
@@ -140,11 +138,7 @@ class nlCrawler {
           }
         }
 
-        this.newFlats = await this.flatChecker.compare(flats);
-
-        if (this.newFlats.length > 0) {
-          flatListener.emit('newFlat', this.newFlats);
-        }
+      this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
         logErr(error);

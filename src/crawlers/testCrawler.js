@@ -17,7 +17,7 @@ class testCrawler {
   }
 
   async crawl() {
-    const job = new CronJob('*/10 * * * * *', async () => {
+    const job = new CronJob('* */5 * * * *', async () => {
       try {
         console.log('executing testCrawler.js');
         this.newFlats = [];
