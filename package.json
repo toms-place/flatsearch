@@ -4,15 +4,16 @@
   "description": "crawls different websites for flats and informs user about new ones",
   "main": "src/app.js",
   "scripts": {
-    "start": "env NODE_ENV=prod node src/app.js",
+    "start": "env NODE_ENV=prod node src/app.js & npm run www",
     "test": "env NODE_ENV=dev node --inspect src/app.js",
+    "www": "cd www && node app.js",
     "restart": "git pull && npm start"
   },
   "keywords": [],
   "author": "Thomas Weber",
   "repository": {
     "type": "git",
-    "url": "https://github.com/websi96/wohnen-crawler.git"
+    "url": "https://github.com/websi96/flatsearch.git"
   },
   "license": "ISC",
   "dependencies": {

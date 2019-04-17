@@ -96,7 +96,7 @@ module.exports = function (passport) {
                             }
 
                             let uniq = a => [...new Set(a)];
-                            user.plz_interests = uniq(user.plz_interests);
+                            newUser.plz_interests = uniq(plz_interests);
 
                             newUser.mail = email;
                             newUser.password = newUser.generateHash(password);
@@ -108,6 +108,7 @@ module.exports = function (passport) {
                             newUser._id = userdata[0]._id + 1;
                             newUser.plz_interests = plz_interests;
                             newUser.flats = [];
+                            newUser.notificationrate = req.body.notificationrate;
 
                             // save the user
                             newUser.save(function (err) {
