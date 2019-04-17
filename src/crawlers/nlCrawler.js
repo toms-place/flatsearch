@@ -10,14 +10,14 @@ const logOut = require('../logger').logOut;
 const CronJob = require('cron').CronJob;
 
 class nlCrawler {
-  constructor() {
-    this.flatChecker = new FlatChecker();
+  constructor(initOutput) {
+    this.flatChecker = new FlatChecker(initOutput);
     this.newFlats = [];
   }
 
-  async crawl() {
+  async crawl(cron) {
 
-    const job = new CronJob('0 */5 * * * *', async () => {
+    const job = new CronJob(cron, async () => {
       try {
         //logOut('crawlNL');
 
@@ -138,7 +138,7 @@ class nlCrawler {
           }
         }
 
-      this.newFlats = await this.flatChecker.compare(flats);
+        this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
         logErr(error);

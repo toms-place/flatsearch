@@ -12,14 +12,14 @@ var utf8 = require('utf8');
 const CronJob = require('cron').CronJob;
 
 class willCrawler {
-  constructor() {
-    this.flatChecker = new FlatChecker();
+  constructor(initOutput) {
+    this.flatChecker = new FlatChecker(initOutput);
     this.newFlats = [];
   }
 
-  async crawl() {
+  async crawl(cron) {
 
-    const job = new CronJob('0 */30 * * * *', async () => {
+    const job = new CronJob(cron, async () => {
     try {
       //logOut('crawlWillhaben');
 

@@ -7,13 +7,10 @@ const CronJob = require('cron').CronJob;
 const Flat = require('./model/flat');
 
 class Notifier {
-  constructor(notificationrate) {
-    this.notificationrate = notificationrate || 5;
-  }
-  startCron() {
-    const job = new CronJob('0 */5 * * * *', () => {
+  startCron(cron) {
+    const job = new CronJob(cron, () => {
       this.alert();
-    }, null, null, "Europe/Amsterdam", null, true);
+    }, null, null, "Europe/Amsterdam", null, false);
     job.start();
   }
 

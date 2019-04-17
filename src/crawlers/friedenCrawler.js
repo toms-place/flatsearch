@@ -10,15 +10,15 @@ const logOut = require('../logger').logOut;
 const CronJob = require('cron').CronJob;
 
 class friedenCrawler {
-  constructor() {
-    this.flatChecker = new FlatChecker();
+  constructor(iniOutput) {
+    this.flatChecker = new FlatChecker(iniOutput);
     this.newFlats = [];
     this.body = '';
   }
 
-  async crawl() {
+  async crawl(cron) {
 
-    const job = new CronJob('0 */5 * * * *', async () => {
+    const job = new CronJob(cron, async () => {
     try {
       //logOut('crawlFrieden');
 

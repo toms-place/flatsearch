@@ -2,25 +2,29 @@ const dbUser = require('./model/user');
 
 class FlatChecker {
   constructor(initOutput) {
-    this.initOutput = false || initOutput;
+    this.initOutput = initOutput;
     this.tempFlats = [];
   }
   async compare(flats) {
     let newFlats = [];
-
-    if (this.initOutput) {
-
-      newFlats = flats;
-      this.initOutput = false;
-
+    newFlats = getJustUniqueElementsFromArray2(this.tempFlats, flats);
+    if (this.initOutput == undefined) {
+      this.initOutput = true;
     } else {
-
-      newFlats = getJustUniqueElementsFromArray2(this.tempFlats, flats);
-
+      saveNewFlats(newFlats);
     }
 
+    //set tempFlats to just crawled flats
+    this.tempFlats = flats;
+
+  }
+};
+
+module.exports = FlatChecker;
+
+function saveNewFlats(newFlats) {
+
     /* New Flats are pushed to each user if plz_interests match*/
-    if (this.initOutput == true && newFlats.length > 0) {
       try {
         dbUser.find({}).exec(function (err, users) {
           if (!err) {
@@ -49,16 +53,8 @@ class FlatChecker {
       } catch (err) {
         throw err;
       }
-      this.initOutput = true;
-    }
 
-    //set tempFlats to just crawled flats
-    this.tempFlats = flats;
-
-  }
-};
-
-module.exports = FlatChecker;
+}
 
 
 function getJustUniqueElementsFromArray2(array1, array2) {

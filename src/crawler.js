@@ -12,16 +12,16 @@ const willCrawler = require('./crawlers/willCrawler');
 class Crawler {
   crawl() {
 
-      let nl = new nlCrawler().crawl();
-      let szb = new szbCrawler().crawl();
-      let su = new suCrawler().crawl();
-      let egw = new egwCrawler().crawl();
-      let ebg = new ebgCrawler().crawl();
-      let hb = new hbCrawler().crawl();
-      let fr = new frCrawler().crawl();
-      let wsud = new wsudCrawler().crawl();
-      let will = new willCrawler().crawl();
-      //let test = new testCrawler().crawl();
+      let nl = new nlCrawler().crawl('0 */5 * * * *');
+      let szb = new szbCrawler().crawl('0 */5 * * * *');
+      let su = new suCrawler().crawl('0 */5 * * * *');
+      let egw = new egwCrawler().crawl('0 */5 * * * *');
+      let ebg = new ebgCrawler().crawl('0 */5 * * * *');
+      let hb = new hbCrawler().crawl('0 */5 * * * *');
+      let fr = new frCrawler().crawl('0 */5 * * * *');
+      let wsud = new wsudCrawler().crawl('0 */5 * * * *');
+      let will = new willCrawler().crawl('0 0 */1 * * *');
+      //let test = new testCrawler(true).crawl('0 */5 * * * *');
 
   }
 }

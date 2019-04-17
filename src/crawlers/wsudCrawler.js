@@ -5,14 +5,14 @@ const logErr = require('../logger').logErr;
 const CronJob = require('cron').CronJob;
 
 class wsudCrawler {
-  constructor() {
-    this.flatChecker = new FlatChecker();
+  constructor(initOutput) {
+    this.flatChecker = new FlatChecker(initOutput);
     this.newFlats = [];
   }
 
-  async crawl() {
+  async crawl(cron) {
 
-    const job = new CronJob('0 */5 * * * *', async () => {
+    const job = new CronJob(cron, async () => {
       try {
         //logOut('crawlWSUD');
         this.newFlats = [];

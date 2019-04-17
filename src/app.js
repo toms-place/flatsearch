@@ -12,4 +12,4 @@ const Notifier = require('./notifier');
 const notifier = new Notifier();
 
 crawler.crawl();
-notifier.startCron();
+notifier.startCron('0 */1 * * * *');
