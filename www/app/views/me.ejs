@@ -98,27 +98,27 @@
         }
 
         let details = '';
-        if (flat.status !== undefined || flat.legalform !== undefined || flat.costs !== undefined || flat.deposit !== undefined || flat.funds !== undefined || flat.size !== undefined || flat.rooms !== undefined) {
+        if (flat.status !== null || flat.legalform !== null || flat.costs !== null || flat.deposit !== null || flat.funds !== null || flat.size !== null || flat.rooms !== null) {
           details += `<h3>Details</h3><table>`;
-          if (flat.status !== undefined) {
+          if (flat.status !== null) {
             details += `<tr><td>Status:</td> <td>${flat.status}</td></tr>`;
           }
-          if (flat.legalform !== undefined) {
+          if (flat.legalform !== null) {
             details += `<tr><td>Art:</td> <td>${flat.legalform}</td></tr>`;
           }
-          if (flat.costs !== undefined) {
+          if (flat.costs !== null) {
             details += `<tr><td>Kosten:</td> <td>${flat.costs}</td></tr>`;
           }
-          if (flat.deposit !== undefined) {
+          if (flat.deposit !== null) {
             details += `<tr><td>Kaution:</td> <td>${flat.deposit}</td></tr>`;
           }
-          if (flat.funds !== undefined) {
+          if (flat.funds !== null) {
             details += `<tr><td>Eigenmittel:</td> <td>${flat.funds}</td></tr>`;
           }
-          if (flat.size !== undefined) {
+          if (flat.size !== null) {
             details += `<tr><td>Größe:</td> <td>${flat.size} m&sup2;</td></tr>`;
           }
-          if (flat.rooms !== undefined) {
+          if (flat.rooms !== null) {
             details += `<tr><td>Raumanzahl:</td> <td>${flat.rooms}</td></tr>`;
           }
           details += `</table>`;
