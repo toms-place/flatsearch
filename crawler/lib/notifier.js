@@ -105,7 +105,7 @@ async function sendMail(sendingFlats, user) {
   let html = buildHTML(sendingFlats);
 
   let mailOptions = {
-    from: mailAuth.user,
+    from: mailAuth.name,
     to: user.mail,
     subject: subject,
     html: html

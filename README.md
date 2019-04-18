@@ -27,6 +27,7 @@ on the webserver you can register for the mailinglist
 {
   "host": "",
   "user": "",
+  "name": "",
   "pass": ""
 }
 ```
