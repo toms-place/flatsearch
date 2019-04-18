@@ -1,11 +1,3 @@
-<% if (error.length > 0) { %>
-<div class="alert alert-danger"><%- error %></div>
-<% } %>
-
-<% if (success.length > 0) { %>
-<div class="alert alert-success"><%- success %></div>
-<% } %>
-
 <div class="top-content">
   <div class="inner-bg">
     <div class="container">
@@ -13,10 +5,19 @@
         <div class="form-bottom">
           <form role="form" action="/change_plz_interests/" method="post" class="login-form">
 
+
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger"><%- error %></div>
+            <% } %>
+
+            <% if (success.length > 0) { %>
+                <div class="alert alert-success"><%- success %></div>
+            <% } %>
+
             <div class="form-group">
               <% if (session.user.plz_interests.length > 0) { %>
 
-              <h2>You selected following districts to show flats in:</h2>
+              <h2>You selected following districts:</h2>
               <ul id='districts' class='list'>
                 <% session.user.plz_interests.forEach(function(plz){ %>
                 <li id="<%= plz %>" class="plz"><%= plz %><span>X</span></li>

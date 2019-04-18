@@ -1,45 +1,37 @@
 const Flat = require('../model/flat');
-const FlatChecker = require('../flatchecker');
+const FlatChecker = require('../lib/flatchecker');
 const rp = require('request-promise');
+const logErr = require('../lib/logger').logErr;
+const logOut = require('../lib/logger').logOut;
+const CronJob = require('cron').CronJob;
+const fs = require('../lib/Filereader');
 const jsdom = require('jsdom');
 const {
   JSDOM
 } = jsdom;
-const logErr = require('../logger').logErr;
-const logOut = require('../logger').logOut;
-const CronJob = require('cron').CronJob;
 
-class suCrawler {
+class testCrawler {
   constructor(initOutput) {
     this.flatChecker = new FlatChecker(initOutput);
     this.newFlats = [];
   }
 
   async crawl(cron) {
-
     const job = new CronJob(cron, async () => {
       try {
-        //logOut('crawlSU');
+        console.log('executing testCrawler.js');
         this.newFlats = [];
 
-        let url = 'http://www.siedlungsunion.at/wohnen/sofort';
+        let url = 'su.html';
 
-        if (process.env.NODE_ENV == 'dev') {
-          url = 'http://127.0.0.1:8080/su';
-        }
-
-        let res1 = await rp({
-          'url': url,
-          resolveWithFullResponse: true
+        let dom = await JSDOM.fromFile(url, {
+          contentType: "text/html"
         });
-
-        let document = new JSDOM(res1.body).window.document;
-        let angebot = document.querySelectorAll('article');
-
-
+        let angebot = dom.window.document.querySelectorAll('article');
+        
         let flats = [];
 
-        for (let i = 1; i < angebot.length; i++) {
+        for (let i = 0; i < angebot.length; i++) {
 
           let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
@@ -59,12 +51,13 @@ class suCrawler {
         this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
-        logErr(error);
+        console.log(error);
       }
 
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
+
   }
 }
 
-module.exports = suCrawler;
+module.exports = testCrawler;

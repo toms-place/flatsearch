@@ -1,37 +1,45 @@
 const Flat = require('../model/flat');
-const FlatChecker = require('../flatchecker');
+const FlatChecker = require('../lib/flatchecker');
 const rp = require('request-promise');
-const logErr = require('../logger').logErr;
-const logOut = require('../logger').logOut;
-const CronJob = require('cron').CronJob;
-const fs = require('../Filereader');
 const jsdom = require('jsdom');
 const {
   JSDOM
 } = jsdom;
+const logErr = require('../lib/logger').logErr;
+const logOut = require('../lib/logger').logOut;
+const CronJob = require('cron').CronJob;
 
-class testCrawler {
-  constructor() {
-    this.flatChecker = new FlatChecker();
+class suCrawler {
+  constructor(initOutput) {
+    this.flatChecker = new FlatChecker(initOutput);
     this.newFlats = [];
   }
 
-  async crawl() {
-    const job = new CronJob('0 */1 * * * *', async () => {
+  async crawl(cron) {
+
+    const job = new CronJob(cron, async () => {
       try {
-        console.log('executing testCrawler.js');
+        //logOut('crawlSU');
         this.newFlats = [];
 
-        let url = 'su.html';
+        let url = 'http://www.siedlungsunion.at/wohnen/sofort';
 
-        let dom = await JSDOM.fromFile(url, {
-          contentType: "text/html"
+        if (process.env.NODE_ENV == 'dev') {
+          url = 'http://127.0.0.1:8080/su';
+        }
+
+        let res1 = await rp({
+          'url': url,
+          resolveWithFullResponse: true
         });
-        let angebot = dom.window.document.querySelectorAll('article');
-        
+
+        let document = new JSDOM(res1.body).window.document;
+        let angebot = document.querySelectorAll('article');
+
+
         let flats = [];
 
-        for (let i = 0; i < angebot.length; i++) {
+        for (let i = 1; i < angebot.length; i++) {
 
           let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
@@ -51,13 +59,12 @@ class testCrawler {
         this.newFlats = await this.flatChecker.compare(flats);
 
       } catch (error) {
-        console.log(error);
+        logErr(error);
       }
 
     }, null, null, "Europe/Amsterdam", null, true);
     job.start();
-
   }
 }
 
-module.exports = testCrawler;
+module.exports = suCrawler;

@@ -2,10 +2,10 @@
   "name": "flatsearch",
   "version": "1.0.0",
   "description": "crawls different websites for flats and informs user about new ones",
-  "main": "src/app.js",
+  "main": "crawler/app.js",
   "scripts": {
-    "start": "env NODE_ENV=prod node src/app.js & npm run www",
-    "test": "env NODE_ENV=dev node --inspect src/app.js",
+    "start": "env NODE_ENV=prod env NODE_PATH=./crawler node crawler/app.js & npm run www",
+    "test": "env NODE_ENV=dev env NODE_PATH=./crawler node --inspect crawler/app.js & npm run www",
     "www": "cd www && node app.js",
     "restart": "git pull && npm start"
   },

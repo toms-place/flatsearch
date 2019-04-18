@@ -1,10 +1,10 @@
 const Filereader = require('./Filereader');
 const nodemailer = require('nodemailer');
-const dbUser = require('./model/user');
+const dbUser = require('../model/user');
 const logOut = require('./logger').logOut;
 const logErr = require('./logger').logErr;
 const CronJob = require('cron').CronJob;
-const Flat = require('./model/flat');
+const Flat = require('../model/flat');
 
 class Notifier {
   startCron(cron) {
@@ -43,8 +43,6 @@ class Notifier {
         try {
 
           if (sendFlag == true) {
-            console.log(user.mail);
-            console.log("first indicator");
 
             let sendingFlats = [];
             for (let flatJSON of user.flats) {
@@ -55,14 +53,12 @@ class Notifier {
             }
 
             if (sendingFlats.length > 0) {
-              console.log("second indicator");
               await sendMail(sendingFlats, user);
               await dbUser.updateOne({
                 'mail': user.mail
               }, {
                 'flats': []
               });
-              console.log("third indicator");
 
             }
           }
@@ -78,15 +74,16 @@ module.exports = Notifier;
 
 async function sendMail(sendingFlats, user) {
 
-  console.log("sendmail indicator");
   let mailAuth;
-  try {
-    let data = await Filereader.readFile('./mailAuth.json');
-    mailAuth = JSON.parse(data);
+  let data;
 
+  try {
+    data = await Filereader.readFile(process.env.NODE_PATH + '/config/mailAuth.json');
   } catch (error) {
     if (error) throw error
   }
+
+  mailAuth = JSON.parse(data);
 
   let transporter = nodemailer.createTransport({
     host: mailAuth.host,

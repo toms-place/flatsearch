@@ -1,7 +1,7 @@
 const Flat = require('../model/flat');
-const FlatChecker = require('../flatchecker');
-const logErr = require('../logger').logErr;
-const logOut = require('../logger').logOut;
+const FlatChecker = require('../lib/flatchecker');
+const logErr = require('../lib/logger').logErr;
+const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
 
 const rp = require('request-promise');

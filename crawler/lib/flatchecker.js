@@ -1,4 +1,5 @@
-const dbUser = require('./model/user');
+const dbUser = require('../model/user');
+const Flat = require('../model/flat');
 
 class FlatChecker {
   constructor(initOutput) {
@@ -7,7 +8,7 @@ class FlatChecker {
   }
   async compare(flats) {
     let newFlats = [];
-    newFlats = getJustUniqueElementsFromArray2(this.tempFlats, flats);
+    newFlats = getJustUniqueFlatsFromArray2(this.tempFlats, flats);
     if (this.initOutput == undefined) {
       this.initOutput = true;
     } else {
@@ -24,23 +25,37 @@ module.exports = FlatChecker;
 
 function saveNewFlats(newFlats) {
 
-    /* New Flats are pushed to each user if plz_interests match*/
+    /* New Flats are pushed to each user if plz_interests match */
       try {
         dbUser.find({}).exec(function (err, users) {
           if (!err) {
 
             for (let user of users) {
-              let flag = false;
 
-              for (let flat of newFlats) {
+              let userTempFlats = [];
+              let userTempNewFlats = [];
+                  
+              for (let flatJSON of user.flats) {
+                let flat = new Flat(flatJSON.website, flatJSON.district, flatJSON.city, flatJSON.address, flatJSON.link, flatJSON.rooms, flatJSON.size, flatJSON.costs, flatJSON.deposit, flatJSON.funds, flatJSON.legalform, flatJSON.title, flatJSON.status, flatJSON.info, flatJSON.docs, flatJSON.images);
                 if (user.plz_interests.includes(flat.district)) {
-                  user.flats.push(flat);
-                  flag = true;
+                  userTempFlats.push(flat);
                 }
               }
 
-              if (flag) {
-                console.log("saving");
+              for (let flat of newFlats) {
+                if (user.plz_interests.includes(flat.district)) {
+                  userTempNewFlats.push(flat);
+                }
+              }
+
+              let flatsToSave = getJustUniqueFlatsFromArray2(userTempFlats, userTempNewFlats);
+
+              if (flatsToSave.length > 0) {
+
+                for (let flat of flatsToSave) {
+                  user.flats.push(flat);
+                }
+
                 user.save(function (err) {
                   if (err) throw err;
                 });
@@ -57,7 +72,7 @@ function saveNewFlats(newFlats) {
 }
 
 
-function getJustUniqueElementsFromArray2(array1, array2) {
+function getJustUniqueFlatsFromArray2(array1, array2) {
 
   let uniqueElements = [];
 

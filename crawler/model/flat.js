@@ -1,5 +1,10 @@
+/** TODO make mongoose model 
+ * add crawl Time
+ * 
+*/
+
 class Flat {
-  constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images) {
+  constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images, crawlTime) {
     this.id = getHash(address, city, district);
     this.website = website;
     this.district = parseInt(district);
@@ -17,6 +22,7 @@ class Flat {
     this.info = info;
     this.docs = docs;
     this.images = images;
+    this.crawlTime = crawlTime;
   }
   
   isSameAs(flat) {

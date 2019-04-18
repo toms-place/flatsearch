@@ -175,14 +175,19 @@ exports.delete = function (req, res) {
 			if (err) throw err;
 
 			if (user.deletedCount == 1) {
-				res.redirect("/logout/");
+				req.session.destroy(() => {
+					res.render('home', {
+						success: "Account deleted..",
+						error: "",
+						session: req.session,
+						title: "Flatsearch"
+					});
+				});
 			} else {
 				res.render('home', {
 					error: "You must be logged in to delete your account.",
-					success: req.flash("success"),
 					session: req.session,
-					title: "Flatsearch",
-					name: ""
+					title: "Flatsearch"
 				});
 			}
 		});
@@ -198,5 +203,51 @@ exports.delete = function (req, res) {
 		});
 	}
 
+
+}
+
+exports.delete_on_activation = async function (req, res) {
+
+	// find a user whose email is the same as the forms email
+	let user = await User.findOne({
+		'mail': req.query.email
+	});
+
+	if (user) {
+		if (user.active_hash == req.query.active_link) {
+
+			User.deleteOne({
+				mail: req.query.email
+			}, function (err, user) {
+				if (err) throw err;
+
+				if (user.deletedCount == 1) {
+					req.session.destroy(() => {
+						res.render('home', {
+							success: "Account deleted..",
+							error: "",
+							session: req.session,
+							title: "Flatsearch"
+						});
+					});
+				} else {
+					res.render('home', {
+						error: "You must be logged in to delete your account.",
+						success: req.flash("success"),
+						session: req.session,
+						title: "Flatsearch",
+						name: ""
+					});
+				}
+			});
+		}
+	} else {
+		res.render('signup', {
+			error: "We could not find a user with this E-Mail. Please sign up!",
+			success: req.flash("success"),
+			session: req.session,
+			title: "signup"
+		});
+	}
 
 }

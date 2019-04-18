@@ -25,7 +25,7 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	<head>
 	<meta name="viewport" content="width=device-width">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Special Request Form</title>
+	<title>Flatsearch e-mail activation</title>
 	<style>
 	/* -------------------------------------
 	    GLOBAL
@@ -213,23 +213,23 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	          <td>
 	            <p>Hi `+user_name+`,</p>
 	    
-	            <h3>Welcome to  express-mvc-generator </h3>
-	            <p>Your Account Created Successfully ,Please Confirm Your Account</p>
+	            <h3>Welcome to Flatsearch</h3>
+	            <p>You have successfully created an account, please confirm your e-mail address</p>
 	            
-	            <h2>Click on the  button link below to activate your account</h2>
+	            <h2>Click on the button below to activate your account</h2>
 	      
 	            <!-- button -->
 	            <table class="btn-primary" cellpadding="0" cellspacing="0" border="0">
 	              <tr>
 	                <td>
-	                  <a href="`+constants.host+`/confirm?email=`+email+`&active_link=`+acitvate_link+`">Verify Your express-mvc-generator</a>
+	                  <a href="`+constants.webHost+`/confirm?email=`+email+`&active_link=`+acitvate_link+`">Verify your e-mail address!</a>
 	                </td>
 	              </tr>
 	            </table>
 	            <!-- /button -->
 	           
 	            <p>Thanks, have a lovely day.</p>
-	            <p><a href="`+constants.host+`">express-mvc-generator Team</a></p>
+	            <p>Thomas from <a href="`+constants.webHost+`">Flatsearch</a></p>
 	          </td>
 	        </tr>
 	      </table>
@@ -253,7 +253,7 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	        <table>
 	          <tr>
 	            <td align="center">
-	              <p>Don't like these annoying emails? <a href="`+constants.host+`/unsubscribe?email=`+email+`"><unsubscribe>Unsubscribe</unsubscribe></a>.
+	              <p>Don't like these annoying emails? Delete your account: <a href="`+constants.webHost+`/delete_on_activation/?email=`+email+`&active_link=`+acitvate_link+`"><unsubscribe>Delete me now!</unsubscribe></a>.
 	              </p>
 	            </td>
 	          </tr>
@@ -275,7 +275,7 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	var mailOptions = {
 	    from: '"'+constants.smtp_from_name+'" <'+constants.smtp_from_email+'>', // sender address
 	    to: email, // list of receivers
-	    subject: 'express-mvc-generator Account Acitvation', // Subject line
+	    subject: 'Flatsearch e-mail activation', // Subject line
 	    html: email_data
 	};
 	

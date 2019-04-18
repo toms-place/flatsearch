@@ -9,6 +9,8 @@ module.exports = function (app, passport) {
     app.get('/confirm/', home.confirm);
     app.get('/logout/', home.logout);
     app.get('/delete/', home.delete);
+    app.get('/delete_on_activation/', home.delete_on_activation);
+    
     //posts
     app.post('/signup/', passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
