@@ -175,7 +175,7 @@ exports.delete = function (req, res) {
 			if (err) throw err;
 
 			if (user.deletedCount == 1) {
-				res.redirect("/logout");
+				res.redirect("/logout/");
 			} else {
 				res.render('home', {
 					error: "You must be logged in to delete your account.",
