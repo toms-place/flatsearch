@@ -14,7 +14,7 @@ class wsudCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        //logOut('crawlWSUD');
+        logOut('crawlWSUD');
         this.newFlats = [];
 
         let api = 'https://www.wiensued.at/api/project/list';

@@ -22,7 +22,7 @@ class ebgCrawler {
     const job = new CronJob(cron, async () => {
       try {
 
-        //logOut('crawlEBG');
+        logOut('crawlEBG');
         this.newFlats = [];
 
         let url = 'http://www.ebg-wohnen.at/Suche.aspx';

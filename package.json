@@ -4,7 +4,7 @@
   "description": "crawls different websites for flats and informs user about new ones",
   "main": "crawler/app.js",
   "scripts": {
-    "start": "env NODE_ENV=prod env NODE_PATH=./crawler node crawler/app.js & npm run www",
+    "start": "env NODE_ENV=prod env NODE_PATH=./crawler node crawler/app.js",
     "test": "env NODE_ENV=dev env NODE_PATH=./crawler node --inspect crawler/app.js & npm run www",
     "www": "cd www && node app.js",
     "restart": "git pull && npm start"

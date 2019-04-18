@@ -20,7 +20,7 @@ class friedenCrawler {
 
     const job = new CronJob(cron, async () => {
     try {
-      //logOut('crawlFrieden');
+      logOut('crawlFrieden');
 
       this.newFlats = [];
       let flats = [];

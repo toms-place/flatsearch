@@ -21,7 +21,7 @@ class willCrawler {
 
     const job = new CronJob(cron, async () => {
     try {
-      //logOut('crawlWillhaben');
+      logOut('crawlWillhaben');
 
       this.newFlats = [];
 

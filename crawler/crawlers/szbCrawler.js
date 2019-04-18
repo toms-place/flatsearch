@@ -19,7 +19,7 @@ class szbCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        //logOut('crawlSZB');
+        logOut('crawlSZB');
         this.newFlats = [];
 
         let url = 'https://www.sozialbau.at/unser-angebot/sofort-verfuegbar/';

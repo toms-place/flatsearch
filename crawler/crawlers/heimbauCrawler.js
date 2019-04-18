@@ -19,7 +19,7 @@ class heimbauCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        //logOut('crawlHeimbauNeubau');
+        logOut('crawlHeimbauNeubau');
         this.newFlats = [];
 
         let url = 'https://www.heimbau.at/wohnungen';

@@ -19,7 +19,7 @@ class egwCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        //logOut('crawlEGW');
+        logOut('crawlEGW');
         this.newFlats = [];
 
         let url = 'http://www.egw.at/immobilien/bestands-wohnungen/miete/';
