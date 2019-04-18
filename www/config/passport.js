@@ -44,7 +44,6 @@ module.exports = function (passport) {
             // asynchronous
             // User.findOne wont fire unless data is sent back
             try {
-                process.nextTick(function () {
 
                     // find a user whose email is the same as the forms email
                     // we are checking to see if the user trying to login already exists
@@ -52,8 +51,10 @@ module.exports = function (passport) {
                         'mail': email
                     }, function (err, user) {
                         // if there are any errors, return the error
-                        if (err)
+                        if (err) {
+                            Logger.logErr(err);
                             return done(err);
+                        }
 
                         // check to see if theres already a user with that email
                         if (user) {
@@ -72,8 +73,6 @@ module.exports = function (passport) {
                                 // set the user's local credentials
 
                                 var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
-                                
-                Logger.logOut(day);
 
                                 if (userdata.length == 0) {
                                     userdata = [{}]
@@ -122,7 +121,6 @@ module.exports = function (passport) {
                             });
                         }
                     });
-                });
 
 
             } catch (error) {
