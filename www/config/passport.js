@@ -72,6 +72,8 @@ module.exports = function (passport) {
                                 // set the user's local credentials
 
                                 var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
+                                
+                Logger.logOut(day);
 
                                 if (userdata.length == 0) {
                                     userdata = [{}]
