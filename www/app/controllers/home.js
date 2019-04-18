@@ -80,7 +80,7 @@ exports.change_plz_interests = async function (req, res, next) {
 			if (error) req.flash("error", error);
 		}
 
-		next();
+		res.redirect('/');
 
 	} else {
 

@@ -24,6 +24,6 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
-    app.post('/change_plz_interests/', home.change_plz_interests, home.userReload, home.home);
+    app.post('/change_plz_interests/', home.change_plz_interests);
 
 }
