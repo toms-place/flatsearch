@@ -13,8 +13,21 @@ const notifier = new Notifier();
 notifier.startCron('0 */1 * * * *');
 
 
+/** Website List:
+ * 
+ * https://www.wohnen.at/
+ * http://www.egw.at/
+ * http://www.ebg-wohnen.at/
+ * http://www.siedlungsunion.at/
+ * https://www.sozialbau.at/
+ * https://www.heimbau.at/
+ * https://www.frieden.at/
+ * https://www.wiensued.at/
+ * https://www.willhaben.at/iad/
+ */
+
 const nlCrawler = require('./crawlers/nlCrawler');
-const egwCrawler = require('./crawlers/egwCrawler');
+const egwCrawler = require('./crawlers/egwCrawler'); 
 const ebgCrawler = require('./crawlers/ebgCrawler');
 const suCrawler = require('./crawlers/suCrawler');
 const szbCrawler = require('./crawlers/szbCrawler');
@@ -24,7 +37,7 @@ const wsudCrawler = require('./crawlers/wsudCrawler');
 const willCrawler = require('./crawlers/willCrawler');
 //const testCrawler = require('./crawlers/testCrawler');
 
-let nl = new nlCrawler(true).crawl('0 */5 * * * *');
+let nl = new nlCrawler().crawl('0 */5 * * * *');
 let szb = new szbCrawler().crawl('0 */5 * * * *');
 let su = new suCrawler().crawl('0 */5 * * * *');
 let egw = new egwCrawler().crawl('0 */5 * * * *');
