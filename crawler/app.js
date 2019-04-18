@@ -10,7 +10,7 @@ mongoose.connect(configDB.url, {
 
 const Notifier = require('./lib/notifier');
 const notifier = new Notifier();
-notifier.startCron('0 */1 * * * *');
+notifier.startCron('30 */1 * * * *');
 
 
 /** Website List:

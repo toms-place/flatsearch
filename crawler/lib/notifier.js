@@ -29,10 +29,10 @@ class Notifier {
 
         switch (user.notificationrate) {
           case 1:
-          case 2 && current_minute == 0 && (current_hour == 6 || current_hour == 12 || current_hour == 18):
-          case 3 && current_minute == 0 && (current_hour == 10 || current_hour == 15):
-          case 4 && current_minute == 0 && current_hour == 6:
-          case 5 && current_minute == 0 && current_day == 4 && current_hour == 8:
+          case 2 && (current_minute == 0 || current_minute == 1) && (current_hour == 6 || current_hour == 12 || current_hour == 18):
+          case 3 && (current_minute == 0 || current_minute == 1) && (current_hour == 10 || current_hour == 15):
+          case 4 && (current_minute == 0 || current_minute == 1) && current_hour == 6:
+          case 5 && (current_minute == 0 || current_minute == 1) && current_day == 4 && current_hour == 8:
             sendFlag = true;
             break;
           default:
