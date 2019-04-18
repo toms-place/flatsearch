@@ -67,8 +67,8 @@ exports.change_plz_interests = async function (req, res, next) {
 				}
 			}
 
-			user.plz_interests = user.plz_interests.concat(plz_interests);
 			user.plz_interests = user.plz_interests.filter(plz => plz_remove.indexOf(plz) === -1);
+			user.plz_interests = user.plz_interests.concat(plz_interests);
 			user.plz_interests.sort();
 
 			let uniq = a => [...new Set(a)];
