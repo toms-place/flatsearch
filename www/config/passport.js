@@ -116,7 +116,7 @@ module.exports = function (passport) {
                                     var email = require('../lib/email.js');
                                     email.activate_email(req.body.username, req.body.email, active_code);
 
-                                    return done(null, newUser, req.flash('success', 'Account Created Successfully,Please Check Your Email For Account Confirmation.'));
+                                    return done(null, newUser, req.flash('success', 'You successfully created an account! Please confirm your e-mail address.'));
 
                                 });
                             });

@@ -118,7 +118,7 @@ exports.signup = function (req, res) {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			session: req.session,
-			title: "signup"
+			title: "Sign Up"
 		});
 	}
 
@@ -136,22 +136,21 @@ exports.confirm = async function (req, res) {
 			user.status = 'active';
 			await user.save(function (err) {
 				if (err) throw err;
-				return;
+				next();
 			});
+		} else if (user.status == 'active' && req.session.user) {
 			res.render('home', {
 				error: req.flash("error"),
-				success: "You successfully confirmed your account. Please sign in!",
+				success: "You already confirmed your account.",
 				session: req.session,
-				title: "Flatsearch",
-				name: ""
+				title: "Flatsearch"
 			});
 		} else if (user.status == 'active') {
 			res.render('home', {
 				error: req.flash("error"),
-				success: "You already confirmed your account. Please sign in!",
+				success: "You already confirmed your account. Please Sign in!",
 				session: req.session,
-				title: "Flatsearch",
-				name: ""
+				title: "Flatsearch"
 			});
 		}
 	} else {
@@ -159,7 +158,7 @@ exports.confirm = async function (req, res) {
 			error: "We could not find a user with this E-Mail. Please sign up!",
 			success: req.flash("success"),
 			session: req.session,
-			title: "signup"
+			title: "Sign Up"
 		});
 	}
 
@@ -198,8 +197,7 @@ exports.delete = function (req, res) {
 			error: "You must be logged in to delete your account.",
 			success: req.flash("success"),
 			session: req.session,
-			title: "Flatsearch",
-			name: ""
+			title: "Flatsearch"
 		});
 	}
 
@@ -235,8 +233,7 @@ exports.delete_on_activation = async function (req, res) {
 						error: "You must be logged in to delete your account.",
 						success: req.flash("success"),
 						session: req.session,
-						title: "Flatsearch",
-						name: ""
+						title: "Flatsearch"
 					});
 				}
 			});

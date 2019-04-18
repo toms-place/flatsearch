@@ -81,13 +81,35 @@ h3 {
 
 img { max-width: 100%; }
 
-::-moz-selection { background: #4aaf51; color: #fff; text-shadow: none; }
-::selection { background: #4aaf51; color: #fff; text-shadow: none; }
+::-moz-selection { background: #ccc; color: #fff; text-shadow: none; }
+::selection { background: #ccc; color: #fff; text-shadow: none; }
 
 .row {
 	max-width: 750px;
 	margin: auto;
 }
+
+/* Header & Footer */
+header, footer {
+	background: #555;
+}
+header h1, footer h1 {
+	color: inherit;
+	margin: 0px;
+}
+header a, footer a {
+	color: white;
+}
+header a:hover, footer a:hover {
+	color: #999;
+	text-decoration: none;
+}
+header img {
+    float: right;
+    height: 53px;
+}
+
+/* Buttons */
 
 .btn-link-1 {
 	display: inline-block;

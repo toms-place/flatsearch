@@ -2,16 +2,21 @@
   <div class="inner-bg">
     <div class="container">
       <div class="row">
+
+        <div class="form-top">
+          <p>Hi, <%= session.user.name %>! You are logged in. - <a href="/logout/">logout?</a></p>
+        </div>
+
         <div class="form-bottom">
           <form role="form" action="/change_plz_interests/" method="post" class="login-form">
 
 
             <% if (error.length > 0) { %>
-              <div class="alert alert-danger"><%- error %></div>
+            <div class="alert alert-danger"><%- error %></div>
             <% } %>
 
             <% if (success.length > 0) { %>
-                <div class="alert alert-success"><%- success %></div>
+            <div class="alert alert-success"><%- success %></div>
             <% } %>
 
             <div class="form-group">
@@ -53,10 +58,10 @@
     <div class="inner-bg">
       <div class="container">
 
-          <% let count = 0;
+        <% let count = 0;
             let flatCountString = "new Flats";
             session.user.flats.forEach(function(flat){ %>
-            <% if (session.user.plz_interests.includes(flat.district)) {
+        <% if (session.user.plz_interests.includes(flat.district)) {
               count++;
               if (count == 1) {
                 flatCountString = "new Flat"
