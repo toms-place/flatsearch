@@ -66,13 +66,14 @@ exports.change_plz_interests = async function (req, res, next) {
 					plz_remove.push(parseInt(req.body.plz_remove));
 				}
 			}
-
 			user.plz_interests = user.plz_interests.filter(plz => plz_remove.indexOf(plz) === -1);
 			user.plz_interests = user.plz_interests.concat(plz_interests);
 			user.plz_interests.sort();
 
 			let uniq = a => [...new Set(a)];
 			user.plz_interests = uniq(user.plz_interests);
+
+			user.notificationrate = req.body.notificationrate;
 
 			await user.save();
 
@@ -136,7 +137,12 @@ exports.confirm = async function (req, res) {
 			user.status = 'active';
 			await user.save(function (err) {
 				if (err) throw err;
-				next();
+				res.render('home', {
+					error: req.flash("error"),
+					success: "You successfully confirmed your account!",
+					session: req.session,
+					title: "Flatsearch"
+				});
 			});
 		} else if (user.status == 'active' && req.session.user) {
 			res.render('home', {

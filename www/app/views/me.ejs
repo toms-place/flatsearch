@@ -31,7 +31,7 @@
 
               <% } %>
 
-              <label for="plzContainer">Add your PLZ interests:</label>
+              <label for="plzContainer">Add new PLZs:</label>
               <div id="plzContainer" class="field_wrapper">
                 <div class="plzs">
                   <input type='number' max='9999' min='1000' name="plz_interests"
@@ -40,6 +40,46 @@
                 </div>
               </div>
 
+            </div>
+
+            <div class="form-group">
+              <label for="notificationrate">Change your notificationrate:</label>
+              <select name="notificationrate" id="notificationrate" class="form-control" required>
+                <%
+                    let select1 = "";
+                    let select2 = "";
+                    let select3 = "";
+                    let select4 = "";
+                    let select5 = "";
+
+                    switch (session.user.notificationrate) {
+                      case 1:
+                        select1 = "selected";
+                        break;
+                      case 2:
+                        select2 = "selected";
+                        break;
+                      case 3:
+                        select3 = "selected";
+                        break;
+                      case 4:
+                        select4 = "selected";
+                        break;
+                      case 5:
+                        select5 = "selected";
+                        break;
+                    
+                      default:
+                        select1 = "selected";
+                        break;
+                    }
+                  %>
+                <option value="1" <%= select1 %>>instant notification</option>
+                <option value="2" <%= select2 %>>at 6, 12 and 18 o'clock</option>
+                <option value="3" <%= select3 %>>at 10 and 15 o'clock</option>
+                <option value="4" <%= select4 %>>at 6 o'clock</option>
+                <option value="5" <%= select5 %>>every Thursday</option>
+              </select>
             </div>
 
             <button type="submit" class="btn">Save!</button>

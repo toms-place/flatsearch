@@ -5,6 +5,7 @@ const logOut = require('./logger').logOut;
 const logErr = require('./logger').logErr;
 const CronJob = require('cron').CronJob;
 const Flat = require('../model/flat');
+const moment = require('moment-timezone');
 
 class Notifier {
   startCron(cron) {
@@ -16,10 +17,9 @@ class Notifier {
 
   async alert() {
 
-    let date = new Date();
-    let current_hour = date.getHours();
-    let current_day = date.getDay();
-    let current_minute = date.getMinutes();
+    let current_hour = moment().tz("Europe/Amsterdam").format('H');
+    let current_day = moment().tz("Europe/Amsterdam").weekday();
+    let current_minute = moment().tz("Europe/Amsterdam").get('minute');
 
     let users = await dbUser.find({});
     for (let user of users) {
@@ -32,7 +32,7 @@ class Notifier {
           case 2 && current_minute == 0 && (current_hour == 6 || current_hour == 12 || current_hour == 18):
           case 3 && current_minute == 0 && (current_hour == 10 || current_hour == 15):
           case 4 && current_minute == 0 && current_hour == 6:
-          case 5 && current_minute == 0 && current_day == 3:
+          case 5 && current_minute == 0 && current_day == 4 && current_hour == 8:
             sendFlag = true;
             break;
           default:
