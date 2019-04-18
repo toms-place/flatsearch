@@ -2,6 +2,7 @@ const Flat = require('../model/flat');
 const FlatChecker = require('../lib/flatchecker');
 const rp = require('request-promise');
 const logErr = require('../lib/logger').logErr;
+const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
 
 class wsudCrawler {
