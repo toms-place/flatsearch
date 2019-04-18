@@ -2,6 +2,9 @@
   "name": "www",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "pm2 start app.js"
+  },
   "dependencies": {
     "async": "latest",
     "basic-auth-connect": "latest",
@@ -32,7 +35,7 @@
     "numeral": "latest",
     "passport": "latest",
     "passport-local": "latest",
-    "pm2": "latest",
+    "pm2": "^3.5.0",
     "request": "latest",
     "serve-favicon": "^2.5.0",
     "simple-encryptor": "latest",
