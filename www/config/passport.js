@@ -95,6 +95,7 @@ module.exports = function (passport) {
 
                                 let uniq = a => [...new Set(a)];
                                 newUser.plz_interests = uniq(plz_interests);
+                                newUser.plz_interests.sort();
 
                                 newUser.mail = email;
                                 newUser.password = newUser.generateHash(password);
