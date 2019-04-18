@@ -19,7 +19,7 @@ class suCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        logOut('crawlSU');
+        //logOut('crawlSU');
         this.newFlats = [];
 
         let url = 'http://www.siedlungsunion.at/wohnen/sofort';

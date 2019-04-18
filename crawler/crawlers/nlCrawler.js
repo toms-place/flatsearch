@@ -19,7 +19,7 @@ class nlCrawler {
 
     const job = new CronJob(cron, async () => {
       try {
-        logOut('crawlNL');
+        //logOut('crawlNL');
 
         this.newFlats = [];
 
