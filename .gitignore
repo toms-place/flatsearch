@@ -9,3 +9,5 @@ users_save.json
 .env
 constants.js
 auth.js
+server.key
+server.cert

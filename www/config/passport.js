@@ -1,6 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../app/models/home');
+var Logger = require('../lib/logger');
 
 var bcrypt = require('bcrypt-nodejs');
 
@@ -42,83 +43,89 @@ module.exports = function (passport) {
         function (req, email, password, done) {
             // asynchronous
             // User.findOne wont fire unless data is sent back
-            process.nextTick(function () {
+            try {
+                process.nextTick(function () {
 
-                // find a user whose email is the same as the forms email
-                // we are checking to see if the user trying to login already exists
-                User.findOne({
-                    'mail': email
-                }, function (err, user) {
-                    // if there are any errors, return the error
-                    if (err)
-                        return done(err);
+                    // find a user whose email is the same as the forms email
+                    // we are checking to see if the user trying to login already exists
+                    User.findOne({
+                        'mail': email
+                    }, function (err, user) {
+                        // if there are any errors, return the error
+                        if (err)
+                            return done(err);
 
-                    // check to see if theres already a user with that email
-                    if (user) {
-                        return done(null, false, req.flash('error', 'That email is already taken.'));
-                    } else {
+                        // check to see if theres already a user with that email
+                        if (user) {
+                            return done(null, false, req.flash('error', 'That email is already taken.'));
+                        } else {
 
 
-                        User.find().sort([
-                            ['_id', 'descending']
-                        ]).limit(1).exec(function (err, userdata) {
+                            User.find().sort([
+                                ['_id', 'descending']
+                            ]).limit(1).exec(function (err, userdata) {
 
-                            // if there is no user with that email
-                            // create the user
-                            var newUser = new User();
+                                // if there is no user with that email
+                                // create the user
+                                var newUser = new User();
 
-                            // set the user's local credentials
+                                // set the user's local credentials
 
-                            var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
+                                var day = dateFormat(Date.now(), "yyyy-mm-dd HH:MM:ss");
 
-                            if (userdata.length == 0) {
-                                userdata = [{}]
-                                userdata[0]._id = 0
-                            }
-
-                            var active_code = bcrypt.hashSync(Math.floor((Math.random() * 99999999) * 54), null, null);
-
-                            let plz_interests = [];
-
-                            if (Array.isArray(req.body.plz_interests)) {
-                                for (let plz of req.body.plz_interests) {
-                                    plz_interests.push(parseInt(plz));
+                                if (userdata.length == 0) {
+                                    userdata = [{}]
+                                    userdata[0]._id = 0
                                 }
-                            } else if (req.body.plz_interests != undefined) {
-                                if (req.body.plz_interests.length > 0) {
-                                    plz_interests.push(parseInt(req.body.plz_interests));
+
+                                var active_code = bcrypt.hashSync(Math.floor((Math.random() * 99999999) * 54), null, null);
+
+                                let plz_interests = [];
+
+                                if (Array.isArray(req.body.plz_interests)) {
+                                    for (let plz of req.body.plz_interests) {
+                                        plz_interests.push(parseInt(plz));
+                                    }
+                                } else if (req.body.plz_interests != undefined) {
+                                    if (req.body.plz_interests.length > 0) {
+                                        plz_interests.push(parseInt(req.body.plz_interests));
+                                    }
                                 }
-                            }
 
-                            let uniq = a => [...new Set(a)];
-                            newUser.plz_interests = uniq(plz_interests);
+                                let uniq = a => [...new Set(a)];
+                                newUser.plz_interests = uniq(plz_interests);
 
-                            newUser.mail = email;
-                            newUser.password = newUser.generateHash(password);
-                            newUser.name = req.body.username;
-                            newUser.created_date = day;
-                            newUser.updated_date = day;
-                            newUser.status = 'inactive'; //inactive for email actiavators
-                            newUser.active_hash = active_code;
-                            newUser._id = userdata[0]._id + 1;
-                            newUser.plz_interests = plz_interests;
-                            newUser.flats = [];
-                            newUser.notificationrate = req.body.notificationrate;
+                                newUser.mail = email;
+                                newUser.password = newUser.generateHash(password);
+                                newUser.name = req.body.username;
+                                newUser.created_date = day;
+                                newUser.updated_date = day;
+                                newUser.status = 'inactive'; //inactive for email actiavators
+                                newUser.active_hash = active_code;
+                                newUser._id = userdata[0]._id + 1;
+                                newUser.plz_interests = plz_interests;
+                                newUser.flats = [];
+                                newUser.notificationrate = req.body.notificationrate;
 
-                            // save the user
-                            newUser.save(function (err) {
-                                if (err) throw err;
+                                // save the user
+                                newUser.save(function (err) {
+                                    if (err) throw err;
 
-                                var email = require('../lib/email.js');
-                                email.activate_email(req.body.username, req.body.email, active_code);
+                                    var email = require('../lib/email.js');
+                                    email.activate_email(req.body.username, req.body.email, active_code);
 
-                                return done(null, newUser, req.flash('success', 'Account Created Successfully,Please Check Your Email For Account Confirmation.'));
+                                    return done(null, newUser, req.flash('success', 'Account Created Successfully,Please Check Your Email For Account Confirmation.'));
 
+                                });
                             });
-                        });
-                    }
+                        }
+                    });
                 });
-            });
+
+
+            } catch (error) {
+                Logger.logErr(error);
+            }
 
         }));
 
