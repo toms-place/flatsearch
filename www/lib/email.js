@@ -1,8 +1,7 @@
 var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
 var constants = require('../config/constants');
 
-var transporter = nodemailer.createTransport(smtpTransport({
+var transporter = nodemailer.createTransport({
     host: constants.email_smtp_host,
     port: constants.email_smtp_port,
 		secure: true, // use TLS
@@ -14,7 +13,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
 			// do not fail on invalid certs
 			rejectUnauthorized: false
 		}
-}));
+});
 
 
 exports.activate_email = function(user_name,email,acitvate_link) {
@@ -59,7 +58,8 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	}
 
 	.btn-primary {
-	  Margin-bottom: 10px;
+	  Margin-top: 25px;
+	  Margin-bottom: 25px;
 	  width: auto !important;
 	}
 
@@ -139,7 +139,7 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	  font-weight: 200;
 	  line-height: 1.2em;
-	  margin: 40px 0 10px;
+	  margin: 20px 0 10px;
 	}
 
 	h1 {
@@ -150,6 +150,14 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	}
 	h3 {
 	  font-size: 22px;
+	}
+	h4 {
+	  font-size: 20px;
+	  color: #111111;
+	  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	  font-weight: 200;
+	  line-height: 1.2em;
+	  margin: 20px 0 5px;
 	}
 
 	p, 
@@ -211,13 +219,11 @@ exports.activate_email = function(user_name,email,acitvate_link) {
 	      <table>
 	        <tr>
 	          <td>
-	            <p>Hi `+user_name+`,</p>
-	    
+	            <h2>Hi `+user_name+`,</h2>
 	            <h3>Welcome to Flatsearch</h3>
-	            <p>You have successfully created an account, please confirm your e-mail address</p>
-	            
-	            <h2>Click on the button below to activate your account</h2>
-	      
+	            <p>You have successfully created an account, please confirm your e-mail address!</p>
+	            <h4>Click on the button below to activate your account:</h4>
+
 	            <!-- button -->
 	            <table class="btn-primary" cellpadding="0" cellspacing="0" border="0">
 	              <tr>

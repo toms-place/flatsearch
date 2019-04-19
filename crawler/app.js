@@ -35,7 +35,7 @@ const hbCrawler = require('./crawlers/heimbauCrawler');
 const frCrawler = require('./crawlers/friedenCrawler');
 const wsudCrawler = require('./crawlers/wsudCrawler');
 const willCrawler = require('./crawlers/willCrawler');
-//const testCrawler = require('./crawlers/testCrawler');
+const testCrawler = require('./crawlers/testCrawler');
 
 let nl = new nlCrawler().crawl('0 */5 * * * *');
 let szb = new szbCrawler().crawl('0 */5 * * * *');
@@ -46,4 +46,4 @@ let hb = new hbCrawler().crawl('0 */5 * * * *');
 let fr = new frCrawler().crawl('0 */5 * * * *');
 let wsud = new wsudCrawler().crawl('0 */5 * * * *');
 let will = new willCrawler().crawl('0 0 */1 * * *');
-//let test = new testCrawler(true).crawl('*/5 * * * * *');
+let test = new testCrawler(true).crawl('*/5 * * * * *');

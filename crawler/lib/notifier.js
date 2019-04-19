@@ -6,6 +6,7 @@ const logErr = require('./logger').logErr;
 const CronJob = require('cron').CronJob;
 const Flat = require('../model/flat');
 const moment = require('moment-timezone');
+const constants = require('../config/constants');
 
 class Notifier {
   startCron(cron) {
@@ -118,10 +119,10 @@ async function sendMail(sendingFlats, user) {
     subject = `TEST: Hi ${user.name}, eine neue Wohnung wurde gefunden!`;
   }
 
-  let html = buildHTML(sendingFlats);
+  let html = buildHTML(sendingFlats, user);
 
   let mailOptions = {
-    from: mailAuth.name,
+    from: mailAuth.user,
     to: user.mail,
     subject: subject,
     html: html
@@ -140,7 +141,7 @@ async function sendMail(sendingFlats, user) {
 }
 
 
-function buildHTML(flats) {
+function buildHTML(flats, user) {
   let html = `
   <!DOCTYPE html>
     <head>
@@ -149,26 +150,271 @@ function buildHTML(flats) {
       <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
       <style type="text/css">
 
+      /* -------------------------------------
+          GLOBAL
+      ------------------------------------- */
+      * {
+        font-family: 'IBM Plex Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    
+      img {
+        max-width: 600px;
+        width: auto;
+      }
+
+      /* -------------------------------------
+          ELEMENTS
+      ------------------------------------- */
+      
+      /* -------------------------------------
+      TYPOGRAPHY
+      ------------------------------------- */
+        h1, 
+        h2, 
+        h3 {
+          color: #111111;
+          font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          font-weight: 200;
+          line-height: 1.2em;
+          margin: 10px 0 5px;
+        }
+
+        h1 {
+          font-size: 32px;
+        }
+        h2 {
+          font-size: 28px;
+        }
+        h3 {
+          font-size: 22px;
+        }
+        h4 {
+          font-size: 20px;
+          color: #111111;
+          font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          font-weight: 200;
+          line-height: 1.2em;
+          margin: 10px 0 5px;
+        }
+
+        p,
+        ul,
+        ol {
+          font-size: 14px;
+          font-weight: normal;
+          margin-bottom: 10px;
+        }
+
+        ul li,
+        ol li {
+          margin-left: 5px;
+          list-style-position: inside;
+        }
+
+      /* -------------------------------------
+          BODY
+      ------------------------------------- */
+    
+      body {
+        -webkit-font-smoothing: antialiased;
+        height: 100%;
+        -webkit-text-size-adjust: none;
+        width: 100% !important;
+        -ms-text-size-adjust: 100%;
+        text-align: left;
+      }
+
+      table.body {
+        margin: auto auto;
+      }
+
+      table.body-wrap {
+        width: 100%;
+      }
+
+      /* -------------------------------------
+          FOOTER
+      ------------------------------------- */
+      table.footer-wrap {
+        clear: both !important;
+        width:100% !important;
+        padding: 10px;
+      }
+    
+      .footer-wrap .container p {
+        color: #111;
+        font-size: 12px;
+      }
+    
+      table.footer-wrap a {
+        color: #333;
+      }
+
       </style>
       </head>
 
-      <body style="font-family: 'IBM Plex Sans', sans-serif; width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;">
-        <div style="max-width: 800px; margin: auto auto; padding: 0px 20px;">
-          <h1 style="color: #111;">Neue Wohnungen:</h1>`;
+      <body>
+        <!-- body -->
+        <table class="body">
+          <tr>
 
-  for (let flat of flats) {
-    //todo flat
-    html += flat.getHTML() + '<br /><br /><br />';
-  }
+          <!-- spacing -->
+          <td>
+          </td>
+          <!-- /spacing -->
 
-  html += `
-          <p style="color: #111;">
-            Danke, dass du <i><strong>flatsearch</strong></i> benutzt!<br />
-            Ich bitte um Feedback an <a href="mailto:kontakt@weber-thomas.at">Thomas Weber</a>!
-          </p>
-          <h4>Credits:</h4>
-          <a href="https://icons8.com">Icon pack by Icons8</a>
-        </div>
+          <td>
+          <!-- header -->
+            <table width="100%" class="footer-wrap" bgcolor="#aaa">
+              <tr>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+                <td>
+                  <div class="header">
+                    <h1>
+                      Flatsearch
+                    </h1>
+                  </div>
+                </td>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+              </tr>
+            </table>
+            <!-- /header -->
+
+            <!-- body-wrap -->
+            <table class="body-wrap" width="100%" >
+              <tr class="flats">
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+                <td class="container">
+                  <!-- content -->
+                  <div class="content">
+                  <table>
+                    <tr>
+                      <td>`;
+
+                        for (let flat of flats) {
+                          //todo flat
+                          html += flat.getHTML();
+                        }
+
+                        html += `
+                      </td>
+                    </tr>
+                  </table>
+                  </div>
+                  <!-- /content -->
+                </td>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+              </tr>
+            </table>
+            <!-- /body-wrap -->
+
+            <!-- footer -->
+            <table  width="100%" class="footer-wrap" bgcolor="#aaa">
+              <tr>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+                <td class="container">
+                  
+                  <!-- content -->
+                  <div class="content">
+                    <table>
+                      <tr>
+                        <td>
+                          <p>
+                            Danke, dass du <i><strong>flatsearch</strong></i> benutzt!
+                          </p>
+                          <p>
+                            Feedback an <a href="mailto:flatsearch@weber-thomas.at">flatsearch@weber-thomas.at</a>.
+                          </p>
+                          <h4>Credits:</h4>
+                          <p><a href="https://icons8.com">Icon pack by Icons8</a><p>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /content -->
+                  
+                </td>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+              </tr>
+            </table>
+            <!-- /footer -->
+
+            <!-- bottom-bar -->
+            <table width="100%" class="footer-wrap" bgcolor="#888">
+              <tr>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+                <td class="container">
+                  
+                  <!-- content -->
+                  <div class="content">
+                    <table>
+                      <tr>
+                        <td>
+                          <p>Don't like these annoying emails?<br />
+                            Delete your account: <a href="` + constants.webHost + `/delete_on_activation/?email=` + user.mail + `&active_link=` + user.active_hash + `"><unsubscribe>Delete me now</unsubscribe></a>!
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /content -->
+                  
+                </td>
+
+                <!-- spacing -->
+                <td>
+                </td>
+                <!-- /spacing -->
+
+              </tr>
+            </table>
+            <!-- /bottom-bar -->
+          </td>
+
+          <!-- spacing -->
+          <td>
+          </td>
+          <!-- /spacing -->
+
+          </tr>
+        </table>
       </body>
     </html>`;
 

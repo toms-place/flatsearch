@@ -37,6 +37,8 @@ class Flat {
       let title = '';
       if (this.title) {
         title = `<h4 style="margin: 0px;">${this.title}</h4>`
+      } else {
+        title = `<h4 style="margin: 0px;">Neue Wohnung</h4>`
       }
 
       let info = '';
@@ -92,14 +94,15 @@ class Flat {
       }
 
       let html =
-        `<div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa;">
+      `<div style="margin: auto auto; padding: 20px 20px;">
+        <div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa;">
 
           <div style="padding: 12.5px 11px; background: #999; color: white;">
             ${title}
           </div>
 
           <div style="background-color:#ddd; padding:20px;">
-              <a href="${this.link}" style="line-height: 1;">
+              <a href="${this.link}" style="line-height: 1; text-decoration: none;">
                 <h2 style="margin: 0px;">${this.address}, ${this.district} ${this.city}</h2>
               </a>
           </div>
@@ -118,7 +121,8 @@ class Flat {
             </a>
           </div>
 
-        </div>`
+        </div>
+      </div>`
       return html;
     } catch (error) {
       console.log(error)

@@ -243,6 +243,13 @@ exports.delete_on_activation = async function (req, res) {
 					});
 				}
 			});
+		} else {
+			res.render('home', {
+				error: "Please provide the correct activation link!",
+				success: req.flash("success"),
+				session: req.session,
+				title: "Flatsearch"
+			});
 		}
 	} else {
 		res.render('signup', {

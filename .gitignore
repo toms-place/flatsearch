@@ -11,3 +11,4 @@ constants.js
 auth.js
 server.key
 server.cert
+test.js
