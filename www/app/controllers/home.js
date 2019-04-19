@@ -16,7 +16,7 @@ exports.loggedIn = function (req, res, next) {
 exports.legals = function (req, res, next) {
 
 	res.render('legals', {
-		title: "Flatsearch",
+		title: "Legal Notice",
 		session: req.session,
 		error: req.flash("error"),
 		success: req.flash("success"),
