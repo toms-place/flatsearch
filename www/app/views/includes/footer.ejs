@@ -1,10 +1,13 @@
         <footer>
             <% if (session == undefined) { %>
+                <a href="/impressum/">Impressum</a>
 
             <% } else if (session.user == undefined) { %>
+                <a href="/impressum/">im</a>
 
             <% } else { %>
                 <a href="/delete/">delete account?</a>
+                <a href="/impressum/">Impressum</a>
             <% } %>
         </footer>
 
