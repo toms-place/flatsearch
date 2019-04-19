@@ -13,6 +13,17 @@ exports.loggedIn = function (req, res, next) {
 
 }
 
+exports.legals = function (req, res, next) {
+
+	res.render('legals', {
+		title: "Flatsearch",
+		session: req.session,
+		error: req.flash("error"),
+		success: req.flash("success"),
+	});
+
+}
+
 exports.userReload = async function (req, res, next) {
 	if (req.session.user) { // req.session.passport._id
 

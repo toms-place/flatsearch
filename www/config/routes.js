@@ -10,6 +10,7 @@ module.exports = function (app, passport) {
     app.get('/logout/', home.logout);
     app.get('/delete/', home.delete);
     app.get('/delete_on_activation/', home.delete_on_activation);
+    app.get('/legals/', home.legals);
     
     //posts
     app.post('/signup/', passport.authenticate('local-signup', {
