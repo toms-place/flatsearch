@@ -18,6 +18,7 @@ var userSchema = mongoose.Schema({
 	plz_interests: { type: Array, default: [] },
 	flats: { type: Array, default: [] },
 	notificationrate: { type: Number, default: 1 },
+	max_costs: { type: Number, default: 1000 },
 });
 
 //create the model for users and expose it to our app

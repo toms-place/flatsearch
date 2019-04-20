@@ -33,22 +33,28 @@ function saveNewFlats(newFlats) {
             for (let user of users) {
 
               let userTempFlats = [];
-              let userTempNewFlats = [];
-                  
+              let tempNewFlats = [];
+
               for (let flatJSON of user.flats) {
-                let flat = new Flat(flatJSON.website, flatJSON.district, flatJSON.city, flatJSON.address, flatJSON.link, flatJSON.rooms, flatJSON.size, flatJSON.costs, flatJSON.deposit, flatJSON.funds, flatJSON.legalform, flatJSON.title, flatJSON.status, flatJSON.info, flatJSON.docs, flatJSON.images);
-                if (user.plz_interests.includes(flat.district)) {
-                  userTempFlats.push(flat);
-                }
+                let flat = new Flat()
+                Object.assign(flat, flatJSON);
+                userTempFlats.push(flat);
               }
 
               for (let flat of newFlats) {
                 if (user.plz_interests.includes(flat.district)) {
-                  userTempNewFlats.push(flat);
+                  if (!isNaN(parseFloat(flat.costs))) {
+                    console.log(user.max_costs);
+                    if (flat.costs <= user.max_costs) {
+                      tempNewFlats.push(flat);
+                    }
+                  } else {
+                    tempNewFlats.push(flat);
+                  }
                 }
               }
 
-              let flatsToSave = getJustUniqueFlatsFromArray2(userTempFlats, userTempNewFlats);
+              let flatsToSave = getJustUniqueFlatsFromArray2(userTempFlats, tempNewFlats);
 
               if (flatsToSave.length > 0) {
 

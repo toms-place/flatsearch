@@ -24,10 +24,6 @@ class szbCrawler {
 
         let url = 'https://www.sozialbau.at/unser-angebot/sofort-verfuegbar/';
 
-        if (process.env.NODE_ENV == 'dev') {
-          url = 'http://127.0.0.1:8080/szb';
-        }
-
         let res1 = await rp({
           'url': url,
           resolveWithFullResponse: true
@@ -52,6 +48,11 @@ class szbCrawler {
             costs = angebot[i].querySelectorAll('td')[3].innerHTML;
             funds = angebot[i].querySelectorAll('td')[2].innerHTML;
 
+            let tempCosts = parseFloat(reverseFormatNumber(costs.split(";")[1],'de'));
+            if (!isNaN(tempCosts)) {
+              costs = tempCosts;
+            }
+
             let flat = new Flat('SZB', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
             flats.push(flat);
@@ -71,3 +72,11 @@ class szbCrawler {
 }
 
 module.exports = szbCrawler;
+
+function reverseFormatNumber(val,locale){
+  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
+  return Number.isNaN(reversedVal)?0:reversedVal;
+}

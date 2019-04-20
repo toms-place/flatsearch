@@ -69,6 +69,11 @@ class willCrawler {
             let bytes = base64.decode(encoded);
             costs = utf8.decode(bytes).trim().split(" ")[2];
 
+            let tempCosts = parseFloat(reverseFormatNumber(costs,'de'));
+            if (!isNaN(tempCosts)) {
+              costs = tempCosts;
+            }
+
             title = angebot[i].querySelectorAll('.header')[0].querySelectorAll('a')[0].textContent.trim();
             images = [{
               src: angebot[i].querySelectorAll('.image-section')[0].querySelectorAll('img')[0].src
@@ -94,3 +99,12 @@ class willCrawler {
 }
 
 module.exports = willCrawler;
+
+
+function reverseFormatNumber(val,locale){
+  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
+  return Number.isNaN(reversedVal)?0:reversedVal;
+}

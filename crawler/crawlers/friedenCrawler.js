@@ -44,7 +44,6 @@ class friedenCrawler {
           link = 'http://www.frieden.at' + angebot[i].querySelectorAll('.first')[0].getAttribute("onclick").split('\'')[1];
         }
 
-
         let flat = new Flat('Frieden', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
         flats.push(flat);

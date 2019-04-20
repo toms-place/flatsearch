@@ -24,10 +24,6 @@ class suCrawler {
 
         let url = 'http://www.siedlungsunion.at/wohnen/sofort';
 
-        if (process.env.NODE_ENV == 'dev') {
-          url = 'http://127.0.0.1:8080/su';
-        }
-
         let res1 = await rp({
           'url': url,
           resolveWithFullResponse: true
@@ -36,10 +32,9 @@ class suCrawler {
         let document = new JSDOM(res1.body).window.document;
         let angebot = document.querySelectorAll('article');
 
-
         let flats = [];
 
-        for (let i = 1; i < angebot.length; i++) {
+        for (let i = 0; i < angebot.length; i++) {
 
           let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images;
 
@@ -50,6 +45,11 @@ class suCrawler {
           rooms = parseInt(angebot[i].querySelectorAll('.settlers-wohnen-properities')[0].querySelectorAll('.uk-text-bold')[0].innerHTML.split(' ')[0]);
           costs = angebot[i].querySelectorAll('.settlers-wohnen-properities')[0].querySelectorAll('.uk-text-bold')[2].textContent.split(' ')[0];
           size = angebot[i].querySelectorAll('.settlers-wohnen-properities')[0].querySelectorAll('.uk-text-bold')[1].textContent;
+
+          let tempCosts = parseFloat(reverseFormatNumber(costs,'en'));
+          if (!isNaN(tempCosts)) {
+            costs = tempCosts;
+          }
 
           let flat = new Flat('SU', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
@@ -68,3 +68,11 @@ class suCrawler {
 }
 
 module.exports = suCrawler;
+
+function reverseFormatNumber(val,locale){
+  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
+  return Number.isNaN(reversedVal)?0:reversedVal;
+}

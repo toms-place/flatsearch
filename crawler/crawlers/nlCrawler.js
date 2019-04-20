@@ -129,6 +129,11 @@ class nlCrawler {
               }
             }
 
+            let tempCosts = parseFloat(reverseFormatNumber(costs,'de'));
+            if (!isNaN(tempCosts)) {
+              costs = tempCosts;
+            }
+
             let flat = new Flat('Neuesleben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
             await flats.push(flat);
           } catch (error) {
@@ -151,3 +156,11 @@ class nlCrawler {
 }
 
 module.exports = nlCrawler;
+
+function reverseFormatNumber(val,locale){
+  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
+  return Number.isNaN(reversedVal)?0:reversedVal;
+}

@@ -63,7 +63,8 @@ class Notifier {
 
             let sendingFlats = [];
             for (let flatJSON of user.flats) {
-              let flat = new Flat(flatJSON.website, flatJSON.district, flatJSON.city, flatJSON.address, flatJSON.link, flatJSON.rooms, flatJSON.size, flatJSON.costs, flatJSON.deposit, flatJSON.funds, flatJSON.legalform, flatJSON.title, flatJSON.status, flatJSON.info, flatJSON.docs, flatJSON.images);
+              let flat = new Flat()
+              Object.assign(flat, flatJSON);
               if (user.plz_interests.includes(flat.district)) {
                 sendingFlats.push(flat);
               }

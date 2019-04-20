@@ -62,11 +62,20 @@ class wsudCrawler {
               for (let unit of project.units) {
 
                 address = street + ' (ID: ' + unit.id + ')'
-                costs = unit.sampleRent;
+                costs = parseFloat(reverseFormatNumber(unit.sampleRent,'de'));
                 funds = unit.samplePrice;
                 size = unit.size;
                 info = infoTemp + '<br />' + unit.description;
                 rooms = unit.rooms;
+
+                if (isNaN(costs)) {
+                  let elements = unit.sampleRent.split(' ');
+                  for (let e of elements) {
+                    if (!isNaN(parseFloat(reverseFormatNumber(e,'de')))) {
+                      costs = parseFloat(reverseFormatNumber(e,'de'));
+                    }
+                  }
+                }
 
                 if (unit.images.length > 0) {
                   if (!imgFlag) images = [];
@@ -98,3 +107,11 @@ class wsudCrawler {
 }
 
 module.exports = wsudCrawler;
+
+function reverseFormatNumber(val,locale){
+  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
+  return Number.isNaN(reversedVal)?0:reversedVal;
+}
