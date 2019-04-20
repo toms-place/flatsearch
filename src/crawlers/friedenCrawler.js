@@ -21,7 +21,7 @@ class friedenCrawler {
 
       this.newFlats = [];
       let flats = [];
-
+      
       let document = new JSDOM(await this.getBody()).window.document;
       let angebot = document.querySelectorAll('.batch-units tr');
 

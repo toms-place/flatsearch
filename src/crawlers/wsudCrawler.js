@@ -58,7 +58,7 @@ class wsudCrawler {
             for (let unit of project.units) {
 
               address = street + ' (ID: ' + unit.id + ')'
-              costs = unit.sampleRent;
+              costs = parseFloat(unit.sampleRent.replace('.', '').replace(',', '.'));
               funds = unit.samplePrice;
               size = unit.size;
               info = infoTemp + '<br />' + unit.description;

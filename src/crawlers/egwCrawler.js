@@ -44,7 +44,7 @@ class egwCrawler {
         link = angebot[i].querySelectorAll('a')[0].href;
         rooms = parseInt(angebot[i].querySelectorAll('td')[2].innerHTML);
         size = angebot[i].querySelectorAll('td')[1].textContent;
-        costs = angebot[i].querySelectorAll('td')[4].innerHTML.split(" ")[1];
+        costs = parseFloat(angebot[i].querySelectorAll('td')[4].innerHTML.split(" ")[1].replace('.', '').replace(',', '.'));
         funds = angebot[i].querySelectorAll('td')[3].innerHTML.split(" ")[1];
 
         let flat = new Flat('EGW', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);

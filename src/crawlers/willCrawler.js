@@ -19,7 +19,7 @@ class willCrawler {
 
   async crawl() {
     try {
-      logOut('crawlWillhaben');
+      //logOut('crawlWillhaben');
 
       this.newFlats = [];
 
@@ -27,7 +27,8 @@ class willCrawler {
 
       const res1 = await rp({
         'url': url,
-        resolveWithFullResponse: true
+        resolveWithFullResponse: true,
+        encoding: 'latin1'
       });
 
       let document = new JSDOM(res1.body).window.document;
@@ -40,24 +41,23 @@ class willCrawler {
           //eliminate ads
           if (angebot[i].getAttribute("itemtype") == 'http://schema.org/Residence') {
             let district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, images, info, docs;
-
             let addressLine = angebot[i].querySelectorAll('.addressLine')[0].querySelectorAll('div')[1].innerHTML.trim();
-            if (addressLine.match(",")) {
-              if (addressLine.split(",")[0].trim().match("\n")) {
-                address = addressLine.split(",")[0].trim().split(" ")[addressLine.split(",")[0].trim().split(" ").length - 1];
-              } else {
-                address = addressLine.split(",")[0].trim();
-              }
-              city = addressLine.split(",")[1].trim().split(" ")[addressLine.split(",")[1].trim().split(" ").length - 1];
-            } else {
-              address = addressLine;
-              city = addressLine.split(" ")[addressLine.split(" ").length - 1];
-            }
 
             if (addressLine.match(/[0-9]{4}/)) {
               district = addressLine.match(/[0-9]{4}/)[0];
             } else {
               continue;
+            }
+            if (addressLine.match(",")) {
+              if (addressLine.split(",")[0].trim().match("\n")) {
+                address = addressLine.split(",")[0].trim().split(" ")[addressLine.split(",")[0].trim().split(" ").length - 1];
+              } else {
+                address = decodeURI(addressLine.split(",")[0].trim());
+              }
+              city = addressLine.split(",")[1].trim().split(" ")[addressLine.split(",")[1].trim().split(" ").length - 1];
+            } else {
+              city = addressLine.split(" ")[addressLine.split(" ").length - 1];
+              address = district + " " + city;
             }
             link = 'https://www.willhaben.at' + angebot[i].querySelectorAll('.header')[0].querySelectorAll('a')[0].href;
             size = parseInt(angebot[i].querySelectorAll('.desc-left')[0].innerHTML.trim());
@@ -65,7 +65,11 @@ class willCrawler {
             /* Willhaben encodes the span with the price in base64 */
             let encoded = angebot[i].querySelectorAll('.info')[0].querySelectorAll('script')[0].innerHTML.split("'")[3];
             let bytes = base64.decode(encoded);
-            costs = utf8.decode(bytes).trim().split(" ")[2];
+            costs = parseFloat(utf8.decode(bytes).trim().split(" ")[2].replace('.', '').replace(',', '.'));
+            
+            if (costs > 750) {
+              continue;
+            }
 
             title = angebot[i].querySelectorAll('.header')[0].querySelectorAll('a')[0].textContent.trim();
             images = [{

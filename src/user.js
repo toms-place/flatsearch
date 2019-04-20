@@ -53,11 +53,13 @@ class User {
         subject = `TEST: Hi ${this.name}, eine neue Wohnung wurde gefunden!`;
       }
 
+      let html = buildHTML(arr);
+
       let mailOptions = {
         from: mailAuth.user,
         to: this.email,
         subject: subject,
-        html: buildHTML(arr)
+        html: html
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
@@ -68,6 +70,10 @@ class User {
             logOut(`Email sent to: ${a}`);
           }
         }
+      });
+
+      fs.writeFile('./messageTest.html', html, (err) => {
+        if (err) throw err;
       });
 
     });
@@ -82,22 +88,31 @@ function buildHTML(arr) {
     <head>
       <meta charset="utf-8">
       <title>Flatsearch</title>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
+      <style type="text/css">
+
+      </style>
       </head>
 
-      <body>
-        <div style="max-width: 800px; margin: auto auto;">
-        <h1 style="color: #111;">Neue Wohnungen:</h1>`;
+      <body style="font-family: 'IBM Plex Sans', sans-serif; width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;">
+        <div style="max-width: 800px; margin: auto auto; padding: 0px 20px;">
+          <h1 style="color: #111;">Neue Wohnungen:</h1>`;
 
-          for (let f of arr) {
-            let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
+            for (let f of arr) {
+              let flat = new Flat(f.website, f.district, f.city, f.address, f.link, f.rooms, f.size, f.costs, f.deposit, f.funds, f.legalform, f.title, f.status, f.info, f.docs, f.images);
 
-            html += flat.getHTML() + '<br />';
+              html += flat.getHTML() + '<br /><br /><br />';
 
-          }
+            }
 
-            html += `
-        <p style="color: #111;">Danke, dass du <i><strong>flatsearch</strong></i> benutzt!</p>
-        <p style="color: #111;">Ich bitte um Feedback an <a href="mailto:kontakt@weber-thomas.at">Thomas Weber</a>!</p>
+              html += `
+          <p style="color: #111;">
+            Danke, dass du <i><strong>flatsearch</strong></i> benutzt!<br />
+            Ich bitte um Feedback an <a href="mailto:kontakt@weber-thomas.at">Thomas Weber</a>!
+          </p>
+          <h4>Credits:</h4>
+          <a href="https://icons8.com">Icon pack by Icons8</a>
+        </div>
       </body>
     </html>`;
 

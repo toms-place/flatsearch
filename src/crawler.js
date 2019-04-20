@@ -30,11 +30,11 @@ class Crawler {
     if (process.env.NODE_ENV == 'dev') {
       let newFlats = [];
   
-      let promises = [this.will.crawl()];
+      let promises = [this.szb.crawl()];
   
       await Promise.all(promises);
   
-      let flats = [this.will.newFlats];
+      let flats = [this.szb.newFlats];
   
       await combine(newFlats, flats);
   

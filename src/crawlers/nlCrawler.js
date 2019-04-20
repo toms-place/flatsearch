@@ -88,12 +88,13 @@ class nlCrawler {
         legalform = singleFlat.querySelectorAll('.legalForm')[0].innerHTML;
         title = angebot.querySelectorAll('.title')[0].innerHTML.trim();
         status = angebot.querySelectorAll('.tile-ribbon')[0].innerHTML.trim();
+        /*
         if (flatDoc.querySelectorAll('.description')[0]) {
           info += flatDoc.querySelectorAll('.description')[0].innerHTML;
         }
         if (flatDoc.querySelectorAll('.master-data')[0]) {
           info += flatDoc.querySelectorAll('.master-data')[0].innerHTML;
-        }
+        }*/
 
         let tempDocs = flatDoc.querySelectorAll('.materials')[0].querySelectorAll('a');
         if (tempDocs) {
@@ -111,7 +112,7 @@ class nlCrawler {
           for (let i = 0; i < financing.length; i++) {
             switch (financing[i].querySelectorAll('.financing-title')[0].innerHTML) {
               case 'monatliche Kosten:':
-                costs = financing[i].querySelectorAll('.financing-value')[0].innerHTML;
+                costs = parseFloat(financing[i].querySelectorAll('.financing-value')[0].innerHTML.replace('.', '').replace(',', '.'));
                 break;
               case 'Kaution:':
                 deposit = financing[i].querySelectorAll('.financing-value')[0].innerHTML;
