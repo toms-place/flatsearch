@@ -6,3 +6,8 @@ users.js
 mailAuth.json
 users.json
 users_save.json
+crawler/config/constants\.js
+
+test\.js
+
+www/config/constants\.js
