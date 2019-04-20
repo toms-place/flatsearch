@@ -27,10 +27,6 @@ class ebgCrawler {
 
         let url = 'http://www.ebg-wohnen.at/Suche.aspx';
 
-        if (process.env.NODE_ENV == 'dev') {
-          url = 'http://127.0.0.1:8080/ebg';
-        }
-
         let flats = [];
 
         let res1 = await rp({

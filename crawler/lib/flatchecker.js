@@ -44,7 +44,6 @@ function saveNewFlats(newFlats) {
               for (let flat of newFlats) {
                 if (user.plz_interests.includes(flat.district)) {
                   if (!isNaN(parseFloat(flat.costs))) {
-                    console.log(user.max_costs);
                     if (flat.costs <= user.max_costs) {
                       tempNewFlats.push(flat);
                     }

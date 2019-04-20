@@ -1,7 +1,7 @@
 /** TODO make mongoose model 
  * add crawl Time
  * 
-*/
+ */
 
 class Flat {
   constructor(website, district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images, crawlTime) {
@@ -24,7 +24,7 @@ class Flat {
     this.images = images;
     this.crawlTime = crawlTime;
   }
-  
+
   isSameAs(flat) {
     if (this.id == flat.id) return true;
     else return false;
@@ -94,12 +94,14 @@ class Flat {
       }
 
       let html =
-      `<div style="margin: auto auto; padding: 20px 20px;">
+        `<div style="margin: auto auto; padding: 20px 20px;">
         <div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa;">
 
-          <div style="padding: 12.5px 11px; background: #999; color: white;">
-            ${title}
-          </div>
+          <a href="${this.link}" style="line-height: 1; text-decoration: none;">
+            <div style="padding: 12.5px 11px; background: #999; color: white;">
+              ${title}
+            </div>
+          </a>
 
           <div style="background-color:#ddd; padding:20px;">
               <a href="${this.link}" style="line-height: 1; text-decoration: none;">
