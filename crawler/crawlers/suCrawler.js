@@ -8,6 +8,7 @@ const {
 const logErr = require('../lib/logger').logErr;
 const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
+const numeral = require('numeral');
 
 class suCrawler {
   constructor(initOutput) {
@@ -46,7 +47,10 @@ class suCrawler {
           costs = angebot[i].querySelectorAll('.settlers-wohnen-properities')[0].querySelectorAll('.uk-text-bold')[2].textContent.split(' ')[0];
           size = angebot[i].querySelectorAll('.settlers-wohnen-properities')[0].querySelectorAll('.uk-text-bold')[1].textContent;
 
-          let tempCosts = parseFloat(reverseFormatNumber(costs,'en'));
+          // switch between locales
+          numeral.locale('en-gb');
+          costs = costs.split(',-')[0];
+          let tempCosts = parseFloat(numeral(costs).value());
           if (!isNaN(tempCosts)) {
             costs = tempCosts;
           }
@@ -68,11 +72,3 @@ class suCrawler {
 }
 
 module.exports = suCrawler;
-
-function reverseFormatNumber(val,locale){
-  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
-  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
-  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
-  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
-  return Number.isNaN(reversedVal)?0:reversedVal;
-}

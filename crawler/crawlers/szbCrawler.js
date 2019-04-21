@@ -8,6 +8,9 @@ const {
 const logErr = require('../lib/logger').logErr;
 const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
+const numeral = require('numeral');
+// switch between locales
+numeral.locale('de');
 
 class szbCrawler {
   constructor(initOutput) {
@@ -47,8 +50,11 @@ class szbCrawler {
             rooms = parseInt(angebot[i].querySelectorAll('td')[1].innerHTML);
             costs = angebot[i].querySelectorAll('td')[3].innerHTML;
             funds = angebot[i].querySelectorAll('td')[2].innerHTML;
-
-            let tempCosts = parseFloat(reverseFormatNumber(costs.split(";")[1],'de'));
+            
+            // switch between locales
+            numeral.locale('de');
+            costs = costs.split(',-')[0];
+            let tempCosts = parseFloat(numeral(costs).value());
             if (!isNaN(tempCosts)) {
               costs = tempCosts;
             }
@@ -72,11 +78,3 @@ class szbCrawler {
 }
 
 module.exports = szbCrawler;
-
-function reverseFormatNumber(val,locale){
-  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
-  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
-  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
-  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
-  return Number.isNaN(reversedVal)?0:reversedVal;
-}

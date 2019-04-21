@@ -1,3 +1,34 @@
+const numeral = require('numeral');
+// load a locale
+numeral.register('locale', 'de', {
+  delimiters: {
+    thousands: '.',
+    decimal: ','
+  },
+  abbreviations: {
+    thousand: 'k',
+    million: 'm'
+  },
+  currency: {
+    symbol: '€'
+  }
+});
+numeral.register('locale', 'en-gb', {
+  delimiters: {
+      thousands: ',',
+      decimal: '.'
+  },
+  abbreviations: {
+      thousand: 'k',
+      million: 'm'
+  },
+  currency: {
+    symbol: '£'
+  }
+});
+// switch between locales (standard = de)
+numeral.locale('de');
+
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');

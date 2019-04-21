@@ -8,6 +8,9 @@ const {
 const logErr = require('../lib/logger').logErr;
 const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
+const numeral = require('numeral');
+// switch between locales
+numeral.locale('de');
 
 class nlCrawler {
   constructor(initOutput) {
@@ -129,7 +132,10 @@ class nlCrawler {
               }
             }
 
-            let tempCosts = parseFloat(reverseFormatNumber(costs,'de'));
+            // switch between locales
+            numeral.locale('de');
+            costs = costs.split(',-')[0];
+            let tempCosts = parseFloat(numeral(costs).value());
             if (!isNaN(tempCosts)) {
               costs = tempCosts;
             }
@@ -156,11 +162,3 @@ class nlCrawler {
 }
 
 module.exports = nlCrawler;
-
-function reverseFormatNumber(val,locale){
-  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
-  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
-  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
-  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
-  return Number.isNaN(reversedVal)?0:reversedVal;
-}

@@ -8,6 +8,9 @@ const {
 const logErr = require('../lib/logger').logErr;
 const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
+const numeral = require('numeral');
+// switch between locales
+numeral.locale('de');
 
 class egwCrawler {
   constructor(initOutput) {
@@ -45,8 +48,11 @@ class egwCrawler {
           size = angebot[i].querySelectorAll('td')[1].textContent;
           costs = angebot[i].querySelectorAll('td')[4].innerHTML.split(" ")[1];
           funds = angebot[i].querySelectorAll('td')[3].innerHTML.split(" ")[1];
-
-          let tempCosts = parseFloat(reverseFormatNumber(costs,'de'));
+          
+          // switch between locales
+          numeral.locale('de');
+          costs = costs.split(',-')[0];
+          let tempCosts = parseFloat(numeral(costs).value());
           if (!isNaN(tempCosts)) {
             costs = tempCosts;
           }
@@ -68,12 +74,3 @@ class egwCrawler {
 }
 
 module.exports = egwCrawler;
-
-
-function reverseFormatNumber(val,locale){
-  var group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
-  var decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
-  var reversedVal = val.replace(new RegExp('\\' + group, 'g'), '');
-  reversedVal = reversedVal.replace(new RegExp('\\' + decimal, 'g'), '.');
-  return Number.isNaN(reversedVal)?0:reversedVal;
-}
