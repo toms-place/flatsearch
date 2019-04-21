@@ -48,10 +48,11 @@ class Flat {
 
       let images = '';
       if (this.images) {
-        images = `<h3>Bilder</h3>`
+        images = `<h3>Bilder</h3><ul style="list-style: none;">`
         for (let i = 0; i < this.images.length; i++) {
-          images += `<img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${this.images[i].src}" />`;
+          images += `<li><img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${this.images[i].src}" /></li>`;
         }
+        images += `</ul>`
       }
 
       let docs = '';
