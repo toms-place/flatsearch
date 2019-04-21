@@ -85,6 +85,7 @@ exports.change_plz_interests = async function (req, res, next) {
 			user.plz_interests = uniq(user.plz_interests);
 
 			user.notificationrate = req.body.notificationrate;
+			user.max_costs = req.body.max_costs;
 
 			await user.save();
 

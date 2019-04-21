@@ -10,7 +10,6 @@
         <div class="form-bottom">
           <form role="form" action="/change_plz_interests/" method="post" class="login-form">
 
-
             <% if (error.length > 0) { %>
             <div class="alert alert-danger"><%- error %></div>
             <% } %>
@@ -21,25 +20,33 @@
 
             <div class="form-group">
               <% if (session.user.plz_interests.length > 0) { %>
-
-              <h2>You selected following districts:</h2>
-              <ul id='districts' class='list'>
-                <% session.user.plz_interests.forEach(function(plz){ %>
-                <li id="<%= plz %>" class="plz"><%= plz %><span>X</span></li>
-                <% }); %>
-              </ul>
-
+                    <h2>You selected following districts:</h2>
+                    <ul id='districts' class='list'>
+                      <% session.user.plz_interests.forEach(function(plz){ %>
+                        <li id="<%= plz %>" class="plz"><%= plz %><span>X</span></li>
+                      <% }); %>
+                    </ul>
               <% } %>
+            </div>
 
+            <div class="form-group">
               <label for="plzContainer">Add new PLZs:</label>
               <div id="plzContainer" class="field_wrapper">
                 <div class="plzs">
                   <input type='number' max='9999' min='1000' name="plz_interests"
-                    class="form-control form-username plz_input" />
+                    class="form-control plz_input" />
                   <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
                 </div>
               </div>
-
+            </div>
+            
+            <div class="form-group">
+              <label for="max_costs">Change your max costs:</label>
+              <%
+                let max_costs = session.user.max_costs;
+              %>
+              <input type='number' min='50' id="max_costs" name="max_costs"
+                class="form-control" value="<%= max_costs %>" required/>
             </div>
 
             <div class="form-group">
@@ -101,7 +108,7 @@
         <% let count = 0;
             let flatCountString = "new Flats";
             session.user.flats.forEach(function(flat){ %>
-        <% if (session.user.plz_interests.includes(flat.district)) {
+        <% if (session.user.plz_interests.includes(flat.district) && session.user.max_costs <= flat.costs) {
               count++;
               if (count == 1) {
                 flatCountString = "new Flat"
@@ -111,7 +118,7 @@
             }); %>
         <h2>We found <%- count + " " + flatCountString%> for your Account:</h2>
         <% session.user.flats.forEach(function(flat){ %>
-        <% if (session.user.plz_interests.includes(flat.district)) {
+        <% if (session.user.plz_interests.includes(flat.district) && session.user.max_costs <= flat.costs) {
 
         let title = '';
         if (flat.title) {
