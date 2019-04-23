@@ -65,8 +65,16 @@ class Notifier {
             for (let flatJSON of user.flats) {
               let flat = new Flat()
               Object.assign(flat, flatJSON);
+
+              //check if user wants the flat
               if (user.plz_interests.includes(flat.district)) {
-                sendingFlats.push(flat);
+                if (!isNaN(parseFloat(flat.costs))) {
+                  if (flat.costs <= user.max_costs) {
+                    sendingFlats.push(flat);
+                  }
+                } else {
+                  sendingFlats.push(flat);
+                }
               }
             }
 
@@ -229,6 +237,7 @@ function buildHTML(flats, user) {
 
       table.body {
         margin: auto auto;
+        min-width: 75%;
       }
 
       table.body-wrap {
@@ -247,10 +256,6 @@ function buildHTML(flats, user) {
       .footer-wrap .container p {
         color: #111;
         font-size: 12px;
-      }
-    
-      table.footer-wrap a {
-        color: #333;
       }
 
       </style>
@@ -310,7 +315,6 @@ function buildHTML(flats, user) {
                       <td>`;
 
                         for (let flat of flats) {
-                          //todo flat
                           html += flat.getHTML();
                         }
 
