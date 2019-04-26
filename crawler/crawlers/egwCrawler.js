@@ -49,6 +49,7 @@ class egwCrawler {
           costs = angebot[i].querySelectorAll('td')[4].innerHTML.split(" ")[1];
           funds = angebot[i].querySelectorAll('td')[3].innerHTML.split(" ")[1];
           
+          // parse Costs
           // switch between locales
           numeral.locale('de');
           costs = costs.split(',-')[0];
@@ -56,6 +57,8 @@ class egwCrawler {
           if (!isNaN(tempCosts)) {
             costs = tempCosts;
           }
+
+          size = parseFloat(size.split(' ')[0].replace(',', '.'));
 
           let flat = new Flat('EGW', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 

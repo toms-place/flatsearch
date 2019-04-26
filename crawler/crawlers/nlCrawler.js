@@ -9,8 +9,6 @@ const logErr = require('../lib/logger').logErr;
 const logOut = require('../lib/logger').logOut;
 const CronJob = require('cron').CronJob;
 const numeral = require('numeral');
-// switch between locales
-numeral.locale('de');
 
 class nlCrawler {
   constructor(initOutput) {
@@ -140,8 +138,12 @@ class nlCrawler {
               costs = tempCosts;
             }
 
+            size = parseFloat(size.split(' ')[0].replace(',', '.'));
+
             let flat = new Flat('Neuesleben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
-            await flats.push(flat);
+            
+
+            flats.push(flat);
           } catch (error) {
             logOut("NL")
             logOut(singleFlatsRequests[i].res.request.uri.href);

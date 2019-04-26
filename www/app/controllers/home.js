@@ -26,28 +26,25 @@ exports.legals = function (req, res, next) {
 
 exports.userReload = async function (req, res, next) {
 	if (req.session.user) { // req.session.passport._id
-
 		try {
-			// find a user whose email is the same as the sessions email
-			let user = await User.findOne({
-				'mail': req.session.user.mail
-			});
 
+			let user = await User.findOne({
+				'mail': req.session.user.mail,
+			});
 			req.session.user = user;
+			next();
+
 		} catch (error) {
-			if (error) req.flash("error", error)
+			if (error) req.flash("error", error);
+			next();
 		}
 
-		next();
-
 	} else {
-
 		next();
-
 	}
 };
 
-exports.change_plz_interests = async function (req, res, next) {
+exports.update_user = async function (req, res, next) {
 	if (req.session.user) { // req.session.passport._id
 
 		try {
@@ -86,6 +83,8 @@ exports.change_plz_interests = async function (req, res, next) {
 
 			user.notificationrate = req.body.notificationrate;
 			user.max_costs = req.body.max_costs;
+			user.max_size = req.body.max_size;
+			user.min_size = req.body.min_size;
 
 			await user.save();
 

@@ -7,6 +7,8 @@ const CronJob = require('cron').CronJob;
 const Flat = require('../model/flat');
 const moment = require('moment-timezone');
 const constants = require('../config/constants');
+const UFC = require('./userflatchecker');
+const UserFlatChecker = new UFC;
 
 class Notifier {
   startCron(cron) {
@@ -61,14 +63,15 @@ class Notifier {
 
           if (sendFlag == true) {
 
-            let sendingFlats = [];
+            let testingFlats = [];
             for (let flatJSON of user.flats) {
               let flat = new Flat()
               Object.assign(flat, flatJSON);
-              if (user.plz_interests.includes(flat.district)) {
-                sendingFlats.push(flat);
-              }
+              testingFlats.push(flat)
             }
+
+            //check again for filter changes
+            let sendingFlats = UserFlatChecker.getMatchingFlats(testingFlats, user);
 
             if (sendingFlats.length > 0) {
               await sendMail(sendingFlats, user);
@@ -229,6 +232,7 @@ function buildHTML(flats, user) {
 
       table.body {
         margin: auto auto;
+        min-width: 75%;
       }
 
       table.body-wrap {
@@ -247,10 +251,6 @@ function buildHTML(flats, user) {
       .footer-wrap .container p {
         color: #111;
         font-size: 12px;
-      }
-    
-      table.footer-wrap a {
-        color: #333;
       }
 
       </style>
@@ -310,7 +310,6 @@ function buildHTML(flats, user) {
                       <td>`;
 
                         for (let flat of flats) {
-                          //todo flat
                           html += flat.getHTML();
                         }
 

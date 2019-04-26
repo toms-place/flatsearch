@@ -55,10 +55,27 @@
                         </div>
 
                         <div class="form-group">
+                        <label for="max_costs">Set your max costs:</label>
+                        <input type='number' min='50' id="max_costs" name="max_costs"
+                            class="form-control" value="1000" required/>
+                        </div>
+
+                        <div class="form-group" style="width:45%;float:left;">
+                        <label for="min_size">Set your min size:</label>
+                        <input type='number' min='0' id="min_size" name="min_size"
+                            class="form-control" value="0" required/>
+                        </div>
+                        <div class="form-group" style="width:45%;float:right;">
+                        <label for="max_size">Set your max size:</label>
+                        <input type='number' min='0' id="max_size" name="max_size"
+                            class="form-control" value="100" required/>
+                        </div>
+
+                        <div class="form-group">
                             <label for="plz_i_0" >Please enter your desired PLZ numbers!</label>
                             <div id="plzContainer" class="field_wrapper">
                                 <div class="plzs">
-                                    <input type='number' max='9999' min='1000' name="plz_interests" class="form-control plz_input" required />
+                                    <input type='number' max='9999' min='1000' name="plz_interests" placeholder="1010" class="form-control plz_input" required />
                                     <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
                                 </div>
                             </div>

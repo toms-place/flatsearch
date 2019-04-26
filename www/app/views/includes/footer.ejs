@@ -1,14 +1,22 @@
         <footer>
             <% if (session == undefined) { %>
                 <a href="/legals/">Legal Notice</a>
+                <div style="float:right; margin-right:10px;">
+                    Version: <%= process.env.npm_package_version %>
+                </div>
 
             <% } else if (session.user == undefined) { %>
                 <a href="/legals/">Legal Notice</a>
-
+                <div style="float:right; margin-right:10px;">
+                    Version: <%= process.env.npm_package_version %>
+                </div>
             <% } else { %>
                 <a href="/legals/">Legal Notice</a>
                 -
                 <a href="/delete/">delete account?</a>
+                <div style="float:right; margin-right:10px;">
+                    Version: <%= process.env.npm_package_version %>
+                </div>
             <% } %>
         </footer>
 

@@ -20,6 +20,8 @@ var userSchema = mongoose.Schema({
 	flats: { type: Array, default: [] },
 	notificationrate: { type: Number, default: 1 },
 	max_costs: { type: Number, default: 1000 },
+	min_size: { type: Number, default: 0 },
+	max_size: { type: Number, default: 100 },
 });
 
 
