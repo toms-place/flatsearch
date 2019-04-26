@@ -1,6 +1,6 @@
 {
   "name": "flatsearch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "crawls different websites for flats and informs user about new ones",
   "main": "crawler/app.js",
   "scripts": {

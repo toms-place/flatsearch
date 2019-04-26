@@ -108,6 +108,9 @@ module.exports = function (passport) {
                                 newUser.plz_interests = plz_interests;
                                 newUser.flats = [];
                                 newUser.notificationrate = req.body.notificationrate;
+                                newUser.max_costs = req.body.max_costs;
+                                newUser.max_size = req.body.max_size;
+                                newUser.min_size = req.body.min_size;
 
                                 // save the user
                                 newUser.save(function (err) {
@@ -144,7 +147,6 @@ module.exports = function (passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function (req, email, password, done) { // callback with email and password from our form
-
 
 
             // find a user whose email is the same as the forms email

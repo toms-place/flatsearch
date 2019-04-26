@@ -8,7 +8,7 @@
         </div>
 
         <div class="form-bottom">
-          <form role="form" action="/change_plz_interests/" method="post" class="login-form">
+          <form role="form" action="/update_user/" method="post" class="login-form">
 
             <% if (error.length > 0) { %>
             <div class="alert alert-danger"><%- error %></div>
@@ -49,6 +49,23 @@
                 class="form-control" value="<%= max_costs %>" required/>
             </div>
 
+            <div class="form-group" style="width:45%;float:left;">
+            <label for="min_size">Change your min size:</label>
+              <%
+                let min_size = session.user.min_size;
+              %>
+            <input type='number' min='0' id="min_size" name="min_size"
+                class="form-control" value="<%= min_size %>" required/>
+            </div>
+            <div class="form-group" style="width:45%;float:right;">
+            <label for="max_size">Change your max size:</label>
+              <%
+                let max_size = session.user.max_size;
+              %>
+            <input type='number' min='0' id="max_size" name="max_size"
+                class="form-control" value="<%= max_size %>" required/>
+            </div>
+
             <div class="form-group">
               <label for="notificationrate">Change your notificationrate:</label>
               <select name="notificationrate" id="notificationrate" class="form-control" required>
@@ -81,11 +98,11 @@
                         break;
                     }
                   %>
-                <option value="1" <%= select1 %>>instant notification</option>
-                <option value="2" <%= select2 %>>at 6, 12 and 18 o'clock</option>
-                <option value="3" <%= select3 %>>at 10 and 15 o'clock</option>
-                <option value="4" <%= select4 %>>at 6 o'clock</option>
-                <option value="5" <%= select5 %>>every Thursday</option>
+                <option value="1" <%= select1 %> >instant notification</option>
+                <option value="2" <%= select2 %> >at 6, 12 and 18 o'clock</option>
+                <option value="3" <%= select3 %> >at 10 and 15 o'clock</option>
+                <option value="4" <%= select4 %> >at 6 o'clock</option>
+                <option value="5" <%= select5 %> >every Thursday</option>
               </select>
             </div>
 
@@ -100,25 +117,50 @@
 
 
 <% if (session.user.flats.length > 0) { %>
+
 <div id='flats'>
   <div class="top-content">
     <div class="inner-bg">
       <div class="container">
 
-        <% let count = 0;
-            let flatCountString = "new Flats";
-            session.user.flats.forEach(function(flat){ %>
-        <% if (session.user.plz_interests.includes(flat.district) && session.user.max_costs <= flat.costs) {
-              count++;
-              if (count == 1) {
-                flatCountString = "new Flat"
+        <%let count = 0;
+          let flatCountString = "new Flats";
+          let outFlats = [];
+          session.user.flats.forEach(function(flat){
+
+            if (session.user.plz_interests.includes(flat.district)) {
+              if (!isNaN(parseFloat(flat.costs)) && !isNaN(parseFloat(flat.size))) {
+                if (flat.costs <= session.user.max_costs && (flat.size >= session.user.min_size && flat.size <= session.user.max_size)) {
+                  outFlats.push(flat);
+                  count++;
+                }
+              } else if (!isNaN(parseFloat(flat.costs))) {
+                if (flat.costs <= session.user.max_costs) {
+                  outFlats.push(flat);
+                  count++;
+                }
+              } else if (!isNaN(parseFloat(flat.size))) {
+                if (flat.size >= session.user.min_size && flat.size <= session.user.max_size) {
+                  outFlats.push(flat);
+                  count++;
+                }
               } else {
-                flatCountString = "new Flats"
-              }}
-            }); %>
-        <h2>We found <%- count + " " + flatCountString%> for your Account:</h2>
-        <% session.user.flats.forEach(function(flat){ %>
-        <% if (session.user.plz_interests.includes(flat.district) && session.user.max_costs <= flat.costs) {
+                outFlats.push(flat);
+                count++;
+              }
+            }
+          });
+
+          if (count == 1) {
+            flatCountString = "new Flat";
+          } else {
+            flatCountString = "new Flats";
+          }
+
+        %>
+
+        <h2 class="flatcount">We found <%- count + " " + flatCountString%> for your Account:</h2>
+        <% outFlats.forEach(function(flat){
 
         let title = '';
         if (flat.title) {
@@ -127,20 +169,22 @@
 
         let info = '';
         if (flat.info) {
-          info = `<p>${flat.info}</p>`;
+          info = `<h3>Info</h3>`
+          info += `<div class="info">${flat.info}</div>`;
         }
 
         let images = '';
         if (flat.images) {
-          images = `<h3>Bilder</h3>`
+          images = `<h3>Bilder</h3><div class="thumbs info">`
           for (let i = 0; i < flat.images.length; i++) {
-            images += `<img width="146" height="98" style="margin: 0px 5px 5px 0px;" src="${flat.images[i].src}" />`;
+            images += `<a href="${flat.images[i].src}" target="_blank" rel="noopener" name="${flat.website}"><img width="200" height="125" style="margin: 0px 5px 5px 0px;" src="${flat.images[i].src}" /></a>`;
           }
+          images += `</div>`;
         }
 
         let docs = '';
         if (flat.docs) {
-          docs = `<h3>Dokumente</h3><ul>`
+          docs = `<h3>Dokumente</h3><ul class="list">`
           for (let i = 0; i < flat.docs.length; i++) {
             if (i == flat.docs.length - 1) {
               docs += `<li><a href="${flat.docs[i].href}">${flat.docs[i].text}</a></li></ul>`
@@ -152,7 +196,7 @@
 
         let details = '';
         if (flat.status !== null || flat.legalform !== null || flat.costs !== null || flat.deposit !== null || flat.funds !== null || flat.size !== null || flat.rooms !== null) {
-          details += `<h3>Details</h3><table>`;
+          details += `<h3>Details</h3><table class="info">`;
           if (flat.status !== null) {
             details += `<tr><td>Status:</td> <td>${flat.status}</td></tr>`;
           }
@@ -180,15 +224,17 @@
         let html =
           `<div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa; width: 100%; margin-bottom: 30px;">
 
-            <div style="padding: 12.5px 11px; background: #999; color: white;">
-              ${title}
-            </div>
+            <a href="${flat.link}">
+              <div class="flatheading" style="background: #999; color: white;">
+                ${title}
+              </div>
+            </a>
 
-            <div style="background-color:#ddd; padding:20px;">
-                <a href="${flat.link}" style="line-height: 1;">
+            <a href="${flat.link}">
+              <div class="flatheading" style="background-color:#ddd;">
                   <h2 style="margin: 0px;">${flat.address}, ${flat.district} ${flat.city}</h2>
-                </a>
-            </div>
+              </div>
+            </a>
 
             <div style="padding: 5px 20px 10px 40px; background-color:#eee;">
               ${details + docs + info + images}
@@ -198,24 +244,19 @@
               <h4 style="margin: 0px; padding: 0px;">${flat.website}</h4>
             </div>
 
-            <div style="padding: 12.5px 11px; background: #ddd; color: white; text-align:center;">
-              <a style="padding: 10px;" href="https://www.google.com/maps/search/${flat.address}+${flat.district}+${flat.city}">
-                <img src="https://img.icons8.com/metro/50/ffffff/marker.png" alt="marker" width="25" height="25">
-              </a>
-            </div>
+            <a href="https://www.google.com/maps/search/${flat.address}+${flat.district}+${flat.city}" target="_blank">
+              <div style="padding: 12.5px 11px; background: #ddd; color: white; text-align:center;">
+                  <img src="https://img.icons8.com/metro/50/ffffff/marker.png" alt="marker" width="25" height="25">
+              </div>
+            </a>
 
           </div>`
           
           %>
 
-
         <div class="row">
           <%- html %>
         </div>
-
-
-
-        <% } %>
 
         <% }); %>
 

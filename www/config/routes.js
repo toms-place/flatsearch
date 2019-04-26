@@ -11,7 +11,7 @@ module.exports = function (app, passport) {
     app.get('/delete/', home.delete);
     app.get('/delete_on_activation/', home.delete_on_activation);
     app.get('/legals/', home.legals);
-    
+
     //posts
     app.post('/signup/', passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
@@ -25,6 +25,6 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
-    app.post('/change_plz_interests/', home.change_plz_interests);
+    app.post('/update_user/', home.update_user);
 
 }

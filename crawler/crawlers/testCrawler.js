@@ -47,7 +47,9 @@ class testCrawler {
           if (!isNaN(tempCosts)) {
             costs = tempCosts;
           }
-          
+
+          size = parseFloat(size.split(' ')[0].replace(',', '.'));
+
           let flat = new Flat('SU', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
 
           flats.push(flat);

@@ -84,7 +84,8 @@ class willCrawler {
               }]
 
               let flat = new Flat('Willhaben', district, city, address, link, rooms, size, costs, deposit, funds, legalform, title, status, info, docs, images);
-              await flats.push(flat);
+
+              flats.push(flat);
             }
           } catch (error) {
             logOut("WILLHABEN - FLAT:");

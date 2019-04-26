@@ -2,7 +2,7 @@
 
 <% if (session == undefined) { %>
 	<%- include('login'); -%>
-<% } else if (session.user == undefined) { %>
+<% } else if (session.user == undefined || session.user == null) { %>
 	<%- include('login'); -%>
 <% } else { %>
 	<%- include('me'); -%>
