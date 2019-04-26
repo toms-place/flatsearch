@@ -20,6 +20,7 @@ exports.legals = function (req, res, next) {
 		session: req.session,
 		error: req.flash("error"),
 		success: req.flash("success"),
+		meta: "Legal Notice"
 	});
 
 }
@@ -114,6 +115,7 @@ exports.home = function (req, res) {
 		session: req.session,
 		error: req.flash("error"),
 		success: req.flash("success"),
+		meta: "Flatsearch"
 	});
 
 }
@@ -130,7 +132,8 @@ exports.signup = function (req, res) {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			session: req.session,
-			title: "Sign Up"
+			title: "Sign Up",
+			meta: "Flatsearch"
 		});
 	}
 
@@ -152,7 +155,8 @@ exports.confirm = async function (req, res) {
 					error: req.flash("error"),
 					success: "You successfully confirmed your account!",
 					session: req.session,
-					title: "Flatsearch"
+					title: "Flatsearch",
+					meta: "Flatsearch"
 				});
 			});
 		} else if (user.status == 'active' && req.session.user) {
@@ -160,14 +164,16 @@ exports.confirm = async function (req, res) {
 				error: req.flash("error"),
 				success: "You already confirmed your account.",
 				session: req.session,
-				title: "Flatsearch"
+				title: "Flatsearch",
+				meta: "Flatsearch"
 			});
 		} else if (user.status == 'active') {
 			res.render('home', {
 				error: req.flash("error"),
 				success: "You already confirmed your account. Please Sign in!",
 				session: req.session,
-				title: "Flatsearch"
+				title: "Flatsearch",
+				meta: "Flatsearch"
 			});
 		}
 	} else {
@@ -175,7 +181,8 @@ exports.confirm = async function (req, res) {
 			error: "We could not find a user with this E-Mail. Please sign up!",
 			success: req.flash("success"),
 			session: req.session,
-			title: "Sign Up"
+			title: "Sign Up",
+			meta: "Flatsearch"
 		});
 	}
 
@@ -196,14 +203,16 @@ exports.delete = function (req, res) {
 						success: "Account deleted..",
 						error: "",
 						session: req.session,
-						title: "Flatsearch"
+						title: "Flatsearch",
+						meta: "Flatsearch"
 					});
 				});
 			} else {
 				res.render('home', {
 					error: "You must be logged in to delete your account.",
 					session: req.session,
-					title: "Flatsearch"
+					title: "Flatsearch",
+					meta: "Flatsearch"
 				});
 			}
 		});
@@ -214,7 +223,8 @@ exports.delete = function (req, res) {
 			error: "You must be logged in to delete your account.",
 			success: req.flash("success"),
 			session: req.session,
-			title: "Flatsearch"
+			title: "Flatsearch",
+			meta: "Flatsearch"
 		});
 	}
 
@@ -242,7 +252,8 @@ exports.delete_on_activation = async function (req, res) {
 							success: "Account deleted..",
 							error: "",
 							session: req.session,
-							title: "Flatsearch"
+							title: "Flatsearch",
+							meta: "Flatsearch"
 						});
 					});
 				} else {
@@ -250,7 +261,8 @@ exports.delete_on_activation = async function (req, res) {
 						error: "You must be logged in to delete your account.",
 						success: req.flash("success"),
 						session: req.session,
-						title: "Flatsearch"
+						title: "Flatsearch",
+						meta: "Flatsearch"
 					});
 				}
 			});
@@ -259,7 +271,8 @@ exports.delete_on_activation = async function (req, res) {
 				error: "Please provide the correct activation link!",
 				success: req.flash("success"),
 				session: req.session,
-				title: "Flatsearch"
+				title: "Flatsearch",
+				meta: "Flatsearch"
 			});
 		}
 	} else {
@@ -267,7 +280,8 @@ exports.delete_on_activation = async function (req, res) {
 			error: "We could not find a user with this E-Mail. Please sign up!",
 			success: req.flash("success"),
 			session: req.session,
-			title: "signup"
+			title: "signup",
+			meta: "Flatsearch"
 		});
 	}
 

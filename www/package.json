@@ -3,8 +3,8 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "pm2 start app.js",
-    "test": "pm2 start app.js --watch"
+    "start": "pm2 start src/app.js",
+    "test": "pm2 start src/app.js --watch"
   },
   "dependencies": {
     "async": "latest",
