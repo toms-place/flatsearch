@@ -12,3 +12,4 @@ auth.js
 server.key
 server.cert
 test.js
+.vscode
