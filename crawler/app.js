@@ -42,7 +42,7 @@ mongoose.connect(configDB.url, {
 const Notifier = require('./lib/notifier');
 const notifier = new Notifier();
 if (process.env.NODE_ENV == 'dev') {
-  //notifier.startCron('*/50 * * * * *');
+  notifier.startCron('*/50 * * * * *');
 } else {
   notifier.startCron('30 */1 * * * *');
 }
