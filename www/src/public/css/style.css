@@ -113,6 +113,7 @@ header h1,
 footer h1 {
 	color: inherit;
 	margin: 0px;
+	padding-left: 53px;
 }
 
 header a,
