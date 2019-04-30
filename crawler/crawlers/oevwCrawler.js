@@ -21,7 +21,7 @@ class oevwCrawler {
 
 		const job = new CronJob(cron, async () => {
 			try {
-				console.log('oevwCrawler');
+				//console.log('oevwCrawler');
 
 				this.newFlats = [];
 				this.newFlats = await this.flatChecker.compare(await this.getFlats());
