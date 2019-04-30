@@ -205,8 +205,12 @@ header img {
 
 /***** Top content *****/
 
-.inner-bg {
-	padding: 20px 0 20px 0;
+#greeting {
+    margin: 10px;
+}
+
+#description {
+    margin: 20px;
 }
 
 .top-content .text {
@@ -270,7 +274,7 @@ header img {
 }
 
 .form-bottom {
-	padding: 25px 25px 30px 25px;
+	padding: 10px 25px 30px 25px;
 	background: #eee;
 	-moz-border-radius: 0 0 4px 4px;
 	-webkit-border-radius: 0 0 4px 4px;
@@ -381,14 +385,6 @@ header img {
 		width: 95%;
 	}
 
-
-}
-
-@media (max-width: 767px) {
-
-	.inner-bg {
-		padding: 10px 0 10px 0;
-	}
 
 }
 
