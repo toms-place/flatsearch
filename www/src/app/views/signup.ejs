@@ -1,95 +1,92 @@
 <%- include('includes/header'); -%>
 
 <!-- Top content -->
-<div class="top-content">
-    <div class="inner-bg">
-        <div class="container">
-            <div class="row">
-                <div class="form-top">
-                    <div class="form-top-left">
-                        <h3>Signup for flatsearch</h3>
-                        <p>Enter a username, your email adress, a password and select which districts you will search in to sign up on:</p>
-                    </div>
-                    <div class="form-top-right">
-                        <i class="fa fa-key"></i>
-                    </div>
+<main>
+    <container>
+        <div class="row form">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>Signup for flatsearch</h3>
+                    <p>Enter a username, your email adress, a password and select which districts you will search in to sign up on:</p>
                 </div>
-                <div class="form-bottom">
-
-                    <% if (error.length > 0) { %>
-                    <div class="alert alert-danger"><%- error %></div>
-                    <% } %>
-
-                    <% if (success.length > 0) { %>
-                    <div class="alert alert-success"><%- success %></div>
-                    <% } %>
-
-                    <form role="form" action="/signup/" method="post" class="login-form">
-                        <div class="form-group">
-                            <label for="username" class="sr-only">Name</label>
-                            <input type="text" name="username" id="username" class="form-control" required
-                                placeholder="Name" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" required
-                                placeholder="Email" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="password" class="form-control"
-                                required placeholder="Password" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="notificationrate">Notificationrate if new flat is found</label>
-                            <select name="notificationrate" id="notificationrate" class="form-control" required>
-                                <option value="1">instant notification</option>
-                                <option value="2">at 6, 12 and 18 o'clock</option>
-                                <option value="3">at 10 and 15 o'clock</option>
-                                <option value="4">at 6 o'clock</option>
-                                <option value="5">every Thursday</option>
-                              </select>
-                        </div>
-
-                        <div class="form-group">
-                        <label for="max_costs">Set your max costs:</label>
-                        <input type='number' min='50' id="max_costs" name="max_costs"
-                            class="form-control" value="1000" required/>
-                        </div>
-
-                        <div class="form-group" style="width:45%;float:left;">
-                        <label for="min_size">Set your min size:</label>
-                        <input type='number' min='0' id="min_size" name="min_size"
-                            class="form-control" value="0" required/>
-                        </div>
-                        <div class="form-group" style="width:45%;float:right;">
-                        <label for="max_size">Set your max size:</label>
-                        <input type='number' min='0' id="max_size" name="max_size"
-                            class="form-control" value="100" required/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="plz_i_0" >Please enter your desired PLZ numbers!</label>
-                            <div id="plzContainer" class="field_wrapper">
-                                <div class="plzs">
-                                    <input type='number' max='9999' min='1000' name="plz_interests" placeholder="1010" class="form-control plz_input" required />
-                                    <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn">Sign up!</button>
-
-                    </form>
+                <div class="form-top-right">
+                    <i class="fa fa-key"></i>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="form-content">
 
-</div>
+                <% if (error.length > 0) { %>
+                <div class="alert alert-danger"><%- error %></div>
+                <% } %>
+
+                <% if (success.length > 0) { %>
+                <div class="alert alert-success"><%- success %></div>
+                <% } %>
+
+                <form role="form" action="/signup/" method="post" class="login-form">
+                    <div class="form-group">
+                        <label for="username" class="sr-only">Name</label>
+                        <input type="text" name="username" id="username" class="form-control" required
+                            placeholder="Name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" required
+                            placeholder="Email" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" name="password" id="password" class="form-control"
+                            required placeholder="Password" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notificationrate">Notificationrate if new flat is found</label>
+                        <select name="notificationrate" id="notificationrate" class="form-control" required>
+                            <option value="1">instant notification</option>
+                            <option value="2">at 6, 12 and 18 o'clock</option>
+                            <option value="3">at 10 and 15 o'clock</option>
+                            <option value="4">at 6 o'clock</option>
+                            <option value="5">every Thursday</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="max_costs">Set your max costs:</label>
+                    <input type='number' min='50' id="max_costs" name="max_costs"
+                        class="form-control" value="1000" required/>
+                    </div>
+
+                    <div class="form-group" style="width:45%;float:left;">
+                    <label for="min_size">Set your min size:</label>
+                    <input type='number' min='0' id="min_size" name="min_size"
+                        class="form-control" value="0" required/>
+                    </div>
+                    <div class="form-group" style="width:45%;float:right;">
+                    <label for="max_size">Set your max size:</label>
+                    <input type='number' min='0' id="max_size" name="max_size"
+                        class="form-control" value="100" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plz_i_0" >Please enter your desired PLZ numbers!</label>
+                        <div id="plzContainer" class="field_wrapper">
+                            <div class="plzs">
+                                <input type='number' max='9999' min='1000' name="plz_interests" placeholder="1010" class="form-control plz_input" required />
+                                <a href="javascript:void(0);" class="add_button plz_add" title="Add field">＋</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Sign up!</button>
+
+                </form>
+            </div>
+        </div>
+    </container>
+</main>
 
 <script src="/js/addFormField.js"></script>
 

@@ -45,15 +45,12 @@ if (session.user.flats.length > 0) {
 		flatCountString="new Flats";
 	}
 %>
+	<container id='flats' class="row">
 
-	<div id="description">
+	<div id="description" class="row">
 		<h2 class="flatcount">We found <%- count+" "+flatCountString%> for your Account:</h2>
 	</div>
-
-	<div id='flats'>
-		<div class="top-content">
-			<div class="inner-bg">
-				<div class="container">
+		
 
 <%
 	outFlats.forEach(function(flat) {
@@ -153,7 +150,7 @@ if (session.user.flats.length > 0) {
 			if (flat.costs !==null) {
 				details +=`
 					<tr>
-						<td>Kosten:</td> <td>€ ${flat.costs}</td>
+						<td>Kosten:</td> <td>${flat.costs} €</td>
 					</tr>
 				`;
 			}
@@ -196,12 +193,12 @@ if (session.user.flats.length > 0) {
 		}
 
 		let html=`
-			<div class="row">
+			<div class="row flat">
 				<div style="background-color:#999; color:#333; box-shadow: 5px 5px 5px #aaa; width: 100%; margin-bottom: 30px;">
-					<a href="${flat.link}">
+					<a href="${flat.link}" target="_blank">
 						<div class="flatheading"style="background: #999; color: white;"> ${title} </div>
 					</a>
-					<a href="${flat.link}">
+					<a href="${flat.link}" target="_blank">
 						<div class="flatheading"style="background-color:#ddd;">
 						<h2 style="margin: 0px;">${flat.address}, ${flat.district} ${flat.city}</h2>
 						</div>
@@ -229,10 +226,7 @@ if (session.user.flats.length > 0) {
 		});
 %>
 
-				</div>
-			</div>
-		</div>
-	</div>
+	</container>
 
 <%
 }

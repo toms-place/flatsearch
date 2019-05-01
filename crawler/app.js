@@ -29,16 +29,15 @@ numeral.register('locale', 'en-gb', {
 // switch between locales (standard = de)
 numeral.locale('de');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');
 var configDB = require('./config/database.js');
-//configuration ===============================================================
-mongoose.connect(configDB.url, {
-  useNewUrlParser: true
-}); // connect to our database
+mongoose.connect(configDB.url, {useNewUrlParser: true}); // connect to our database
 
 /** CRON TAB: seconds, minutes, hours, days, months, years */
-
 const Notifier = require('./lib/notifier');
 const notifier = new Notifier();
 if (process.env.NODE_ENV == 'dev') {
@@ -75,16 +74,16 @@ const oevwCrawler = require('./crawlers/oevwCrawler');
 const testCrawler = require('./crawlers/testCrawler');
 
 if (process.env.NODE_ENV == 'dev') {
-  //new testCrawler(true).crawl('*/5 * * * * *');
-  //new nlCrawler(true).crawl('0 */1 * * * *');
-  //new szbCrawler(true).crawl('0 */1 * * * *');
-  //new suCrawler(true).crawl('0 */1 * * * *');
-  //new egwCrawler(true).crawl('0 */1 * * * *');
-  //new ebgCrawler(true).crawl('0 */1 * * * *');
-  //new hbCrawler(true).crawl('0 */1 * * * *');
-  //new frCrawler(true).crawl('0 */1 * * * *');
-  //new wsudCrawler(true).crawl('0 */1 * * * *');
-  //new willCrawler(true).crawl('0 */1 * * * *');
+  new testCrawler(true).crawl('*/5 * * * * *');
+  new nlCrawler(true).crawl('0 */1 * * * *');
+  new szbCrawler(true).crawl('0 */1 * * * *');
+  new suCrawler(true).crawl('0 */1 * * * *');
+  new egwCrawler(true).crawl('0 */1 * * * *');
+  new ebgCrawler(true).crawl('0 */1 * * * *');
+  new hbCrawler(true).crawl('0 */1 * * * *');
+  new frCrawler(true).crawl('0 */1 * * * *');
+  new wsudCrawler(true).crawl('0 */1 * * * *');
+  new willCrawler(true).crawl('0 */1 * * * *');
   new oevwCrawler(true).crawl('0 */2 * * * *');
 } else {
   new nlCrawler().crawl('0 */5 * * * *');

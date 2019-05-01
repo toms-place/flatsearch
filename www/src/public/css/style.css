@@ -1,6 +1,5 @@
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-	padding: 10px 20px;
 }
 
 a {
@@ -100,13 +99,16 @@ img {
 
 .row {
 	max-width: 750px;
-	margin: auto;
+	margin: 15px auto;
+    display: block;
 }
 
 /* Header & Footer */
 header,
 footer {
 	background: #555;
+	position: fixed;
+	width: 100%;
 }
 
 header h1,
@@ -130,6 +132,10 @@ footer a:hover {
 header img {
 	float: right;
 	height: 53px;
+}
+
+footer {
+	bottom: 0;
 }
 
 /* Buttons */
@@ -204,142 +210,13 @@ header img {
 
 
 /***** Top content *****/
-
-#greeting {
-    margin: 10px;
+main {
+	padding: 70px 20px;
 }
 
-#description {
-    margin: 20px;
+row {
+	margin: 10px 0px;
 }
-
-.top-content .text {
-	color: #fff;
-}
-
-.top-content .text h1 {
-	color: #fff;
-}
-
-.top-content .description {
-	margin: 20px 0 10px 0;
-}
-
-.top-content .description p {
-	opacity: 0.8;
-}
-
-.top-content .description a {
-	color: #fff;
-}
-
-.top-content .description a:hover,
-.top-content .description a:focus {
-	border-bottom: 1px dotted #fff;
-}
-
-.form-box {
-	margin-top: 35px;
-}
-
-.form-top {
-	overflow: hidden;
-	background: #fff;
-	-moz-border-radius: 4px 4px 0 0;
-	-webkit-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
-	text-align: left;
-	margin: auto;
-	width: 80%;
-}
-
-.form-top-left {
-	float: left;
-	width: 75%;
-	padding-top: 25px;
-}
-
-.form-top-left h3 {
-	margin-top: 0;
-}
-
-.form-top-right {
-	float: left;
-	width: 25%;
-	padding-top: 5px;
-	font-size: 66px;
-	color: #ddd;
-	line-height: 100px;
-	text-align: right;
-}
-
-.form-bottom {
-	padding: 10px 25px 30px 25px;
-	background: #eee;
-	-moz-border-radius: 0 0 4px 4px;
-	-webkit-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
-	text-align: left;
-	margin: auto;
-	width: 80%;
-}
-
-.form-bottom form textarea {
-	height: 100px;
-}
-
-.form-bottom form button.btn {
-	width: 100%;
-}
-
-.form-bottom form .input-error {
-	border-color: #4aaf51;
-}
-
-#plzContainer {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-}
-
-#add_Field {
-	width: 100%;
-	margin: 5px 0;
-}
-
-.plzs {
-	margin: 5px 0;
-	width: 100%;
-	display: flex;
-}
-
-.plz_input {
-	float: left;
-}
-
-.plz_close,
-.plz_add {
-	min-width: 38px;
-	width: 7%;
-	float: right;
-	text-align: center;
-	height: calc(1.5em + .75rem + 2px);
-	padding: 7px 0px;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #495057;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #ced4da;
-	border-radius: .25rem;
-	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.plz_close:hover {
-	color: red;
-}
-
 
 /* FLATS */
 
@@ -377,16 +254,6 @@ header img {
 @media (min-width: 992px) and (max-width: 1199px) {}
 
 @media (min-width: 768px) and (max-width: 991px) {}
-
-@media (max-width: 628px) {
-
-	.form-bottom,
-	.form-top {
-		width: 95%;
-	}
-
-
-}
 
 @media (max-width: 415px) {
 

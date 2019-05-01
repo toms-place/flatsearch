@@ -1,7 +1,13 @@
-<div id="greeting">
-  <p>Hi, <%= session.user.name %>! You are logged in. - <a href="/logout/">logout?</a></p>
-</div>
+<main>
+  <container>
 
-<%- include('includes/update_user_form'); -%>
+    <div class="row" id="greeting">
+      <p>Hi, <%= session.user.name %>! You are logged in. - <a href="/logout/">logout?</a></p>
+    </div>
 
-<%- include('includes/flats'); -%>
+    <%- include('includes/update_user_form'); -%>
+
+    <%- include('includes/flats'); -%>
+
+  </container>
+</main>
